@@ -1,10 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using EventManagementSystem.Data;
 using EventManagementSystem.Models;
 
@@ -19,139 +13,66 @@ namespace EventManagementSystem.Controllers
             _context = context;
         }
 
-        // GET: Events
-        public async Task<IActionResult> Index()
+        // List all events
+        public IActionResult Index()
         {
-            return View(await _context.Events.ToListAsync());
+            var events = _context.Events.ToList();
+            return View(events);
         }
 
-        // GET: Events/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Register(int id)
         {
-            if (id == null)
+            var ev = _context.Events.Find(id);
+            if (ev == null) return NotFound();
+
+            ViewBag.EventTitle = ev.Title;
+
+            return View(new Registration { EventId = id });
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(Registration registration)
+        {
+            // Set the registration time manually to ensure it's accurate
+            registration.RegisteredAt = DateTime.Now;
+
+            if (ModelState.IsValid)
             {
-                return NotFound();
+                _context.Add(registration);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("RegistrationSuccess");
             }
 
-            var @event = await _context.Events
-                .FirstOrDefaultAsync(m => m.EventId == id);
-            if (@event == null)
-            {
-                return NotFound();
-            }
-
-            return View(@event);
+            // If we return to the view because of an error, we need to set the title again
+            var ev = _context.Events.Find(registration.EventId);
+            ViewBag.EventTitle = ev?.Title;
+            
+            return View(registration);
         }
 
-        // GET: Events/Create
+        public IActionResult RegistrationSuccess()
+        {
+            return View();
+        }
+
+        // Show create form
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Events/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // Save event
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EventId,Title,Description,EventDate,Location")] Event @event)
+        public IActionResult Create(Event ev)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(@event);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(@event);
-        }
-
-        // GET: Events/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
+                _context.Events.Add(ev);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
             }
 
-            var @event = await _context.Events.FindAsync(id);
-            if (@event == null)
-            {
-                return NotFound();
-            }
-            return View(@event);
-        }
-
-        // POST: Events/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EventId,Title,Description,EventDate,Location")] Event @event)
-        {
-            if (id != @event.EventId)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(@event);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!EventExists(@event.EventId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(@event);
-        }
-
-        // GET: Events/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var @event = await _context.Events
-                .FirstOrDefaultAsync(m => m.EventId == id);
-            if (@event == null)
-            {
-                return NotFound();
-            }
-
-            return View(@event);
-        }
-
-        // POST: Events/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var @event = await _context.Events.FindAsync(id);
-            if (@event != null)
-            {
-                _context.Events.Remove(@event);
-            }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool EventExists(int id)
-        {
-            return _context.Events.Any(e => e.EventId == id);
+            return View(ev);
         }
     }
 }

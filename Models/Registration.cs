@@ -1,19 +1,26 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace EventManagementSystem.Models
 {
     public class Registration
     {
+        [Key]
         public int Id { get; set; }
 
-        public int UserId { get; set; }
+        [Required(ErrorMessage = "Full name is required")]
+        public string StudentName { get; set; }
+
+        [Required(ErrorMessage = "Roll Number is required")]
+        public string RollNumber { get; set; }
+
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
 
         public int EventId { get; set; }
-
-        public User User { get; set; }
-
         public Event Event { get; set; }
 
-        public DateTime RegisteredAt { get; set; }
+        public DateTime RegisteredAt { get; set; } = DateTime.Now;
     }
 }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventManagementSystem.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260306143950_AddEMSModels")]
-    partial class AddEMSModels
+    [Migration("20260308100615_UpdateRegistrationModel")]
+    partial class UpdateRegistrationModel
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,6 +33,10 @@ namespace EventManagementSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EventId"));
 
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -44,13 +48,59 @@ namespace EventManagementSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("EventId");
 
                     b.ToTable("Events");
+
+                    b.HasData(
+                        new
+                        {
+                            EventId = 1,
+                            Category = "Technical",
+                            Description = "A deep dive into AI, Machine Learning, and Cloud Computing with industry experts.",
+                            EventDate = new DateTime(2026, 3, 25, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            Location = "Main Auditorium",
+                            Price = 0m,
+                            Title = "Tech Symposium 2026"
+                        },
+                        new
+                        {
+                            EventId = 2,
+                            Category = "Sports",
+                            Description = "Inter-departmental sports competition including Cricket, Football, and Athletics.",
+                            EventDate = new DateTime(2026, 4, 5, 8, 30, 0, 0, DateTimeKind.Unspecified),
+                            Location = "College Ground",
+                            Price = 50m,
+                            Title = "Annual Sports Meet"
+                        },
+                        new
+                        {
+                            EventId = 3,
+                            Category = "Cultural",
+                            Description = "A vibrant evening of dance, music, and drama performances by students.",
+                            EventDate = new DateTime(2026, 4, 12, 18, 0, 0, 0, DateTimeKind.Unspecified),
+                            Location = "Open Air Theater",
+                            Price = 150m,
+                            Title = "Cultural Night"
+                        },
+                        new
+                        {
+                            EventId = 4,
+                            Category = "Education",
+                            Description = "Practical session on modern banking systems and insurance policies.",
+                            EventDate = new DateTime(2026, 3, 20, 11, 0, 0, 0, DateTimeKind.Unspecified),
+                            Location = "Seminar Hall B",
+                            Price = 0m,
+                            Title = "Banking Workshop"
+                        });
                 });
 
             modelBuilder.Entity("EventManagementSystem.Models.Registration", b =>
@@ -61,20 +111,27 @@ namespace EventManagementSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("EventId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("RegisteredAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("RollNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StudentName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("EventId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Registrations");
                 });
@@ -116,15 +173,7 @@ namespace EventManagementSystem.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EventManagementSystem.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Event");
-
-                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

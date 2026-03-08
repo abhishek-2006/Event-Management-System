@@ -1,17 +1,33 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using EventManagementSystem.Models;
+using EventManagementSystem.Data;
+using System.Linq;
 
 namespace EventManagementSystem.Controllers;
 
 public class HomeController : Controller
 {
-    public IActionResult Index()
+    private readonly AppDbContext _context;
+
+    public HomeController(AppDbContext context)
     {
-        return View();
+        _context = context;
     }
 
-    public IActionResult Privacy()
+    public IActionResult Index()
+    {
+        // Fetch top 3 upcoming events for the "Featured" section
+        var featuredEvents = _context.Events
+                                    .Where(e => e.EventDate >= DateTime.Now)
+                                    .OrderBy(e => e.EventDate)
+                                    .Take(3)
+                                    .ToList();
+
+        return View(featuredEvents);
+    }
+
+    public IActionResult Contact()
     {
         return View();
     }
