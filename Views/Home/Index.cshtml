@@ -51,7 +51,7 @@
                             <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             @item.EventDate.ToString("MMM dd, yyyy")
                         </div>
-                        <a asp-controller="Events" asp-action="Register" asp-route-id="@item.EventId" class="block w-full text-center py-3 bg-slate-100 dark:bg-slate-700 hover:bg-blue-600 hover:text-white dark:text-white font-bold rounded-xl transition-all">
+                        <a asp-controller="Events" asp-action="Register" asp-route-slug="@item.Slug" class="block w-full text-center py-3 bg-slate-100 dark:bg-slate-700 hover:bg-blue-600 hover:text-white dark:text-white font-bold rounded-xl transition-all">
                             Register Now
                         </a>
                     </div>

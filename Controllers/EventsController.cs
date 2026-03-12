@@ -20,15 +20,16 @@ namespace EventManagementSystem.Controllers
             return View(events);
         }
 
-        public IActionResult Register(int id)
+        public IActionResult Register(string slug)
         {
-            var ev = _context.Events.Find(id);
+            var ev = _context.Events.FirstOrDefault(e => e.Slug == slug);
             if (ev == null) return NotFound();
 
             ViewBag.EventTitle = ev.Title;
 
-            return View(new Registration { EventId = id });
+            return View(new Registration { EventId = ev.EventId });
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(Registration registration)
@@ -67,6 +68,7 @@ namespace EventManagementSystem.Controllers
         {
             if (ModelState.IsValid)
             {
+                ev.Slug = ev.Title.ToLower().Replace(" ", "-");
                 _context.Events.Add(ev);
                 _context.SaveChanges();
                 return RedirectToAction("Index");

@@ -36,12 +36,12 @@
                 <p class="text-slate-600 dark:text-slate-400 text-sm mb-6 line-clamp-2">@item.Description</p>
 
                 <div class="flex gap-3 mt-auto">
-                    <a asp-action="Register" asp-route-id="@item.EventId" class="flex-1 text-center py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded-xl transition-all">
+                    <a asp-action="Register" asp-route-slug="@item.Slug" class="flex-1 text-center py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded-xl transition-all">
                         Register Now
                     </a>
                     
                     @if (User.Identity.IsAuthenticated) {
-                        <a asp-action="Edit" asp-route-id="@item.EventId" class="px-4 py-2.5 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-xl hover:bg-slate-200 transition-colors">
+                        <a asp-action="Edit" asp-route-slug="@item.Slug" class="px-4 py-2.5 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-xl hover:bg-slate-200 transition-colors">
                            Edit
                         </a>
                     }
