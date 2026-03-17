@@ -1,42 +1,31 @@
 @model EventManagementSystem.Models.Event
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Event Details";
 }
 
-<h1>Details</h1>
+@* This view displays detailed information about a specific event, including its title, description, category, price, date, and location. It also provides options for users to register for the event or go back to the list of events. *@
 
-<div>
-    <h4>Event</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EventDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EventDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Location)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Location)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.EventId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="max-w-4xl mx-auto bg-white dark:bg-slate-800 rounded-3xl p-8 shadow-lg">
+    <h1 class="text-4xl font-extrabold text-slate-900 dark:text-white mb-4">@Model.Title</h1>
+    <div class="flex items-center gap-4 mb-6">
+        <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs font-bold rounded-full">
+            @Model.Category
+        </span>
+        <span class="text-sm text-slate-500 dark:text-slate-400">
+            @Model.EventDate.ToString("MMMM dd, yyyy")
+        </span>
+        <span class="text-sm text-slate-500 dark:text-slate-400">
+            @Model.Location
+        </span>
+    </div>
+    <p class="text-lg text-slate-700 dark:text-slate-300 mb-6">@Model.Description</p>
+    <div class="flex gap-4">
+        <a asp-action="Register" asp-route-slug="@Model.Slug" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors">
+            Register Now
+        </a>
+        <a asp-action="Index" class="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-md transition-colors">
+            Back to Events
+        </a>
+    </div>
 </div>

@@ -20,6 +20,7 @@ namespace EventManagementSystem.Controllers
             return View(events);
         }
 
+        [HttpGet("events/register/{slug}")]
         public IActionResult Register(string slug)
         {
             var ev = _context.Events.FirstOrDefault(e => e.Slug == slug);
@@ -55,24 +56,11 @@ namespace EventManagementSystem.Controllers
         {
             return View();
         }
-
-        // Show create form
-        public IActionResult Create()
+        
+        public IActionResult Details(string slug)
         {
-            return View();
-        }
-
-        // Save event
-        [HttpPost]
-        public IActionResult Create(Event ev)
-        {
-            if (ModelState.IsValid)
-            {
-                ev.Slug = ev.Title.ToLower().Replace(" ", "-");
-                _context.Events.Add(ev);
-                _context.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            var ev = _context.Events.FirstOrDefault(e => e.Slug == slug);
+            if (ev == null) return NotFound();
 
             return View(ev);
         }
