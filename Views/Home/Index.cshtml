@@ -3,33 +3,33 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="space-y-32 pb-32 overflow-x-hidden">
-    <section class="relative min-h-[85vh] flex flex-col items-center justify-center text-center px-6">
+<div class="space-y-16 pb-16 overflow-x-hidden">
+    <section class="relative min-h-[65vh] flex flex-col items-center justify-center text-center px-4">
         <div class="absolute inset-0 -z-10">
-            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-[120px] animate-pulse"></div>
+            <div class="absolute top-1/4 left-1/4 w-72 h-72 bg-blue-500/10 rounded-full blur-[120px] animate-pulse"></div>
             <div class="absolute bottom-1/4 right-1/4 w-[30rem] h-[30rem] bg-indigo-500/10 rounded-full blur-[120px] animate-pulse delay-1000"></div>
         </div>
 
-        <div class="animate-in fade-in slide-in-from-bottom-12 duration-1000">
+        <div class="animate-in fade-in slide-in-from-bottom-8 duration-1000">
             
-            <h1 class="text-4xl md:text-[7.5rem] font-black text-slate-900 dark:text-white tracking-tighter leading-[0.9] mb-8">
+            <h1 class="text-4xl md:text-[6rem] font-black text-slate-900 dark:text-white tracking-tighter leading-[0.95] mb-6">
                 Every Moment <br />
                 <span class="text-transparent bg-clip-text bg-gradient-to-br from-blue-600 to-indigo-400">Becomes an Event.</span>
             </h1>
             
-            <p class="mt-6 text-lg md:text-2xl text-slate-500 dark:text-slate-400 max-w-3xl mx-auto font-medium leading-relaxed">
-                The official platform for Navnirman College's premier workshops, 
+            <p class="mt-4 text-lg md:text-xl text-slate-500 dark:text-slate-400 max-w-2xl mx-auto font-medium leading-relaxed">
+                The official platform for College's premier workshops, 
                 cultural fests, and technical symposiums. Experience campus life like never before.
             </p>
 
-            <div class="flex flex-wrap justify-center gap-6 mt-12">
+            <div class="flex flex-wrap justify-center gap-4 mt-8">
                 <a asp-controller="Events" asp-action="Index" 
-                   class="group relative px-12 py-5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black rounded-[2rem] overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-2xl">
+                   class="group relative px-10 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black rounded-[2rem] overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-2xl">
                     <span class="relative z-10">EXPLORE EVENTS</span>
                     <div class="absolute inset-0 bg-blue-600 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
                 </a>
                 <a asp-controller="Home" asp-action="Contact" 
-                   class="px-12 py-5 bg-transparent text-slate-900 dark:text-white font-black rounded-[2rem] border-2 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
+                   class="px-10 py-4 bg-transparent text-slate-900 dark:text-white font-black rounded-[2rem] border-2 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
                     GET SUPPORT
                 </a>
             </div>
@@ -37,7 +37,7 @@
     </section>
 
     <section class="container mx-auto px-6">
-        <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6 border-b border-slate-100 dark:border-slate-800 pb-10">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4 border-b border-slate-100 dark:border-slate-800 pb-8">
             <div class="max-w-xl">
                 <h2 class="text-5xl font-black text-slate-900 dark:text-white tracking-tight">
                     Upcoming <span class="italic text-blue-600">Events</span>

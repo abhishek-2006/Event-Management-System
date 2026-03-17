@@ -1,0 +1,31 @@
+@model IEnumerable<EventManagementSystem.ViewModels.RegistrationViewModel>
+
+@{
+    ViewData["Title"] = "Registrations";
+}
+
+<div class="space-y-6">
+    <div class="flex items-center gap-3 px-2">
+        <span class="h-6 w-1.5 bg-blue-600 rounded-full"></span>
+        <h3 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight italic">Registration Overview</h3>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div class="group bg-white dark:bg-slate-800 p-8 rounded-[2.5rem] border border-slate-100 dark:border-slate-700 transition-all hover:border-blue-500 hover:shadow-xl">
+            <div class="flex items-center justify-between mb-6">
+                <div class="w-12 h-12 bg-blue-50 dark:bg-blue-900/30 text-2xl flex items-center justify-center rounded-2xl group-hover:scale-110 transition-transform">📅</div>
+            </div>
+            <p class="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em]">Total Registrations</p>
+            <h3 class="text-5xl font-black text-slate-900 dark:text-white mt-2 tracking-tighter">@ViewBag.TotalRegistrations</h3>
+        </div>
+    </div>
+    
+    <div class="group bg-white dark:bg-slate-800 p-8 rounded-[2.5rem] border border-slate-100 dark:border-slate-700 transition-all hover:border-purple-500 hover:shadow-xl">
+        <div class="flex items-center justify-between mb-6">
+            <div class="w-12 h-12 bg-purple-50 dark:bg-purple-900/30 text-2xl flex items-center justify-center rounded-2xl group-hover:scale-110 transition-transform">👥</div>
+        </div>
+        <p class="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em]">Active Registrations</p>
+        <h3 class="text-5xl font-black text-slate-900 dark:text-white mt-2 tracking-tighter">@ViewBag.ActiveRegistrations</h3>
+    </div>
+
+</div>

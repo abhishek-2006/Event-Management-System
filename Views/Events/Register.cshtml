@@ -4,66 +4,73 @@
     ViewData["Title"] = "Event Registration";
 }
 
-<div class="max-w-2xl mx-auto py-12 px-4">
-    <div class="bg-white dark:bg-slate-800 rounded-3xl p-8 shadow-2xl border border-slate-100 dark:border-slate-700">
-        <div class="mb-8">
-            <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white">Register for @ViewData["EventTitle"]</h2>
-            <p class="text-slate-600 dark:text-slate-400 mt-2">Fill in your details to secure your spot for this exciting event!</p>
+<div class="max-w-3xl mx-auto py-10 px-6">
+    <a asp-action="Details" asp-route-slug="@ViewData["EventSlug"]" 
+       class="group inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors mb-8">
+        <span class="group-hover:-translate-x-1 transition-transform">&larr;</span> Back to Details
+    </a>
+
+    <div class="relative bg-white dark:bg-slate-900 rounded-[2.5rem] p-10 border border-slate-200 dark:border-slate-800 shadow-2xl shadow-slate-200/50 dark:shadow-none overflow-hidden">
+        
+        <div class="mb-10 pb-10 border-b border-slate-100 dark:border-slate-800/60">
+            <h2 class="text-4xl font-black text-slate-900 dark:text-white tracking-tighter mb-2">Secure Your Spot</h2>
+            <p class="text-lg font-medium text-slate-500 dark:text-slate-400">
+                Registering for: <span class="text-blue-600 font-black italic">@ViewData["EventTitle"]</span>
+            </p>
         </div>
 
-        <form asp-action="Register" method="post" class="space-y-6">
+        <form asp-action="Register" method="post" class="space-y-8">
             <input type="hidden" asp-for="EventId" />
 
-            <div>
-                <label asp-for="StudentName" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 italic">Full Name</label>
-                <input asp-for="StudentName" placeholder="e.g. Abhishek Shah" 
-                       class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all" />
-                <span asp-validation-for="StudentName" class="text-red-500 text-xs mt-1"></span>
+            <div class="space-y-2">
+                <label asp-for="StudentName" class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1">Full Identity</label>
+                <input asp-for="StudentName" placeholder="Abhishek Shah" 
+                       class="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-2xl text-lg font-bold text-slate-900 dark:text-white placeholder:text-slate-300 focus:border-blue-600 focus:bg-white dark:focus:bg-slate-900 outline-none transition-all" />
+                <span asp-validation-for="StudentName" class="text-red-500 text-[10px] font-bold uppercase tracking-widest mt-1 ml-1"></span>
             </div>
 
-            <div>
-                <div>
-                    <label asp-for="RollNumber" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 italic">Roll Number</label>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-2">
+                    <label asp-for="RollNumber" class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1">Enrollment Number</label>
                     <input asp-for="RollNumber" placeholder="e.g. 101" 
-                           class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all" />
-                    <span asp-validation-for="RollNumber" class="text-red-500 text-xs mt-1"></span>
+                           class="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-2xl text-lg font-bold text-slate-900 dark:text-white placeholder:text-slate-300 focus:border-blue-600 focus:bg-white dark:focus:bg-slate-900 outline-none transition-all" />
+                    <span asp-validation-for="RollNumber" class="text-red-500 text-[10px] font-bold uppercase tracking-widest mt-1 ml-1"></span>
+                </div>
+                <div class="space-y-2">
+                    <label asp-for="Email" class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1">College Email</label>
+                    <input asp-for="Email" placeholder="student@college.edu" 
+                           class="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-2xl text-lg font-bold text-slate-900 dark:text-white placeholder:text-slate-300 focus:border-blue-600 focus:bg-white dark:focus:bg-slate-900 outline-none transition-all" />
+                    <span asp-validation-for="Email" class="text-red-500 text-[10px] font-bold uppercase tracking-widest mt-1 ml-1"></span>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label asp-for="Semester" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 italic">Semester</label>
-                    <input asp-for="Semester" placeholder="e.g. 5" 
-                           class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all" />
-                    <span asp-validation-for="Semester" class="text-red-500 text-xs mt-1"></span>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-2">
+                    <label asp-for="Semester" class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1">Semester</label>
+                    <input asp-for="Semester" placeholder="e.g. 6" 
+                           class="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-2xl text-lg font-bold text-slate-900 dark:text-white placeholder:text-slate-300 focus:border-blue-600 focus:bg-white dark:focus:bg-slate-900 outline-none transition-all" />
+                    <span asp-validation-for="Semester" class="text-red-500 text-[10px] font-bold uppercase tracking-widest mt-1 ml-1"></span>
                 </div>
-                <div>
-                    <label asp-for="Department" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 italic">Department</label>
-                    <input asp-for="Department" placeholder="e.g. Computer Science" 
-                           class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all" />
-                    <span asp-validation-for="Department" class="text-red-500 text-xs mt-1"></span>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label asp-for="Email" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 italic">Email Address</label>
-                    <input asp-for="Email" placeholder="student@example.com" 
-                           class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all" />
-                    <span asp-validation-for="Email" class="text-red-500 text-xs mt-1"></span>
-                </div>
-
-                <div>
-                    <label asp-for="PhoneNumber" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 italic">Phone Number</label>
-                    <input asp-for="PhoneNumber" placeholder="e.g. +1234567890" 
-                        class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all" />
-                    <span asp-validation-for="PhoneNumber" class="text-red-500 text-xs mt-1"></span>
+                <div class="space-y-2">
+                    <label asp-for="Department" class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1">Department</label>
+                    <input asp-for="Department" placeholder="Computer Science" 
+                           class="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-2xl text-lg font-bold text-slate-900 dark:text-white placeholder:text-slate-300 focus:border-blue-600 focus:bg-white dark:focus:bg-slate-900 outline-none transition-all" />
+                    <span asp-validation-for="Department" class="text-red-500 text-[10px] font-bold uppercase tracking-widest mt-1 ml-1"></span>
                 </div>
             </div>
 
-            <button type="submit" class="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg shadow-blue-500/30 transition-all transform hover:-translate-y-1">
-                Confirm Registration
-            </button>
+            <div class="pt-6">
+                <button type="submit" 
+                        class="group relative w-full py-6 bg-blue-600 text-white font-black text-xs uppercase tracking-[0.3em] rounded-2xl transition-all duration-300 hover:bg-blue-700 hover:scale-[1.02] active:scale-95 shadow-xl shadow-blue-500/25">
+                    <span class="relative z-10 flex items-center justify-center gap-2">
+                        Confirm Registration
+                        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+                    </span>
+                </button>
+                <p class="text-center text-[9px] font-black text-slate-400 uppercase tracking-widest mt-6">
+                    By confirming, you agree to receive event-related notifications via email.
+                </p>
+            </div>
         </form>
     </div>
 </div>

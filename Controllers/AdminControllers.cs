@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using EventManagementSystem.Data;
-using System.Linq;
 using EventManagementSystem.Models;
+using EventManagementSystem.ViewModels;
 
 namespace EventManagementSystem.Controllers
 {
@@ -72,7 +72,7 @@ namespace EventManagementSystem.Controllers
             return View(ev);
         }
 
-        public IActionResult ViewEvents()
+        public IActionResult ManageEvents()
         {
             if (HttpContext.Session.GetString("Admin") == null)
                 return RedirectToAction("Login");
@@ -104,7 +104,7 @@ namespace EventManagementSystem.Controllers
             {
                 _context.Events.Update(ev);
                 _context.SaveChanges();
-                return RedirectToAction("ViewEvents");
+                return RedirectToAction("ManageEvents");
             }
 
             return View(ev);
@@ -122,7 +122,29 @@ namespace EventManagementSystem.Controllers
             _context.Events.Remove(ev);
             _context.SaveChanges();
             
-            return RedirectToAction("ViewEvents");
+            return RedirectToAction("ManageEvents");
+        }
+
+        public IActionResult ViewRegistrations()
+        {
+            if (HttpContext.Session.GetString("Admin") == null)
+                return RedirectToAction("Login");
+
+            var registrations = _context.Registrations
+                .Select(r => new RegistrationViewModel
+                {
+                    RegistrationId = r.Id,
+                    EventTitle = r.Event.Title,
+                    Name = r.StudentName,
+                    Phone = r.PhoneNumber,
+                    Department = r.Department,
+                    Semester = r.Semester,
+                    Email = r.Email,
+                    RegisteredAt = r.RegisteredAt
+                })
+                .ToList();
+
+            return View(registrations);
         }
 
         public IActionResult Logout()

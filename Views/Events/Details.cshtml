@@ -4,28 +4,105 @@
     ViewData["Title"] = "Event Details";
 }
 
-@* This view displays detailed information about a specific event, including its title, description, category, price, date, and location. It also provides options for users to register for the event or go back to the list of events. *@
+<div class="py-12 max-w-7xl mx-auto px-6">
+    <a asp-action="Index" class="group inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.3em] text-slate-400 hover:text-blue-600 transition-colors mb-12">
+        <span class="group-hover:-translate-x-1 transition-transform">&larr;</span> Back to Events
+    </a>
 
-<div class="max-w-4xl mx-auto bg-white dark:bg-slate-800 rounded-3xl p-8 shadow-lg">
-    <h1 class="text-4xl font-extrabold text-slate-900 dark:text-white mb-4">@Model.Title</h1>
-    <div class="flex items-center gap-4 mb-6">
-        <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs font-bold rounded-full">
-            @Model.Category
-        </span>
-        <span class="text-sm text-slate-500 dark:text-slate-400">
-            @Model.EventDate.ToString("MMMM dd, yyyy")
-        </span>
-        <span class="text-sm text-slate-500 dark:text-slate-400">
-            @Model.Location
-        </span>
-    </div>
-    <p class="text-lg text-slate-700 dark:text-slate-300 mb-6">@Model.Description</p>
-    <div class="flex gap-4">
-        <a asp-action="Register" asp-route-slug="@Model.Slug" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors">
-            Register Now
-        </a>
-        <a asp-action="Index" class="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-md transition-colors">
-            Back to Events
-        </a>
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+        
+        <div class="lg:col-span-7 space-y-12 animate-in fade-in slide-in-from-left-8 duration-1000">
+            <div>
+                <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-blue-50 dark:bg-blue-900/30 border border-blue-100 dark:border-blue-800 mb-8">
+                    <span class="text-[10px] font-black text-blue-600 dark:text-blue-400 uppercase tracking-widest">@Model.Category</span>
+                </div>
+                
+                <h1 class="text-6xl md:text-8xl font-black text-slate-900 dark:text-white tracking-tighter leading-none mb-8">
+                    @Model.Title
+                </h1>
+                
+                <p class="text-xl md:text-2xl text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
+                    @Model.Description
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="p-8 bg-slate-50 dark:bg-slate-800/50 rounded-[2.5rem] border border-slate-100 dark:border-slate-700">
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Location & Venue</p>
+                    <div class="flex items-center gap-4">
+                        <span class="text-3xl">📍</span>
+                        <p class="text-xl font-bold text-slate-900 dark:text-white">@Model.Location</p>
+                    </div>
+                </div>
+
+                <div class="p-8 bg-slate-50 dark:bg-slate-800/50 rounded-[2.5rem] border border-slate-100 dark:border-slate-700">
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Entry Fee</p>
+                    <div class="flex items-center gap-4">
+                        <span class="text-3xl">💰</span>
+                        <p class="text-xl font-bold text-slate-900 dark:text-white">
+                            @(Model.Price == 0 ? "Complimentary Access" : $"₹{Model.Price}")
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="lg:col-span-5 lg:sticky lg:top-32 animate-in fade-in slide-in-from-right-8 duration-1000">
+            <div class="relative bg-white/70 dark:bg-slate-900/70 backdrop-blur-2xl rounded-[3rem] p-12 border border-slate-200 dark:border-slate-800 shadow-2xl shadow-slate-200/50 dark:shadow-none overflow-hidden">
+                
+                <div class="absolute -top-12 -right-12 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl"></div>
+
+                <div class="mb-10 pb-10 border-b border-slate-100 dark:border-slate-800/60">
+                    <div class="flex items-center gap-2 mb-6">
+                        <span class="w-1.5 h-6 bg-blue-600 rounded-full"></span>
+                        <p class="text-[10px] font-black text-blue-600 dark:text-blue-400 uppercase tracking-[0.4em]">Schedule</p>
+                    </div>
+                    
+                    <div class="flex items-baseline gap-3">
+                        <span class="text-7xl font-black text-slate-900 dark:text-white tracking-tighter leading-none">
+                            @Model.EventDate.ToString("dd")
+                        </span>
+                        <div class="flex flex-col">
+                            <span class="text-2xl font-black text-slate-900 dark:text-white uppercase leading-none">
+                                @Model.EventDate.ToString("MMM")
+                            </span>
+                            <span class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">
+                                @Model.EventDate.ToString("yyyy")
+                            </span>
+                        </div>
+                    </div>
+                    <p class="text-slate-500 dark:text-slate-400 font-bold mt-6 uppercase tracking-widest text-[10px] flex items-center gap-2">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                        @Model.EventDate.ToString("dddd") &bull; Starts at 10:00 AM
+                    </p>
+                </div>
+
+                <div class="space-y-8">
+                    <div class="space-y-3">
+                        <h4 class="text-lg font-black text-slate-900 dark:text-white tracking-tight">Reserve Your Spot</h4>
+                        <p class="text-sm font-medium text-slate-500 dark:text-slate-400 leading-relaxed">
+                            Secure your participation in this event. Digital certificates will be issued to all registered attendees.
+                        </p>
+                    </div>
+                    
+                    <a asp-action="Register" asp-route-slug="@Model.Slug" 
+                    class="group relative flex items-center justify-center w-full py-5 bg-blue-600 text-white font-black text-xs uppercase tracking-[0.3em] rounded-2xl transition-all duration-300 hover:bg-blue-700 hover:scale-[1.02] active:scale-95 shadow-xl shadow-blue-500/25">
+                        <span class="relative z-10 flex items-center gap-2">
+                            Register Now
+                            <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+                        </span>
+                    </a>
+
+                    <div class="flex items-center justify-center gap-4">
+                        <div class="h-[1px] flex-grow bg-slate-100 dark:bg-slate-800"></div>
+                        <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">
+                            Limited Capacity
+                        </p>
+                        <div class="h-[1px] flex-grow bg-slate-100 dark:bg-slate-800"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>

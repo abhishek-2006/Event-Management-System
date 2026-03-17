@@ -45,7 +45,6 @@ namespace EventManagementSystem.Controllers
                 return RedirectToAction("RegistrationSuccess");
             }
 
-            // If we return to the view because of an error, we need to set the title again
             var ev = _context.Events.Find(registration.EventId);
             ViewBag.EventTitle = ev?.Title;
             
@@ -57,10 +56,13 @@ namespace EventManagementSystem.Controllers
             return View();
         }
         
+        [HttpGet("events/{slug}")]
         public IActionResult Details(string slug)
         {
             var ev = _context.Events.FirstOrDefault(e => e.Slug == slug);
             if (ev == null) return NotFound();
+
+            ViewBag.EventTitle = ev.Title;
 
             return View(ev);
         }
