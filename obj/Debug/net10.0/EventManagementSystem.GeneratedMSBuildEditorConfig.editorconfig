@@ -30,28 +30,32 @@ build_property._RazorSourceGeneratorDebug =
 build_property.EffectiveAnalysisLevelStyle = 10.0
 build_property.EnableCodeStyleSeverity = 
 
+[C:/Users/LENOVO/Desktop/Abhishek/Projects/EventManagementSystem/Views/Admin/CreateEvent.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQ3JlYXRlRXZlbnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/LENOVO/Desktop/Abhishek/Projects/EventManagementSystem/Views/Admin/Dashboard.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRGFzaGJvYXJkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/LENOVO/Desktop/Abhishek/Projects/EventManagementSystem/Views/Admin/DeleteEvent.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRGVsZXRlRXZlbnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/LENOVO/Desktop/Abhishek/Projects/EventManagementSystem/Views/Admin/EditEvent.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRWRpdEV2ZW50LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/LENOVO/Desktop/Abhishek/Projects/EventManagementSystem/Views/Admin/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTG9naW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/LENOVO/Desktop/Abhishek/Projects/EventManagementSystem/Views/Events/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXZlbnRzXENyZWF0ZS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/LENOVO/Desktop/Abhishek/Projects/EventManagementSystem/Views/Events/Delete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXZlbnRzXERlbGV0ZS5jc2h0bWw=
+[C:/Users/LENOVO/Desktop/Abhishek/Projects/EventManagementSystem/Views/Admin/ViewEvents.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cVmlld0V2ZW50cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/LENOVO/Desktop/Abhishek/Projects/EventManagementSystem/Views/Events/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXZlbnRzXERldGFpbHMuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/LENOVO/Desktop/Abhishek/Projects/EventManagementSystem/Views/Events/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXZlbnRzXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/LENOVO/Desktop/Abhishek/Projects/EventManagementSystem/Views/Events/Index.cshtml]
