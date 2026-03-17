@@ -32,6 +32,21 @@ public class HomeController : Controller
         return View();
     }
 
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Contact(string fullname, string email, string subject, string message)
+    {
+        if (ModelState.IsValid)
+        {
+            // Process the contact form submission
+            // For example, save to database or send email
+            TempData["SuccessMessage"] = "Your message has been sent to The Hub!";
+            return RedirectToAction(nameof(Contact));
+        }
+
+        return View();
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

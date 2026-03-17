@@ -1,42 +1,133 @@
 @model IEnumerable<EventManagementSystem.Models.Event>
 
 @{
-    ViewData["Title"] = "Available Events";
+    ViewData["Title"] = "Browse Events";
 }
 
-<div class="py-8">
-    <div class="flex justify-between items-end mb-10">
-        <div>
-            <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white">Campus Events</h2>
-            <p class="text-slate-600 dark:text-slate-400 mt-1">Discover and register for upcoming college activities.</p>
+<div class="py-12 space-y-16">
+    <section class="relative">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
+            <div class="animate-in fade-in slide-in-from-left-8 duration-700">
+                <h2 class="text-4xl md:text-7xl font-black text-slate-900 dark:text-white tracking-tighter mb-4 uppercase italic">
+                    Campus <span class="text-blue-600">Pulse</span>
+                </h2>
+                <p class="text-slate-500 dark:text-slate-400 font-medium text-xl">
+                    Discover workshops, fests, and seminars happening across Navnirman College.
+                </p>
+            </div>
+            
+            <div class="flex flex-wrap gap-3 animate-in fade-in slide-in-from-right-8 duration-700" id="filter-buttons">
+                <button onclick="filterEvents('all')" class="filter-btn active px-6 py-3 rounded-full bg-blue-600 text-white text-sm font-black uppercase tracking-widest shadow-lg shadow-blue-500/20 transition-all">All</button>
+                <button onclick="filterEvents('Technical')" class="filter-btn px-6 py-3 rounded-full bg-white dark:bg-slate-800 border-2 border-slate-100 dark:border-slate-700 text-slate-600 dark:text-slate-400 text-sm font-black uppercase tracking-widest hover:border-blue-600 transition-all">Technical</button>
+                <button onclick="filterEvents('Cultural')" class="filter-btn px-6 py-3 rounded-full bg-white dark:bg-slate-800 border-2 border-slate-100 dark:border-slate-700 text-slate-600 dark:text-slate-400 text-sm font-black uppercase tracking-widest hover:border-blue-600 transition-all">Cultural</button>
+                <button onclick="filterEvents('Sports')" class="filter-btn px-6 py-3 rounded-full bg-white dark:bg-slate-800 border-2 border-slate-100 dark:border-slate-700 text-slate-600 dark:text-slate-400 text-sm font-black uppercase tracking-widest hover:border-blue-600 transition-all">Sports</button>
+                <button onclick="filterEvents('Education')" class="filter-btn px-6 py-3 rounded-full bg-white dark:bg-slate-800 border-2 border-slate-100 dark:border-slate-700 text-slate-600 dark:text-slate-400 text-sm font-black uppercase tracking-widest hover:border-blue-600 transition-all">Education</button>
+            </div>
         </div>
-    </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="relative max-w-3xl group">
+            <input type="text" id="event-search" onkeyup="searchEvents()" placeholder="Search for events, workshops..." 
+                   class="w-full pl-16 pr-8 py-6 bg-white/50 dark:bg-slate-800/50 backdrop-blur-xl border-2 border-slate-100 dark:border-slate-700 rounded-[2.5rem] text-xl text-slate-900 dark:text-white placeholder:text-slate-400 focus:ring-8 focus:ring-blue-500/5 focus:border-blue-600 outline-none transition-all shadow-2xl shadow-slate-200/50 dark:shadow-none" />
+            <div class="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-600 transition-colors">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            </div>
+        </div>
+    </section>
+
+    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10" id="event-grid">
         @foreach (var item in Model)
         {
-            <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 hover:shadow-xl transition-all group flex flex-col">
-                <div class="flex justify-between items-start mb-4">
-                    <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs font-bold rounded-full">
-                        @item.Category
-                    </span>
-                    <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">
-                        @item.EventDate.ToShortDateString()
-                    </span>
-                </div>
-                
-                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">@item.Title</h3>
-                <p class="text-slate-600 dark:text-slate-400 text-sm mb-6 line-clamp-2">@item.Description</p>
+            var categoryColor = item.Category switch {
+                "Technical" => "text-emerald-600 bg-emerald-50 dark:bg-emerald-900/30 dark:text-emerald-400 border-emerald-100 dark:border-emerald-800",
+                "Cultural" => "text-purple-600 bg-purple-50 dark:bg-purple-900/30 dark:text-purple-400 border-purple-100 dark:border-purple-800",
+                "Sports" => "text-amber-600 bg-amber-50 dark:bg-amber-900/30 dark:text-amber-400 border-amber-100 dark:border-amber-800",
+                "Education" => "text-green-600 bg-green-50 dark:bg-green-900/30 dark:text-green-400 border-green-100 dark:border-green-800",
+                _ => "text-blue-600 bg-blue-50 dark:bg-blue-900/30 dark:text-blue-400 border-blue-100 dark:border-blue-800"
+            };
 
-                <div class="flex gap-3 mt-auto">
-                    <a asp-action="Register" asp-route-slug="@item.Slug" class="flex-1 text-center py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded-xl transition-all">
-                        Register Now
-                    </a>
-                    <a asp-action="Details" asp-route-slug="@item.Slug" class="flex-1 text-center py-2.5 bg-gray-200 hover:bg-gray-300 text-gray-800 text-sm font-bold rounded-xl transition-all">
-                        View Details
+            <div class="event-card group bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-[3rem] p-2 transition-all duration-500 hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-2" 
+                 data-category="@item.Category" data-title="@item.Title.ToLower()">
+                <div class="relative bg-slate-50 dark:bg-slate-900 rounded-[2.8rem] p-10 h-full flex flex-col">
+                    
+                    <div class="flex justify-between items-center mb-10">
+                        <span class="px-5 py-2 rounded-full text-xs font-black uppercase tracking-widest border @categoryColor">
+                            @item.Category
+                        </span>
+                        <div class="text-right">
+                            <p class="text-[11px] font-black text-slate-400 uppercase tracking-widest">Starts</p>
+                            <p class="text-sm font-bold text-slate-700 dark:text-slate-300">@item.EventDate.ToString("MMM dd")</p>
+                        </div>
+                    </div>
+
+                    <h3 class="text-3xl font-black text-slate-900 dark:text-white mb-6 leading-tight group-hover:text-blue-600 transition-colors">
+                        @item.Title
+                    </h3>
+                    <p class="text-slate-500 dark:text-slate-400 text-lg leading-relaxed mb-12 line-clamp-2">
+                        @item.Description
+                    </p>
+
+                    <div class="flex items-center gap-8 mb-12 text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-[0.2em] border-y border-slate-200/50 dark:border-slate-800 py-6">
+                        <div class="flex items-center gap-3">
+                            <span class="text-xl">📍</span> @item.Location
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-xl">💰</span> @(item.Price == 0 ? "Free" : $"₹{item.Price}")
+                        </div>
+                    </div>
+
+                    <a asp-action="Details" asp-route-slug="@item.Slug" 
+                       class="mt-auto w-full py-5 bg-slate-900 dark:bg-slate-700 text-white font-black text-sm uppercase tracking-[0.3em] rounded-[1.5rem] text-center transition-all hover:bg-blue-600 hover:scale-[1.02] shadow-xl shadow-slate-900/20 dark:shadow-none">
+                        Explore Event
                     </a>
                 </div>
             </div>
-            }
-    </div>
+        }
+    </section>
 </div>
+
+<style>
+    .filter-btn.active {
+        background-color: #2563eb;
+        color: white;
+        border-color: #2563eb;
+    }
+</style>
+
+<script>
+    function filterEvents(category) {
+        const cards = document.querySelectorAll('.event-card');
+        const buttons = document.querySelectorAll('.filter-btn');
+
+        // Update Button Styles
+        buttons.forEach(btn => {
+            btn.classList.remove('bg-blue-600', 'text-white', 'shadow-lg', 'shadow-blue-500/20');
+            btn.classList.add('bg-white', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-400');
+        });
+        event.currentTarget.classList.add('bg-blue-600', 'text-white', 'shadow-lg', 'shadow-blue-500/20');
+        event.currentTarget.classList.remove('bg-white', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-400');
+
+        // Filter Logic
+        cards.forEach(card => {
+            if (category === 'all' || card.getAttribute('data-category') === category) {
+                card.style.display = 'block';
+                card.classList.add('animate-in', 'zoom-in', 'duration-300');
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    function searchEvents() {
+        const input = document.getElementById('event-search').value.toLowerCase();
+        const cards = document.querySelectorAll('.event-card');
+
+        cards.forEach(card => {
+            const title = card.getAttribute('data-title');
+            if (title.includes(input)) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+</script>
