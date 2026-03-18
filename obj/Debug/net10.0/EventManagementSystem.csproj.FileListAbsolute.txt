@@ -324,8 +324,6 @@ C:\Users\LENOVO\Desktop\Abhishek\Projects\EventManagementSystem\obj\Debug\net10.
 C:\Users\LENOVO\Desktop\Abhishek\Projects\EventManagementSystem\obj\Debug\net10.0\compressed\1yjxuaqq5f-{0}-muycvpuwrr-muycvpuwrr.gz
 C:\Users\LENOVO\Desktop\Abhishek\Projects\EventManagementSystem\obj\Debug\net10.0\compressed\dqvcd1h7u4-{0}-87fc7y1x7t-87fc7y1x7t.gz
 C:\Users\LENOVO\Desktop\Abhishek\Projects\EventManagementSystem\obj\Debug\net10.0\compressed\igc2pqghaw-{0}-mlv21k5csn-mlv21k5csn.gz
-C:\Users\LENOVO\Desktop\Abhishek\Projects\EventManagementSystem\obj\Debug\net10.0\compressed\9er43bwexq-{0}-53vczph8s5-53vczph8s5.gz
-C:\Users\LENOVO\Desktop\Abhishek\Projects\EventManagementSystem\obj\Debug\net10.0\compressed\oyjbs5jelg-{0}-53vczph8s5-53vczph8s5.gz
 C:\Users\LENOVO\Desktop\Abhishek\Projects\EventManagementSystem\obj\Debug\net10.0\staticwebassets.build.json
 C:\Users\LENOVO\Desktop\Abhishek\Projects\EventManagementSystem\obj\Debug\net10.0\staticwebassets.build.json.cache
 C:\Users\LENOVO\Desktop\Abhishek\Projects\EventManagementSystem\obj\Debug\net10.0\staticwebassets.development.json
@@ -337,3 +335,5 @@ C:\Users\LENOVO\Desktop\Abhishek\Projects\EventManagementSystem\obj\Debug\net10.
 C:\Users\LENOVO\Desktop\Abhishek\Projects\EventManagementSystem\obj\Debug\net10.0\EventManagementSystem.pdb
 C:\Users\LENOVO\Desktop\Abhishek\Projects\EventManagementSystem\obj\Debug\net10.0\EventManagementSystem.genruntimeconfig.cache
 C:\Users\LENOVO\Desktop\Abhishek\Projects\EventManagementSystem\obj\Debug\net10.0\ref\EventManagementSystem.dll
+C:\Users\LENOVO\Desktop\Abhishek\Projects\EventManagementSystem\obj\Debug\net10.0\compressed\9er43bwexq-{0}-gef6mc197d-gef6mc197d.gz
+C:\Users\LENOVO\Desktop\Abhishek\Projects\EventManagementSystem\obj\Debug\net10.0\compressed\oyjbs5jelg-{0}-gef6mc197d-gef6mc197d.gz
