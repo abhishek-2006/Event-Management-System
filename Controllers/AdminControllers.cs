@@ -2,9 +2,12 @@ using Microsoft.AspNetCore.Mvc;
 using EventManagementSystem.Data;
 using EventManagementSystem.Models;
 using EventManagementSystem.ViewModels;
+using EventManagementSystem.Filters;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EventManagementSystem.Controllers
 {
+    [AdminAuth]
     public class AdminController : Controller
     {
         private readonly AppDbContext _context;
@@ -14,12 +17,19 @@ namespace EventManagementSystem.Controllers
             _context = context;
         }
 
+        [AllowAnonymous]
         public IActionResult Login()
         {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("Admin")))
+            {
+                return RedirectToAction("Dashboard");
+            }
+            
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public IActionResult Login(string login, string password)
         {
             
@@ -62,7 +72,13 @@ namespace EventManagementSystem.Controllers
 
             if (ModelState.IsValid)
             {
-                ev.Slug = ev.Title.ToLower().Replace(" ", "-").Replace(".", "").Replace(",", "");
+                ev.Slug = ev.Title
+                .ToLower()
+                .Trim()
+                .Replace(" ", "-")
+                .Replace("--", "-")
+                .Replace(".", "")
+                .Replace(",", "");
                 _context.Events.Add(ev);
                 _context.SaveChanges();
                 
@@ -81,6 +97,7 @@ namespace EventManagementSystem.Controllers
             return View(events);
         }
 
+        [HttpGet("Admin/EditEvent/{slug}")]
         public IActionResult EditEvent(string slug)
         {
             if (HttpContext.Session.GetString("Admin") == null)
@@ -96,20 +113,30 @@ namespace EventManagementSystem.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult EditEvent(Event ev)
-        {
-            if (HttpContext.Session.GetString("Admin") == null)
-                return RedirectToAction("Login");
-
-            if (ModelState.IsValid)
             {
-                _context.Events.Update(ev);
-                _context.SaveChanges();
-                return RedirectToAction("ManageEvents");
+                if (HttpContext.Session.GetString("Admin") == null)
+                    return RedirectToAction("Login");
+
+                if (ModelState.IsValid)
+                {
+                    ev.Slug = ev.Title
+                        .ToLower()
+                        .Trim()
+                        .Replace(" ","-")
+                        .Replace("--", "-")
+                        .Replace(".", "-")
+                        .Replace(",", "-");
+
+                    _context.Events.Update(ev);
+                    _context.SaveChanges();
+                    
+                    return RedirectToAction("ManageEvents");
+                }
+
+                return View(ev);
             }
 
-            return View(ev);
-        }
-
+        [HttpGet("Admin/DeleteEvent/{slug}")]
         public IActionResult DeleteEvent(string slug)
         {
             if (HttpContext.Session.GetString("Admin") == null)

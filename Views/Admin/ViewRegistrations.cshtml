@@ -1,31 +1,84 @@
 @model IEnumerable<EventManagementSystem.ViewModels.RegistrationViewModel>
 
 @{
-    ViewData["Title"] = "Registrations";
+    ViewData["Title"] = "Attendee Logs";
 }
 
-<div class="space-y-6">
-    <div class="flex items-center gap-3 px-2">
-        <span class="h-6 w-1.5 bg-blue-600 rounded-full"></span>
-        <h3 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight italic">Registration Overview</h3>
-    </div>
+<div class="py-10 space-y-12">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 px-2">
+        <div class="animate-in fade-in slide-in-from-left-6 duration-700">
+            <h1 class="text-5xl md:text-7xl font-black text-slate-900 dark:text-white tracking-tighter uppercase italic">
+                Attendee <span class="text-blue-600">Logs</span>
+            </h1>
+            <p class="text-slate-500 dark:text-slate-400 font-medium text-lg mt-2">
+                Real-time tracking of student engagement across all events.
+            </p>
+        </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-        <div class="group bg-white dark:bg-slate-800 p-8 rounded-[2.5rem] border border-slate-100 dark:border-slate-700 transition-all hover:border-blue-500 hover:shadow-xl">
-            <div class="flex items-center justify-between mb-6">
-                <div class="w-12 h-12 bg-blue-50 dark:bg-blue-900/30 text-2xl flex items-center justify-center rounded-2xl group-hover:scale-110 transition-transform">📅</div>
-            </div>
-            <p class="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em]">Total Registrations</p>
-            <h3 class="text-5xl font-black text-slate-900 dark:text-white mt-2 tracking-tighter">@ViewBag.TotalRegistrations</h3>
+        <div class="flex gap-4">
+            <button onclick="window.print()" class="group inline-flex items-center gap-3 px-6 py-4 bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-black text-[10px] uppercase tracking-[0.2em] rounded-2xl hover:border-blue-600 transition-all">
+                Print Report <span>🖨️</span>
+            </button>
         </div>
     </div>
-    
-    <div class="group bg-white dark:bg-slate-800 p-8 rounded-[2.5rem] border border-slate-100 dark:border-slate-700 transition-all hover:border-purple-500 hover:shadow-xl">
-        <div class="flex items-center justify-between mb-6">
-            <div class="w-12 h-12 bg-purple-50 dark:bg-purple-900/30 text-2xl flex items-center justify-center rounded-2xl group-hover:scale-110 transition-transform">👥</div>
+
+    <div class="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-2xl shadow-slate-200/50 dark:shadow-none overflow-hidden animate-in fade-in zoom-in duration-700">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-slate-50/50 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800">
+                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Student Identity</th>
+                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Event Hub</th>
+                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Academic Info</th>
+                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] text-right">Verification</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-50 dark:divide-slate-800/60">
+                    @foreach (var reg in Model)
+                    {
+                        <tr class="group hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+                            <td class="px-8 py-6">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-black text-xs">
+                                        @reg.Name.Substring(0, 1).ToUpper()
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="text-base font-black text-slate-900 dark:text-white">@reg.Name</span>
+                                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">@reg.Email</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-8 py-6">
+                                <span class="text-sm font-black text-slate-700 dark:text-slate-300">
+                                    @reg.EventTitle
+                                </span>
+                            </td>
+                            <td class="px-8 py-6">
+                                <div class="flex flex-col">
+                                    <span class="text-xs font-black text-slate-700 dark:text-slate-300 uppercase tracking-tight">
+                                        Roll: <span class="text-blue-600">#@reg.RollNumber</span>
+                                    </span>
+                                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">
+                                        Sem @reg.Semester &bull; @reg.Department
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="px-8 py-6 text-right">
+                                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 text-[9px] font-black uppercase tracking-widest border border-emerald-100 dark:border-emerald-800/50">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                    Registered
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
-        <p class="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em]">Active Registrations</p>
-        <h3 class="text-5xl font-black text-slate-900 dark:text-white mt-2 tracking-tighter">@ViewBag.ActiveRegistrations</h3>
     </div>
 
+    <div class="flex justify-center md:justify-end px-4">
+        <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] italic">
+            Total Participants: <span class="text-blue-600">@Model.Count()</span> Students
+        </p>
+    </div>
 </div>

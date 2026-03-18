@@ -2,57 +2,88 @@
 
 @{
     ViewData["Title"] = "Admin Login";
+    Layout = null; // This removes the header and footer
 }
 
-<div class="min-h-[70vh] flex items-center justify-center py-12 px-6">
-    <div class="relative w-full max-w-lg">
-        <div class="absolute -top-20 -left-20 w-64 h-64 bg-blue-600/10 rounded-full blur-[100px] animate-pulse"></div>
-        <div class="absolute -bottom-20 -right-20 w-64 h-64 bg-indigo-600/10 rounded-full blur-[100px] animate-pulse delay-700"></div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Event Management System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: { primary: '#3b82f6' }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-white text-slate-900 dark:bg-slate-900 transition-colors duration-300">
 
-        <div class="relative bg-white dark:bg-slate-900 rounded-[3rem] p-12 border-2 border-slate-200 dark:border-slate-800 shadow-2xl shadow-slate-200/50 dark:shadow-none animate-in fade-in zoom-in duration-700">
-            
-            <div class="text-center mb-12">
-                <div class="inline-flex p-3 bg-blue-600 rounded-2xl shadow-lg shadow-blue-500/20 mb-6">
-                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 00-2 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-                    </svg>
+    <div class="min-h-screen flex items-center justify-center py-12 px-6">
+        <div class="relative w-full max-w-lg">
+            <div class="absolute -top-20 -left-20 w-64 h-64 bg-blue-600/10 rounded-full blur-[100px] animate-pulse"></div>
+            <div class="absolute -bottom-20 -right-20 w-64 h-64 bg-indigo-600/10 rounded-full blur-[100px] animate-pulse delay-700"></div>
+
+            <div class="relative bg-white dark:bg-slate-900 rounded-[3rem] p-12 border-2 border-slate-200 dark:border-slate-800 shadow-2xl shadow-slate-200/50 dark:shadow-none animate-in fade-in zoom-in duration-700">
+                
+                <div class="text-center mb-12">
+                    <div class="inline-flex p-3 bg-blue-600 rounded-2xl shadow-lg shadow-blue-500/20 mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 0 00-2 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                    </div>
+                    <h2 class="text-4xl font-black text-slate-900 dark:text-white tracking-tighter">Admin Portal</h2>
+                    <p class="text-slate-500 dark:text-slate-400 font-medium mt-2">Authorized personnel only.</p>
                 </div>
-                <h2 class="text-4xl font-black text-slate-900 dark:text-white tracking-tighter">Admin Portal</h2>
-                <p class="text-slate-500 dark:text-slate-400 font-medium mt-2">Authorized personnel only.</p>
-            </div>
 
-            <form asp-action="Login" method="post" class="space-y-8">
-                <div class="space-y-2">
-                    <label class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1">Username</label>
-                    <div class="relative group">
+                <form asp-action="Login" method="post" class="space-y-8">
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1">Username</label>
                         <input name="login" required placeholder="Username or Email" 
-                               class="w-full pl-6 pr-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-2xl text-lg font-bold text-slate-900 dark:text-white placeholder:text-slate-300 focus:border-blue-600 focus:bg-white dark:focus:bg-slate-900 outline-none transition-all" />
+                               class="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-2xl text-lg font-bold text-slate-900 dark:text-white placeholder:text-slate-300 focus:border-blue-600 focus:bg-white dark:focus:bg-slate-900 outline-none transition-all" />
                     </div>
-                    <span asp-validation-for="Username" class="text-red-500 text-[10px] font-bold uppercase tracking-widest mt-1 ml-1"></span>
-                </div>
 
-                <div class="space-y-2">
-                    <label class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1">Password</label>
-                    <div class="relative group">
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1">Password</label>
                         <input name="password" type="password" required placeholder="••••••••" 
-                               class="w-full pl-6 pr-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-2xl text-lg font-bold text-slate-900 dark:text-white placeholder:text-slate-300 focus:border-blue-600 focus:bg-white dark:focus:bg-slate-900 outline-none transition-all" />
+                               class="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-2xl text-lg font-bold text-slate-900 dark:text-white placeholder:text-slate-300 focus:border-blue-600 focus:bg-white dark:focus:bg-slate-900 outline-none transition-all" />
                     </div>
-                    <span asp-validation-for="Password" class="text-red-500 text-[10px] font-bold uppercase tracking-widest mt-1 ml-1"></span>
-                </div>
 
-                <div class="pt-4">
-                    <button type="submit" 
-                            class="group relative w-full py-6 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black text-sm uppercase tracking-widest rounded-2xl transition-all duration-300 hover:bg-blue-600 hover:text-white hover:scale-[1.02] active:scale-95 shadow-xl">
-                        <span class="relative z-10">Access Dashboard</span>
-                    </button>
-                </div>
-            </form>
+                    <div class="pt-4">
+                        <button type="submit" 
+                                class="group relative w-full py-6 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black text-sm uppercase tracking-widest rounded-2xl transition-all duration-300 hover:bg-blue-600 hover:text-white hover:scale-[1.02] active:scale-95 shadow-xl">
+                            <span class="relative z-10">Access Dashboard</span>
+                        </button>
+                    </div>
+                </form>
 
-            <div class="mt-10 text-center">
-                <a href="/" class="text-[10px] font-black text-slate-400 hover:text-blue-600 uppercase tracking-widest transition-colors">
-                    &larr; Return to Public Hub
-                </a>
+                <div class="mt-10 text-center">
+                    <a href="/" class="text-[10px] font-black text-slate-400 hover:text-blue-600 uppercase tracking-widest transition-colors">
+                        &larr; Return to Public Site
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+    <script>
+        // Check for system theme preference
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
+        // Security: Prevent going back into the admin stack after logout
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+    </script>
+</body>
+</html>

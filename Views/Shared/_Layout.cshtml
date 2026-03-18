@@ -47,14 +47,14 @@
                         {
                             <a href="/Admin/Dashboard" class="px-4 py-2 rounded-lg transition-all @(currentAction == "Dashboard" ? "bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400" : "text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800")">Dashboard</a>
                             <a href="/Admin/ManageEvents" class="px-4 py-2 rounded-lg transition-all @(currentAction == "ManageEvents" ? "bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400" : "text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800")">Manage Events</a>
-                            <a href="/Admin/Registrations" class="px-4 py-2 rounded-lg transition-all @(currentAction == "Registrations" ? "bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400" : "text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800")">Students</a>
+                            <a href="/Admin/ViewRegistrations" class="px-4 py-2 rounded-lg transition-all @(currentAction == "Registrations" ? "bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400" : "text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800")">Students</a>
                             <a href="/Admin/Logout" class="px-4 py-2 rounded-lg text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all font-black uppercase tracking-widest text-[10px]">Logout</a>
                         }
                         else
                         {
                             <a asp-controller="Home" asp-action="Index" class="px-4 py-2 rounded-lg transition-all @(currentController == "Home" && currentAction == "Index" ? "bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400" : "text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800")">Home</a>
                             <a asp-controller="Events" asp-action="Index" class="px-4 py-2 rounded-lg transition-all @(currentController == "Events" ? "bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400" : "text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800")">Events</a>
-                            <a asp-controller="Home" asp-action="Contact" class="px-4 py-2 rounded-lg transition-all @(currentController == "Home" && currentAction == "Contact" ? "bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400" : "text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800")">Contact</a>
+                            <a asp-controller="Contact" asp-action="Contact" class="px-4 py-2 rounded-lg transition-all @(currentController == "Home" && currentAction == "Contact" ? "bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400" : "text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800")">Contact</a>
                         }
                     </div>
                     
@@ -90,37 +90,44 @@
                         </div>
                         <span class="font-black text-2xl text-slate-900 dark:text-white tracking-tighter">Event<span class="text-blue-600">Hub</span></span>
                     </a>
-                    
                     <p class="text-slate-500 dark:text-slate-400 text-center md:text-left leading-relaxed max-w-sm font-medium">
                         The next-generation campus engagement platform for the student community.
                     </p>
                 </div>
 
                 <div class="md:col-span-4 flex flex-col items-center md:items-start">
-                    <h4 class="text-xs font-black uppercase tracking-[0.2em] text-slate-400 mb-4">Explore</h4>
-                    <div class="flex flex-col gap-4 text-sm font-bold text-slate-600 dark:text-slate-300">
-                        <a asp-controller="Home" asp-action="Index" class="hover:text-blue-600 transition-colors">Home</a>
-                        <a asp-controller="Events" asp-action="Index" class="hover:text-blue-600 transition-colors">All Events</a>
-                        <a asp-controller="Home" asp-action="Contact" class="hover:text-blue-600 transition-colors">Support Center</a>
-                    </div>
-                </div>
-
-                <div class="md:col-span-3 flex flex-col items-center md:items-end">
-                    <h4 class="text-xs font-black uppercase tracking-[0.2em] text-slate-400 mb-4">
-                        @(isAdmin ? "Admin Services" : "Management")
-                    </h4>
-                    
                     @if (isAdmin)
                     {
-                        <div class="flex flex-col gap-4 text-sm font-bold text-slate-600 dark:text-slate-300 text-right">
-                            <a href="/Admin/Dashboard" class="hover:text-blue-600 transition-colors">System Dashboard</a>
-                            <a href="/Admin/CreateEvent" class="hover:text-blue-600 transition-colors">Launch New Event</a>
+                        <h4 class="text-xs font-black uppercase tracking-[0.2em] text-slate-400 mb-4">Admin Navigation</h4>
+                        <div class="flex flex-col gap-4 text-sm font-bold text-slate-600 dark:text-slate-300">
+                            <a href="/Admin/Dashboard" class="hover:text-blue-600 transition-colors">Dashboard</a>
                             <a href="/Admin/ManageEvents" class="hover:text-blue-600 transition-colors">Manage Events</a>
-                            <a href="/Admin/Registrations" class="hover:text-blue-600 transition-colors">Attendee Logs</a>
+                            <a href="/Admin/ViewRegistrations" class="hover:text-blue-600 transition-colors">Attendee Logs</a>
                         </div>
                     }
                     else
                     {
+                        <h4 class="text-xs font-black uppercase tracking-[0.2em] text-slate-400 mb-4">Explore</h4>
+                        <div class="flex flex-col gap-4 text-sm font-bold text-slate-600 dark:text-slate-300">
+                            <a asp-controller="Home" asp-action="Index" class="hover:text-blue-600 transition-colors">Home</a>
+                            <a asp-controller="Events" asp-action="Index" class="hover:text-blue-600 transition-colors">All Events</a>
+                            <a asp-controller="Home" asp-action="Contact" class="hover:text-blue-600 transition-colors">Support Center</a>
+                        </div>
+                    }
+                </div>
+
+                <div class="md:col-span-3 flex flex-col items-center md:items-end">
+                    @if (isAdmin)
+                    {
+                        <h4 class="text-xs font-black uppercase tracking-[0.2em] text-slate-400 mb-4">Quick Actions</h4>
+                        <div class="flex flex-col gap-4 text-sm font-bold text-slate-600 dark:text-slate-300 text-right">
+                            <a href="/Admin/CreateEvent" class="hover:text-blue-600 transition-colors">Launch New Event</a>
+                            <a href="/Admin/Logout" class="text-red-500 hover:text-red-600 transition-colors">Logout</a>
+                        </div>
+                    }
+                    else
+                    {
+                        <h4 class="text-xs font-black uppercase tracking-[0.2em] text-slate-400 mb-4">Management</h4>
                         <a href="/Admin/Login" class="group flex items-center gap-2 px-4 py-2 text-xs font-black uppercase tracking-widest text-slate-900 dark:text-white border-2 border-slate-900 dark:border-white rounded-2xl hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-slate-900 transition-all">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 00-2 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
@@ -131,7 +138,7 @@
                 </div>
             </div>
 
-            <div class="flex flex-row items-center justify-center gap-2 flex-wrap text-center">
+            <div class="flex flex-row items-center justify-center gap-2 flex-wrap text-center border-t border-slate-100 dark:border-slate-800 pt-8">
                 <p class="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">
                     Made with ❤️ by
                 </p>
@@ -142,7 +149,6 @@
                     <div class="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></div>
                 </a>
             </div>
-                
             <p class="text-[9px] font-bold text-slate-400 dark:text-slate-600 text-center mt-3 uppercase tracking-widest">
                 &copy; 2026 Event Management System &mdash; All rights reserved.
             </p>

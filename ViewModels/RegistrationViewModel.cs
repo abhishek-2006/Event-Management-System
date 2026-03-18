@@ -10,6 +10,8 @@ namespace EventManagementSystem.ViewModels
 
         public string Phone { get; set; }
 
+        public string RollNumber {get; set; }
+
         public string Department { get; set; }
 
         public int Semester { get; set; }
