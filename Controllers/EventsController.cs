@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using EventManagementSystem.Data;
 using EventManagementSystem.Models;
+using EventManagementSystem.ViewModels;
 
 namespace EventManagementSystem.Controllers
 {
@@ -35,25 +36,77 @@ namespace EventManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(Registration registration)
         {
-            // Set the registration time manually to ensure it's accurate
+            ModelState.Remove("Event");
+            
             registration.RegisteredAt = DateTime.Now;
+
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors);
+                foreach (var error in errors)
+                {
+                    Console.WriteLine($"Error: {error.ErrorMessage}");
+                }
+            }
 
             if (ModelState.IsValid)
             {
-                _context.Add(registration);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("RegistrationSuccess");
+                Console.WriteLine("MODEL STATE IS VALID");
+                var isAlreadyRegistered = _context.Registrations.Any(r => 
+                    r.RollNumber == registration.RollNumber && 
+                    r.EventId == registration.EventId);
+                if (isAlreadyRegistered)                {
+                    ModelState.AddModelError("RollNumber", "You have already registered for this event.");
+                    Console.WriteLine("ROLL NUMBER ALREADY EXISTS");
+                    return View("RegistrationSuccess");
+                }
+                else
+                {
+                    _context.Registrations.Add(registration);
+                    await _context.SaveChangesAsync();
+                    
+                    return RedirectToAction("RegistrationSuccess", new { id = registration.Id });
+                }
             }
 
-            var ev = _context.Events.Find(registration.EventId);
-            ViewBag.EventTitle = ev?.Title;
+            var ev = await _context.Events.FindAsync(registration.EventId);
+            if (ev != null)
+            {
+                ViewBag.EventTitle = ev.Title;
+                ViewData["EventSlug"] = ev.Slug;
+                Console.WriteLine($"EVENT FOUND: {ev.Title}");
+                Console.WriteLine($"EVENT SLUG: {ev.Slug}");
+                Console.WriteLine($"EVENT ID: {ev.EventId}");
+            }
+            else
+            {
+                Console.WriteLine("EVENT NOT FOUND");
+            }
             
             return View(registration);
         }
 
-        public IActionResult RegistrationSuccess()
+        [HttpGet("events/RegistrationSuccess")]
+        public IActionResult RegistrationSuccess(int id)
         {
-            return View();
+            // Fetch the registration and include the Event details
+            var registration = _context.Registrations
+                .Where(r => r.Id == id)
+                .Select(r => new RegistrationViewModel
+                {
+                    RegistrationId = r.Id,
+                    Name = r.StudentName,
+                    RollNumber = r.RollNumber,
+                    EventTitle = r.Event.Title,
+                    Semester = r.Semester,
+                    Department = r.Department,
+                    RegisteredAt = r.RegisteredAt
+                })
+                .FirstOrDefault();
+
+            if (registration == null) return RedirectToAction("Index");
+
+            return View(registration);
         }
         
         [HttpGet("events/{slug}")]

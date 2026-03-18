@@ -1,5 +1,5 @@
-using System;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace EventManagementSystem.Models
 {
@@ -25,7 +25,9 @@ namespace EventManagementSystem.Models
         public string Department { get; set; }
 
         public int EventId { get; set; }
-        public Event Event { get; set; }
+
+        [ValidateNever]
+        public Event? Event { get; set; }
 
         public DateTime RegisteredAt { get; set; } = DateTime.Now;
     }

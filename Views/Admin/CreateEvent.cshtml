@@ -17,20 +17,20 @@
         </p>
     </div>
 
-    <form asp-action="Create" method="post" class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+    <form asp-action="CreateEvent" method="post" class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
         
         <div class="lg:col-span-7 space-y-8 bg-white dark:bg-slate-900 p-10 rounded-[3rem] border border-slate-100 dark:border-slate-800 shadow-2xl shadow-slate-200/50 dark:shadow-none">
             
             <div class="space-y-2">
                 <label asp-for="Title" class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1">Event Title</label>
                 <input asp-for="Title" placeholder="e.g. AI/ML Workshop 2026" 
-                       class="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-2xl text-xl font-bold text-slate-900 dark:text-white placeholder:text-slate-300 focus:border-blue-600 focus:bg-white dark:focus:bg-slate-900 outline-none transition-all" />
+                    class="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-2xl text-xl font-bold text-slate-900 dark:text-white placeholder:text-slate-300 focus:border-blue-600 focus:bg-white dark:focus:bg-slate-900 outline-none transition-all" />
             </div>
 
             <div class="space-y-2">
                 <label asp-for="Description" class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1">Description</label>
                 <textarea asp-for="Description" rows="5" placeholder="Detail the event objectives and highlights..." 
-                          class="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-2xl text-lg font-bold text-slate-900 dark:text-white placeholder:text-slate-300 focus:border-blue-600 focus:bg-white dark:focus:bg-slate-900 outline-none transition-all resize-none"></textarea>
+                    class="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-2xl text-lg font-bold text-slate-900 dark:text-white placeholder:text-slate-300 focus:border-blue-600 focus:bg-white dark:focus:bg-slate-900 outline-none transition-all resize-none"></textarea>
             </div>
 
             <div class="space-y-2">
@@ -52,24 +52,24 @@
                     <div class="space-y-2">
                         <label asp-for="EventDate" class="text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 ml-1">Schedule Date</label>
                         <input asp-for="EventDate" type="date" 
-                               class="w-full px-6 py-4 bg-slate-800 border-2 border-transparent rounded-2xl text-lg font-bold text-white focus:border-blue-500 outline-none transition-all [color-scheme:dark]" />
+                            class="w-full px-6 py-4 bg-slate-800 border-2 border-transparent rounded-2xl text-lg font-bold text-white focus:border-blue-500 outline-none transition-all [color-scheme:dark]" />
                     </div>
 
                     <div class="space-y-2">
                         <label asp-for="Location" class="text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 ml-1">Venue / Location</label>
                         <input asp-for="Location" placeholder="e.g. Auditorium A" 
-                               class="w-full px-6 py-4 bg-slate-800 border-2 border-transparent rounded-2xl text-lg font-bold text-white placeholder:text-slate-500 focus:border-blue-500 outline-none transition-all" />
+                            class="w-full px-6 py-4 bg-slate-800 border-2 border-transparent rounded-2xl text-lg font-bold text-white placeholder:text-slate-500 focus:border-blue-500 outline-none transition-all" />
                     </div>
 
                     <div class="space-y-2">
                         <label asp-for="Price" class="text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 ml-1">Entry Fee (INR)</label>
                         <input asp-for="Price" type="number" step="0.01" placeholder="0.00" 
-                               class="w-full px-6 py-4 bg-slate-800 border-2 border-transparent rounded-2xl text-lg font-bold text-white placeholder:text-slate-500 focus:border-blue-500 outline-none transition-all" />
+                            class="w-full px-6 py-4 bg-slate-800 border-2 border-transparent rounded-2xl text-lg font-bold text-white placeholder:text-slate-500 focus:border-blue-500 outline-none transition-all" />
                     </div>
 
                     <div class="pt-4">
                         <button type="submit" 
-                                class="group relative w-full py-6 bg-blue-600 text-white font-black text-xs uppercase tracking-[0.4em] rounded-2xl transition-all duration-300 hover:bg-blue-700 hover:scale-[1.02] active:scale-95 shadow-xl shadow-blue-500/25">
+                            class="group relative w-full py-6 bg-blue-600 text-white font-black text-xs uppercase tracking-widest rounded-2xl transition-all duration-300 hover:bg-blue-700 hover:scale-[1.02] active:scale-95 shadow-xl shadow-blue-500/25">
                             <span class="relative z-10">Confirm Launch</span>
                         </button>
                     </div>

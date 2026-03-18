@@ -335,5 +335,5 @@ C:\Users\LENOVO\Desktop\Abhishek\Projects\EventManagementSystem\obj\Debug\net10.
 C:\Users\LENOVO\Desktop\Abhishek\Projects\EventManagementSystem\obj\Debug\net10.0\EventManagementSystem.pdb
 C:\Users\LENOVO\Desktop\Abhishek\Projects\EventManagementSystem\obj\Debug\net10.0\EventManagementSystem.genruntimeconfig.cache
 C:\Users\LENOVO\Desktop\Abhishek\Projects\EventManagementSystem\obj\Debug\net10.0\ref\EventManagementSystem.dll
-C:\Users\LENOVO\Desktop\Abhishek\Projects\EventManagementSystem\obj\Debug\net10.0\compressed\9er43bwexq-{0}-gef6mc197d-gef6mc197d.gz
-C:\Users\LENOVO\Desktop\Abhishek\Projects\EventManagementSystem\obj\Debug\net10.0\compressed\oyjbs5jelg-{0}-gef6mc197d-gef6mc197d.gz
+C:\Users\LENOVO\Desktop\Abhishek\Projects\EventManagementSystem\obj\Debug\net10.0\compressed\9er43bwexq-{0}-4hzawtsnd7-4hzawtsnd7.gz
+C:\Users\LENOVO\Desktop\Abhishek\Projects\EventManagementSystem\obj\Debug\net10.0\compressed\oyjbs5jelg-{0}-4hzawtsnd7-4hzawtsnd7.gz

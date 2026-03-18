@@ -52,6 +52,9 @@ namespace EventManagementSystem.Controllers
             if (HttpContext.Session.GetString("Admin") == null)
                 return RedirectToAction("Login");
 
+            ViewBag.TotalEvents = _context.Events.Count();
+            ViewBag.TotalRegistrations = _context.Registrations.Count();
+            
             return View();
         }
 
@@ -63,7 +66,7 @@ namespace EventManagementSystem.Controllers
             return View();
         }
 
-        [HttpPost]
+        [HttpPost("Admin/CreateEvent")]
         [ValidateAntiForgeryToken]
         public IActionResult CreateEvent(Event ev)
         {
@@ -110,7 +113,7 @@ namespace EventManagementSystem.Controllers
             return View(ev);
         }
 
-        [HttpPost]
+        [HttpPost("Admin/EditEvent")]
         [ValidateAntiForgeryToken]
         public IActionResult EditEvent(Event ev)
             {
@@ -152,6 +155,7 @@ namespace EventManagementSystem.Controllers
             return RedirectToAction("ManageEvents");
         }
 
+        [HttpGet("Admin/ViewRegistrations")]
         public IActionResult ViewRegistrations()
         {
             if (HttpContext.Session.GetString("Admin") == null)
