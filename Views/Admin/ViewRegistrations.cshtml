@@ -7,66 +7,78 @@
 <div class="py-10 space-y-12">
     <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 px-2">
         <div class="animate-in fade-in slide-in-from-left-6 duration-700">
-            <h1 class="text-5xl md:text-7xl font-black text-slate-900 dark:text-white tracking-tighter uppercase italic">
-                Attendee <span class="text-blue-600">Logs</span>
+            <h1 class="text-5xl md:text-7xl font-black text-slate-900 dark:text-white tracking-tighter uppercase italic leading-none">
+                Attendee <span class="text-transparent bg-clip-text bg-brand-gradient">Logs</span>
             </h1>
-            <p class="text-slate-500 dark:text-slate-400 font-medium text-lg mt-2">
-                Real-time tracking of student engagement across all events.
+            <p class="text-slate-500 dark:text-slate-400 font-medium text-lg mt-4">
+                Real-time tracking of student engagement across the <span class="text-brand-purple font-bold">AMTICS</span> ecosystem.
             </p>
         </div>
 
-        <div class="flex gap-4">
-            <button onclick="window.print()" class="group inline-flex items-center gap-3 px-6 py-4 bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-black text-[10px] uppercase tracking-[0.2em] rounded-2xl hover:border-blue-600 transition-all">
-                Print Report <span>🖨️</span>
+        <div class="flex flex-wrap gap-4 no-print">
+            <a href="/Admin/ExportAttendees" class="group relative inline-flex items-center gap-3 px-8 py-4 bg-emerald-600 text-white font-black text-[10px] uppercase tracking-widest rounded-2xl overflow-hidden shadow-2xl shadow-emerald-500/20 transition-all hover:scale-[1.02] active:scale-95">
+                <span class="relative z-10 flex items-center gap-2">
+                    Download CSV <span>📊</span>
+                </span>
+                <div class="absolute inset-0 bg-emerald-500 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out"></div>
+            </a>
+
+            <button onclick="window.print()" class="group relative inline-flex items-center gap-3 px-8 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black text-[10px] uppercase tracking-widest rounded-2xl overflow-hidden shadow-2xl shadow-brand-purple/20 transition-all hover:scale-[1.02] active:scale-95">
+                <span class="relative z-10 flex items-center gap-2 group-hover:text-white transition-colors duration-500">
+                    Print View <span>🖨️</span>
+                </span>
+                <div class="absolute inset-0 bg-brand-gradient translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out"></div>
             </button>
         </div>
     </div>
 
-    <div class="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-2xl shadow-slate-200/50 dark:shadow-none overflow-hidden animate-in fade-in zoom-in duration-700">
+    <div class="bg-white dark:bg-slate-900 rounded-[3rem] border border-slate-100 dark:border-slate-800 shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-700">
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse">
                 <thead>
                     <tr class="bg-slate-50/50 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800">
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Student Identity</th>
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Event Hub</th>
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Academic Info</th>
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">Verification</th>
+                        <th class="px-10 py-8 text-[10px] font-black text-slate-400 uppercase tracking-widest">Student Identity</th>
+                        <th class="px-10 py-8 text-[10px] font-black text-slate-400 uppercase tracking-widest">Enrolled Event</th>
+                        <th class="px-10 py-8 text-[10px] font-black text-slate-400 uppercase tracking-widest">Academic Data</th>
+                        <th class="px-10 py-8 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">Auth Status</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-50 dark:divide-slate-800/60">
                     @foreach (var reg in Model)
                     {
-                        <tr class="group hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
-                            <td class="px-8 py-6">
-                                <div class="flex items-center gap-4">
-                                    <div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-black text-xs">
-                                        @reg.Name.Substring(0, 1).ToUpper()
+                        <tr class="group hover:bg-slate-50/30 dark:hover:bg-brand-purple/[0.02] transition-colors">
+                            <td class="px-10 py-8">
+                                <div class="flex items-center gap-5">
+                                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-purple to-brand-blue p-[2px] shadow-lg group-hover:rotate-6 transition-transform">
+                                        <div class="w-full h-full bg-white dark:bg-slate-900 rounded-[0.9rem] flex items-center justify-center text-slate-900 dark:text-white font-black text-sm uppercase">
+                                            @reg.Name.Substring(0, 1)
+                                        </div>
                                     </div>
                                     <div class="flex flex-col">
-                                        <span class="text-base font-black text-slate-900 dark:text-white">@reg.Name</span>
-                                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">@reg.Email</span>
+                                        <span class="text-lg font-black text-slate-900 dark:text-white group-hover:text-brand-purple transition-colors italic">@reg.Name</span>
+                                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-0.5 opacity-70">@reg.Email</span>
                                     </div>
                                 </div>
                             </td>
-                            <td class="px-8 py-6">
-                                <span class="text-sm font-black text-slate-700 dark:text-slate-300">
+                            <td class="px-10 py-8">
+                                <span class="text-sm font-black text-slate-700 dark:text-slate-200 uppercase tracking-tight">
                                     @reg.EventTitle
                                 </span>
                             </td>
-                            <td class="px-8 py-6">
+                            <td class="px-10 py-8">
                                 <div class="flex flex-col">
-                                    <span class="text-xs font-black text-slate-700 dark:text-slate-300 uppercase tracking-tight">
-                                        Roll: <span class="text-blue-600">#@reg.RollNumber</span>
+                                    <span class="text-xs font-black text-slate-700 dark:text-slate-300">
+                                        Roll: <span class="text-brand-blue">#@reg.RollNumber</span>
                                     </span>
-                                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">
+                                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1 italic">
                                         Sem @reg.Semester &bull; @reg.Department
                                     </span>
                                 </div>
                             </td>
-                            <td class="px-8 py-6 text-right">
-                                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 text-[9px] font-black uppercase tracking-widest border border-emerald-100 dark:border-emerald-800/50">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                                    Registered
+                            <td class="px-10 py-8 text-right">
+                                <span class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-emerald-500/10 text-emerald-500 text-[9px] font-black uppercase tracking-widest border border-emerald-500/20">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                    Verified
                                 </span>
                             </td>
                         </tr>
@@ -76,9 +88,65 @@
         </div>
     </div>
 
-    <div class="flex justify-center md:justify-end px-4">
-        <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] italic">
-            Total Participants: <span class="text-blue-600">@Model.Count()</span> Students
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4 px-10 no-print">
+        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+            &copy; 2026 Control Hub
+        </p>
+        <p class="px-6 py-3 bg-slate-100 dark:bg-slate-900 rounded-2xl text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest italic border border-slate-200 dark:border-slate-800">
+            Total Capacity Used: <span class="text-brand-purple">@Model.Count()</span> Delegates
         </p>
     </div>
 </div>
+
+<style>
+    @@media print {
+        .no-print, header, footer, #theme-toggle, .flex-row-reverse { 
+            display: none !important; 
+        }
+        
+        body { 
+            background: white !important; 
+            color: black !important;
+            padding: 0 !important;
+        }
+        
+        .py-10, .max-w-7xl { 
+            padding: 0 !important; 
+            margin: 0 !important; 
+            max-width: 100% !important; 
+        }
+
+        .py-10::before {
+            content: "EVENTHUB OFFICIAL ATTENDEE LOG";
+            display: block;
+            text-align: center;
+            font-weight: 900;
+            font-size: 14pt;
+            margin-bottom: 20px;
+            border-bottom: 3px solid black;
+            padding-bottom: 10px;
+        }
+
+        /* Table Styling for Paper */
+        table { 
+            width: 100% !important; 
+            border: 1pt solid #eee !important;
+            border-collapse: collapse !important;
+        }
+        
+        th { 
+            background-color: #f1f5f9 !important; 
+            color: black !important;
+            border: 1pt solid #ddd !important;
+            font-size: 9pt !important;
+        }
+
+        td { 
+            border: 1pt solid #eee !important;
+            font-size: 10pt !important;
+            padding: 10px !important;
+        }
+
+        * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    }
+</style>

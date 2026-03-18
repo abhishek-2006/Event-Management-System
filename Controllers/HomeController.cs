@@ -27,19 +27,18 @@ public class HomeController : Controller
         return View(featuredEvents);
     }
 
+    [HttpGet("Home/Contact")]
     public IActionResult Contact()
     {
         return View();
     }
 
-    [HttpPost]
+    [HttpPost("Home/Contact")]
     [ValidateAntiForgeryToken]
     public IActionResult Contact(string fullname, string email, string subject, string message)
     {
         if (ModelState.IsValid)
         {
-            // Process the contact form submission
-            // For example, save to database or send email
             TempData["SuccessMessage"] = "Your message has been sent to The Hub!";
             return RedirectToAction(nameof(Contact));
         }

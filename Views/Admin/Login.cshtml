@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Admin Login";
-    Layout = null; // This removes the header and footer
+    Layout = null; 
 }
 
 <!DOCTYPE html>
@@ -10,62 +10,71 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Event Management System</title>
+    <title>@ViewData["Title"] - EventHub</title>
+    <link rel="icon" type="image/jpeg" href="~/favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
-                    colors: { primary: '#3b82f6' }
+                    colors: { 
+                        'brand-purple': '#8b5cf6',
+                        'brand-blue': '#3b82f6'
+                    },
+                    backgroundImage: {
+                        'brand-gradient': 'linear-gradient(to right, #8b5cf6, #3b82f6)',
+                    }
                 }
             }
         }
     </script>
 </head>
-<body class="bg-white text-slate-900 dark:bg-slate-900 transition-colors duration-300">
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 transition-colors duration-300 selection:bg-brand-purple/30">
 
-    <div class="min-h-screen flex items-center justify-center py-12 px-6">
+    <div class="min-h-screen flex items-center justify-center py-12 px-6 overflow-hidden relative">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40rem] h-[40rem] bg-brand-purple/5 rounded-full blur-[120px] -z-10 animate-pulse"></div>
+        
         <div class="relative w-full max-w-lg">
-            <div class="absolute -top-20 -left-20 w-64 h-64 bg-blue-600/10 rounded-full blur-[100px] animate-pulse"></div>
-            <div class="absolute -bottom-20 -right-20 w-64 h-64 bg-indigo-600/10 rounded-full blur-[100px] animate-pulse delay-700"></div>
-
-            <div class="relative bg-white dark:bg-slate-900 rounded-[3rem] p-12 border-2 border-slate-200 dark:border-slate-800 shadow-2xl shadow-slate-200/50 dark:shadow-none animate-in fade-in zoom-in duration-700">
+            <div class="relative bg-white dark:bg-slate-900 rounded-[3.5rem] p-12 border-2 border-slate-100 dark:border-slate-800 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.2)] animate-in fade-in zoom-in duration-700">
                 
                 <div class="text-center mb-12">
-                    <div class="inline-flex p-3 bg-blue-600 rounded-2xl shadow-lg shadow-blue-500/20 mb-6">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 0 00-2 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-                        </svg>
+                    <div class="inline-flex p-1 bg-brand-gradient rounded-3xl shadow-2xl shadow-brand-purple/20 mb-8 rotate-3 hover:rotate-0 transition-transform duration-500">
+                        <img src="~/logo.png" class="w-20 h-20 rounded-[1.2rem] object-cover" alt="EH" />
                     </div>
-                    <h2 class="text-4xl font-black text-slate-900 dark:text-white tracking-tighter">Admin Portal</h2>
-                    <p class="text-slate-500 dark:text-slate-400 font-medium mt-2">Authorized personnel only.</p>
+                    <h2 class="text-4xl font-black text-slate-900 dark:text-white tracking-tighter uppercase italic">
+                        Admin <span class="text-transparent bg-clip-text bg-brand-gradient">Portal</span>
+                    </h2>
+                    <p class="text-slate-400 font-bold mt-2 uppercase tracking-[0.2em] text-[10px]">Restricted Access Area</p>
                 </div>
 
                 <form asp-action="Login" method="post" class="space-y-8">
-                    <div class="space-y-2">
-                        <label class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1">Username</label>
-                        <input name="login" required placeholder="Username or Email" 
-                               class="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-2xl text-lg font-bold text-slate-900 dark:text-white placeholder:text-slate-300 focus:border-blue-600 focus:bg-white dark:focus:bg-slate-900 outline-none transition-all" />
+                    @Html.AntiForgeryToken()
+                    
+                    <div class="space-y-3">
+                        <label class="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 ml-2">Secure Identifier</label>
+                        <input name="login" required placeholder="Username" 
+                               class="w-full px-8 py-5 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-[2rem] text-lg font-bold text-slate-900 dark:text-white placeholder:text-slate-300 focus:border-brand-purple focus:bg-white dark:focus:bg-slate-900 outline-none transition-all shadow-inner" />
                     </div>
 
-                    <div class="space-y-2">
-                        <label class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1">Password</label>
+                    <div class="space-y-3">
+                        <label class="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 ml-2">Access Key</label>
                         <input name="password" type="password" required placeholder="••••••••" 
-                               class="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-2xl text-lg font-bold text-slate-900 dark:text-white placeholder:text-slate-300 focus:border-blue-600 focus:bg-white dark:focus:bg-slate-900 outline-none transition-all" />
+                               class="w-full px-8 py-5 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-[2rem] text-lg font-bold text-slate-900 dark:text-white placeholder:text-slate-300 focus:border-brand-purple focus:bg-white dark:focus:bg-slate-900 outline-none transition-all shadow-inner" />
                     </div>
 
-                    <div class="pt-4">
+                    <div class="pt-6">
                         <button type="submit" 
-                                class="group relative w-full py-6 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black text-sm uppercase tracking-widest rounded-2xl transition-all duration-300 hover:bg-blue-600 hover:text-white hover:scale-[1.02] active:scale-95 shadow-xl">
-                            <span class="relative z-10">Access Dashboard</span>
+                                class="group relative w-full py-6 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black text-xs uppercase tracking-[0.4em] rounded-[2rem] overflow-hidden transition-all duration-300 hover:scale-[1.02] active:scale-95 shadow-2xl shadow-brand-purple/20">
+                            <span class="relative z-10">Login</span>
+                            <div class="absolute inset-0 bg-gradient-to-r from-brand-purple to-brand-blue translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out"></div>
                         </button>
                     </div>
                 </form>
 
-                <div class="mt-10 text-center">
-                    <a href="/" class="text-[10px] font-black text-slate-400 hover:text-blue-600 uppercase tracking-widest transition-colors">
-                        &larr; Return to Public Site
+                <div class="mt-12 text-center border-t border-slate-50 dark:border-slate-800 pt-8">
+                    <a href="/" class="group inline-flex items-center gap-2 text-[10px] font-black text-slate-400 hover:text-brand-purple uppercase tracking-widest transition-all">
+                        <span class="group-hover:-translate-x-1 transition-transform">&larr;</span> Return to EventHub
                     </a>
                 </div>
             </div>
@@ -73,14 +82,12 @@
     </div>
 
     <script>
-        // Check for system theme preference
         if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
         } else {
             document.documentElement.classList.remove('dark');
         }
 
-        // Security: Prevent going back into the admin stack after logout
         if (window.history.replaceState) {
             window.history.replaceState(null, null, window.location.href);
         }

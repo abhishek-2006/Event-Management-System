@@ -1,7 +1,6 @@
 ﻿@{
     var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
     var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
-    // Logic to detect Admin session
     bool isAdmin = !string.IsNullOrEmpty(Context.Session.GetString("Admin"));
 }
 <!DOCTYPE html>
@@ -9,159 +8,150 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Event Management System</title>
+    <title>@ViewData["Title"] - EventHub</title>
     
-    <link rel="icon" type="image/x-icon" href="~/favicon.ico">
+    <link rel="icon" type="image/jpeg" href="~/favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
-                    colors: { primary: '#3b82f6' }
+                    colors: {
+                        'brand-purple': '#8b5cf6',
+                        'brand-blue': '#3b82f6',
+                        'brand-silver': '#e2e8f0'
+                    },
+                    backgroundImage: {
+                        'brand-gradient': 'linear-gradient(to right, #8b5cf6, #3b82f6)',
+                    }
                 }
             }
         }
     </script>
 </head>
-<body class="bg-white text-slate-900 dark:bg-slate-900 dark:text-white transition-colors duration-300 flex flex-col min-h-screen">
+<body class="bg-white text-slate-900 dark:bg-slate-950 dark:text-white transition-colors duration-300 flex flex-col min-h-screen selection:bg-brand-purple/30">
     
-    <header class="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm">
+    <header class="sticky top-0 z-50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm">
         <nav class="container mx-auto px-6 py-4">
             <div class="flex justify-between items-center">
-                <a href="@(isAdmin ? "/Admin/Dashboard" : "/")" class="flex items-center gap-2 group">
-                    <div class="p-2 bg-blue-600 rounded-lg">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                        </svg>
+                <a href="@(isAdmin ? "/Admin/Dashboard" : "/")" class="flex items-center gap-3 group">
+                    <div class="relative w-12 h-12 overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800 shadow-lg shadow-brand-purple/10">
+                        <img src="~/logo.png" alt="EH Logo" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                     </div>
-                    <span class="font-bold text-xl tracking-tight text-slate-900 dark:text-white uppercase">
-                        Event<span class="text-blue-600 dark:text-blue-400">Hub</span>
-                        @if(isAdmin){ <span class="text-[10px] bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded ml-1 text-slate-500">ADMIN</span> }
-                    </span>
+                    <div class="flex flex-col">
+                        <span class="font-black text-xl tracking-tighter text-slate-900 dark:text-white uppercase leading-none">
+                            Event<span class="text-transparent bg-clip-text bg-brand-gradient">Hub</span>
+                        </span>
+                        <span class="text-[8px] font-bold text-slate-400 tracking-[0.3em] mt-1 uppercase">Curating Moments</span>
+                    </div>
                 </a>
 
-                <div class="hidden md:flex items-center gap-6">
-                    <div class="flex gap-1 text-sm font-semibold">
+                <div class="hidden md:flex items-center gap-8">
+                    <div class="flex gap-2 text-[11px] font-black uppercase tracking-widest">
                         @if (isAdmin)
                         {
-                            <a href="/Admin/Dashboard" class="px-4 py-2 rounded-lg transition-all @(currentAction == "Dashboard" ? "bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400" : "text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800")">Dashboard</a>
-                            <a href="/Admin/ManageEvents" class="px-4 py-2 rounded-lg transition-all @(currentAction == "ManageEvents" ? "bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400" : "text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800")">Manage Events</a>
-                            <a href="/Admin/ViewRegistrations" class="px-4 py-2 rounded-lg transition-all @(currentAction == "ViewRegistrations" ? "bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400" : "text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800")">Students</a>
-                            <a href="/Admin/Logout" class="px-4 py-2 rounded-lg text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all font-black uppercase tracking-widest text-[10px]">Logout</a>
+                            <a href="/Admin/Dashboard" class="px-5 py-2.5 rounded-xl transition-all @(currentAction == "Dashboard" ? "bg-brand-purple text-white shadow-lg shadow-brand-purple/20" : "text-slate-500 hover:text-brand-purple hover:bg-slate-50 dark:hover:bg-slate-900")">Dashboard</a>
+                            <a href="/Admin/ManageEvents" class="px-5 py-2.5 rounded-xl transition-all @(currentAction == "ManageEvents" ? "bg-brand-purple text-white shadow-lg shadow-brand-purple/20" : "text-slate-500 hover:text-brand-purple hover:bg-slate-50 dark:hover:bg-slate-900")">Management</a>
+                            <a href="/Admin/ViewRegistrations" class="px-5 py-2.5 rounded-xl transition-all @(currentAction == "ViewRegistrations" ? "bg-brand-purple text-white shadow-lg shadow-brand-purple/20" : "text-slate-500 hover:text-brand-purple hover:bg-slate-50 dark:hover:bg-slate-900")">Attendees</a>
+                            <a href="/Admin/Logout" class="px-5 py-2.5 rounded-xl text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all border border-transparent hover:border-red-200">Logout</a>
                         }
                         else
                         {
-                            <a asp-controller="Home" asp-action="Index" class="px-4 py-2 rounded-lg transition-all @(currentController == "Home" && currentAction == "Index" ? "bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400" : "text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800")">Home</a>
-                            <a asp-controller="Events" asp-action="Index" class="px-4 py-2 rounded-lg transition-all @(currentController == "Events" ? "bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400" : "text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800")">Events</a>
-                            <a asp-controller="Contact" asp-action="Contact" class="px-4 py-2 rounded-lg transition-all @(currentController == "Home" && currentAction == "Contact" ? "bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400" : "text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800")">Contact</a>
+                            <a asp-controller="Home" asp-action="Index" class="px-5 py-2.5 rounded-xl transition-all @(currentController == "Home" && currentAction == "Index" ? "bg-brand-purple text-white shadow-lg shadow-brand-purple/20" : "text-slate-500 hover:text-brand-purple hover:bg-slate-50 dark:hover:bg-slate-900")">Home</a>
+                            <a asp-controller="Events" asp-action="Index" class="px-5 py-2.5 rounded-xl transition-all @(currentController == "Events" ? "bg-brand-purple text-white shadow-lg shadow-brand-purple/20" : "text-slate-500 hover:text-brand-purple hover:bg-slate-50 dark:hover:bg-slate-900")">Events</a>
+                            <a asp-controller="Home" asp-action="Contact" class="px-5 py-2.5 rounded-xl transition-all @(currentController == "Home" && currentAction == "Contact" ? "bg-brand-purple text-white shadow-lg shadow-brand-purple/20" : "text-slate-500 hover:text-brand-purple hover:bg-slate-50 dark:hover:bg-slate-900")">Contact</a>
                         }
                     </div>
                     
-                    <div class="flex items-center gap-4 border-l border-slate-200 dark:border-slate-700 pl-6">
-                        <button id="theme-toggle" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-transparent hover:border-blue-500 transition-all">
-                            <span class="dark:hidden">🌙</span>
-                            <span class="hidden dark:inline">☀️</span>
-                        </button>
-                    </div>
+                    <button id="theme-toggle" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 text-slate-500 border border-slate-200 dark:border-slate-800 hover:border-brand-purple transition-all">
+                        <span class="dark:hidden text-lg">🌙</span>
+                        <span class="hidden dark:inline text-lg text-brand-purple">☀️</span>
+                    </button>
                 </div>
 
-                <button id="mobile-menu-button" class="md:hidden p-2 text-slate-600 dark:text-slate-300">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                <button id="mobile-menu-button" class="md:hidden p-2 text-slate-600 dark:text-slate-400">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                 </button>
             </div>
         </nav>
     </header>
 
-    <main class="container mx-auto px-4 py-8 flex-grow">
+    <main class="container mx-auto px-6 py-10 flex-grow animate-in fade-in duration-700">
         @RenderBody()
     </main>
 
-    <footer class="mt-20 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 transition-colors duration-300">
-        <div class="container mx-auto px-6 py-10">
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-start mb-10">
+    <footer class="mt-20 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 transition-colors duration-500">
+        <div class="container mx-auto px-6 py-16">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-16 items-start mb-16">
                 
-                <div class="md:col-span-5 flex flex-col items-center md:items-start">
-                    <a href="/" class="flex items-center gap-2 mb-4 group">
-                        <div class="p-2 bg-blue-600 rounded-xl shadow-lg shadow-blue-500/20 group-hover:rotate-6 transition-transform">
-                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                            </svg>
-                        </div>
-                        <span class="font-black text-2xl text-slate-900 dark:text-white tracking-tighter">Event<span class="text-blue-600">Hub</span></span>
-                    </a>
-                    <p class="text-slate-500 dark:text-slate-400 text-center md:text-left leading-relaxed max-w-sm font-medium">
-                        The next-generation campus engagement platform for the student community.
+                <div class="md:col-span-6 flex flex-col items-center md:items-start text-center md:text-left">
+                    <div class="flex items-center gap-3 mb-6">
+                        <img src="~/favicon.ico" class="w-10 h-10 rounded-xl" alt="EH" />
+                        <span class="font-black text-2xl text-slate-900 dark:text-white tracking-tighter uppercase">
+                            Event<span class="text-brand-purple">Hub</span>
+                        </span>
+                    </div>
+                    <p class="text-slate-500 dark:text-slate-400 leading-relaxed max-w-sm font-medium italic text-lg">
+                        "Curating Unforgettable Moments"
+                    </p>
+                    <p class="mt-4 text-xs font-bold text-slate-400 uppercase tracking-widest">
+                        The next-generation campus engagement platform.
                     </p>
                 </div>
 
-                <div class="md:col-span-4 flex flex-col items-center md:items-start">
-                    @if (isAdmin)
-                    {
-                        <h4 class="text-xs font-black uppercase tracking-[0.2em] text-slate-400 mb-4">Admin Navigation</h4>
-                        <div class="flex flex-col gap-4 text-sm font-bold text-slate-600 dark:text-slate-300">
-                            <a href="/Admin/Dashboard" class="hover:text-blue-600 transition-colors">Dashboard</a>
-                            <a href="/Admin/ManageEvents" class="hover:text-blue-600 transition-colors">Manage Events</a>
-                            <a href="/Admin/ViewRegistrations" class="hover:text-blue-600 transition-colors">Attendee Logs</a>
-                        </div>
-                    }
-                    else
-                    {
-                        <h4 class="text-xs font-black uppercase tracking-[0.2em] text-slate-400 mb-4">Explore</h4>
-                        <div class="flex flex-col gap-4 text-sm font-bold text-slate-600 dark:text-slate-300">
-                            <a asp-controller="Home" asp-action="Index" class="hover:text-blue-600 transition-colors">Home</a>
-                            <a asp-controller="Events" asp-action="Index" class="hover:text-blue-600 transition-colors">All Events</a>
-                            <a asp-controller="Home" asp-action="Contact" class="hover:text-blue-600 transition-colors">Support Center</a>
-                        </div>
-                    }
+                <div class="md:col-span-3 flex flex-col items-center md:items-start">
+                    <h4 class="text-[10px] font-black uppercase tracking-[0.3em] text-brand-purple mb-6">Navigation</h4>
+                    <div class="flex flex-col gap-4 text-xs font-bold text-slate-600 dark:text-slate-400">
+                        @if (isAdmin) {
+                            <a href="/Admin/Dashboard" class="hover:text-brand-purple transition-all">Dashboard</a>
+                            <a href="/Admin/ManageEvents" class="hover:text-brand-purple transition-all">Event Management</a>
+                            <a href="/Admin/ViewRegistrations" class="hover:text-brand-purple transition-all">Attendee Logs</a>
+                        } else {
+                            <a asp-controller="Home" asp-action="Index" class="hover:text-brand-purple transition-all">Portal Home</a>
+                            <a asp-controller="Events" asp-action="Index" class="hover:text-brand-purple transition-all">Live Catalog</a>
+                            <a asp-controller="Home" asp-action="Contact" class="hover:text-brand-purple transition-all">Support Desk</a>
+                        }
+                    </div>
                 </div>
 
                 <div class="md:col-span-3 flex flex-col items-center md:items-end">
-                    @if (isAdmin)
-                    {
-                        <h4 class="text-xs font-black uppercase tracking-[0.2em] text-slate-400 mb-4">Quick Actions</h4>
-                        <div class="flex flex-col gap-4 text-sm font-bold text-slate-600 dark:text-slate-300 text-right">
-                            <a href="/Admin/CreateEvent" class="hover:text-blue-600 transition-colors">Launch New Event</a>
-                            <a href="/Admin/Logout" class="text-red-500 hover:text-red-600 transition-colors">Logout</a>
-                        </div>
-                    }
-                    else
-                    {
-                        <h4 class="text-xs font-black uppercase tracking-[0.2em] text-slate-400 mb-4">Management</h4>
-                        <a href="/Admin/Login" class="group flex items-center gap-2 px-4 py-2 text-xs font-black uppercase tracking-widest text-slate-900 dark:text-white border-2 border-slate-900 dark:border-white rounded-2xl hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-slate-900 transition-all">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 00-2 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-                            </svg>
+                    <h4 class="text-[10px] font-black uppercase tracking-[0.3em] text-brand-purple mb-6">System Access</h4>
+                    @if (isAdmin) {
+                        <a href="/Admin/Logout" class="px-6 py-3 bg-red-500 text-white font-black text-[10px] uppercase tracking-widest rounded-xl hover:bg-red-600 transition-all shadow-lg shadow-red-500/10">
+                            Secure Logout
+                        </a>
+                    } else {
+                        <a href="/Admin/Login" class="group flex items-center gap-2 px-6 py-3 text-[10px] font-black uppercase tracking-widest text-slate-900 dark:text-white border-2 border-slate-900 dark:border-white rounded-xl hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-slate-900 transition-all">
                             Admin Portal
                         </a>
                     }
                 </div>
             </div>
 
-            <div class="flex flex-row items-center justify-center gap-2 flex-wrap text-center border-t border-slate-100 dark:border-slate-800 pt-8">
-                <p class="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">
-                    Made with ❤️ by
+            <div class="flex flex-col items-center justify-center pt-10 border-t border-slate-100 dark:border-slate-900">
+                <div class="flex items-center gap-3 mb-4">
+                    <p class="text-[11px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">
+                        Made with ❤️ by
+                    </p>
+                    <a href="https://abhishekshah-portfolio.vercel.app/" target="_blank" class="group relative">
+                        <span class="text-sm font-black text-slate-900 dark:text-white group-hover:text-brand-purple transition-colors uppercase tracking-widest">
+                            Abhishek Shah
+                        </span>
+                        <span class="absolute -bottom-1 left-0 w-full h-1 bg-brand-purple rounded-full scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+                    </a>
+                </div>
+                <p class="text-[9px] font-bold text-slate-400 dark:text-slate-600 uppercase tracking-widest">
+                    &copy; 2026 Event Management System. All rights reserved.
                 </p>
-                <a href="https://abhishekshah-portfolio.vercel.app/" target="_blank" class="group relative">
-                    <span class="text-sm font-black text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors uppercase tracking-widest">
-                        Abhishek Shah
-                    </span>
-                    <div class="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></div>
-                </a>
             </div>
-            <p class="text-[9px] font-bold text-slate-400 dark:text-slate-600 text-center mt-3 uppercase tracking-widest">
-                &copy; 2026 Event Management System &mdash; All rights reserved.
-            </p>
         </div>
     </footer>
 
     <script>
         const html = document.documentElement;
         const themeBtn = document.getElementById('theme-toggle');
-        const mobileMenuBtn = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
 
-        // Theme Toggle
         themeBtn.addEventListener('click', () => {
             if (html.classList.contains('dark')) {
                 html.classList.remove('dark');
@@ -170,11 +160,6 @@
                 html.classList.add('dark');
                 localStorage.theme = 'dark';
             }
-        });
-
-        // Mobile Menu
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
         });
 
         if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {

@@ -6,74 +6,95 @@
 
 <div class="py-10 max-w-7xl mx-auto px-6">
     <div class="mb-12">
-        <a href="/Admin/Dashboard" class="group inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 hover:text-blue-600 transition-colors mb-6">
+        <a href="/Admin/Dashboard" class="group inline-flex items-center gap-3 px-4 py-2 rounded-full border border-transparent hover:border-brand-purple/20 hover:bg-brand-purple/5 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-brand-purple transition-all mb-6">
             <span class="group-hover:-translate-x-1 transition-transform">&larr;</span> Back to Dashboard
         </a>
-        <h1 class="text-5xl md:text-7xl font-black text-slate-900 dark:text-white tracking-tighter uppercase italic">
-            Launch <span class="text-blue-600">Event</span>
+        <h1 class="text-5xl md:text-7xl font-black text-slate-900 dark:text-white tracking-tighter uppercase italic leading-none">
+            Launch <span class="text-transparent bg-clip-text bg-brand-gradient">Event</span>
         </h1>
-        <p class="text-slate-500 dark:text-slate-400 font-medium text-lg mt-2">
-            Configure a new campus experience for the student community.
+        <p class="text-slate-500 dark:text-slate-400 font-medium text-lg mt-4">
+            Architect a new campus experience for the <span class="text-brand-purple font-bold">AMTICS</span> community.
         </p>
     </div>
 
     <form asp-action="CreateEvent" method="post" class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-        
-        <div class="lg:col-span-7 space-y-8 bg-white dark:bg-slate-900 p-10 rounded-[3rem] border border-slate-100 dark:border-slate-800 shadow-2xl shadow-slate-200/50 dark:shadow-none">
+        @Html.AntiForgeryToken()
+
+        <div class="lg:col-span-7 space-y-10 bg-white dark:bg-slate-900 p-10 md:p-12 rounded-[3.5rem] border border-slate-100 dark:border-slate-800 shadow-2xl">
             
-            <div class="space-y-2">
-                <label asp-for="Title" class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1">Event Title</label>
-                <input asp-for="Title" placeholder="e.g. AI/ML Workshop 2026" 
-                    class="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-2xl text-xl font-bold text-slate-900 dark:text-white placeholder:text-slate-300 focus:border-blue-600 focus:bg-white dark:focus:bg-slate-900 outline-none transition-all" />
+            <div class="space-y-3">
+                <label asp-for="Title" class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-2">Event Title</label>
+                <input asp-for="Title" placeholder="e.g. AI/ML Complete Journey 2026" 
+                    class="w-full px-8 py-5 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-[2rem] text-xl font-bold text-slate-900 dark:text-white placeholder:text-slate-300 focus:border-brand-purple focus:bg-white dark:focus:bg-slate-900 outline-none transition-all shadow-inner" />
             </div>
 
-            <div class="space-y-2">
-                <label asp-for="Description" class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1">Description</label>
-                <textarea asp-for="Description" rows="5" placeholder="Detail the event objectives and highlights..." 
-                    class="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-2xl text-lg font-bold text-slate-900 dark:text-white placeholder:text-slate-300 focus:border-blue-600 focus:bg-white dark:focus:bg-slate-900 outline-none transition-all resize-none"></textarea>
+            <div class="space-y-3">
+                <label asp-for="Description" class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-2">Mission Statement / Description</label>
+                <textarea asp-for="Description" rows="6" placeholder="Describe the objectives and student takeaways..." 
+                    class="w-full px-8 py-5 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-[2.5rem] text-lg font-bold text-slate-900 dark:text-white placeholder:text-slate-300 focus:border-brand-purple focus:bg-white dark:focus:bg-slate-900 outline-none transition-all resize-none shadow-inner"></textarea>
             </div>
 
-            <div class="space-y-2">
-                <label asp-for="Category" class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1">Event Category</label>
-                <select asp-for="Category" class="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-2xl text-lg font-bold text-slate-900 dark:text-white focus:border-blue-600 focus:bg-white dark:focus:bg-slate-900 outline-none transition-all appearance-none cursor-pointer">
-                    <option value="">Select Category</option>
-                    <option value="Technical">Technical</option>
-                    <option value="Sports">Sports</option>
-                    <option value="Cultural">Cultural</option>
-                    <option value="Education">Education</option>
-                </select>
+            <div class="space-y-3">
+                <label asp-for="Category" class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-2">Strategic Category</label>
+                <div class="relative group">
+                    <select asp-for="Category" class="w-full px-8 py-5 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-[2rem] text-lg font-bold text-slate-900 dark:text-white focus:border-brand-purple focus:bg-white dark:focus:bg-slate-900 outline-none transition-all appearance-none cursor-pointer shadow-inner">
+                        <option value="">Select Classification</option>
+                        <option value="Technical">Technical / Workshop</option>
+                        <option value="Sports">Sports / Athletics</option>
+                        <option value="Cultural">Cultural / Arts</option>
+                        <option value="Education">Education / Seminar</option>
+                    </select>
+                    <div class="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400 group-focus-within:text-brand-purple transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div class="lg:col-span-5 space-y-8 lg:sticky lg:top-32">
             
-            <div class="bg-slate-900 rounded-[2.5rem] p-10 border border-slate-800 shadow-2xl">
-                <div class="space-y-8">
-                    <div class="space-y-2">
-                        <label asp-for="EventDate" class="text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 ml-1">Schedule Date</label>
+            <div class="bg-slate-900 rounded-[3rem] p-10 md:p-12 border-2 border-slate-800 shadow-2xl relative overflow-hidden">
+                <div class="absolute -top-12 -right-12 w-32 h-32 bg-brand-purple/20 rounded-full blur-3xl"></div>
+
+                <div class="space-y-10 relative z-10">
+                    <div class="space-y-3">
+                        <label asp-for="EventDate" class="text-[10px] font-black uppercase tracking-widest text-brand-purple ml-2">Operation Date</label>
                         <input asp-for="EventDate" type="date" 
-                            class="w-full px-6 py-4 bg-slate-800 border-2 border-transparent rounded-2xl text-lg font-bold text-white focus:border-blue-500 outline-none transition-all [color-scheme:dark]" />
+                            class="w-full px-8 py-5 bg-slate-800 border-2 border-transparent rounded-[2rem] text-lg font-bold text-white focus:border-brand-purple outline-none transition-all [color-scheme:dark] shadow-inner" />
                     </div>
 
-                    <div class="space-y-2">
-                        <label asp-for="Location" class="text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 ml-1">Venue / Location</label>
+                    <div class="space-y-3">
+                        <label asp-for="Location" class="text-[10px] font-black uppercase tracking-widest text-brand-purple ml-2">Deployment Venue</label>
                         <input asp-for="Location" placeholder="e.g. Auditorium A" 
-                            class="w-full px-6 py-4 bg-slate-800 border-2 border-transparent rounded-2xl text-lg font-bold text-white placeholder:text-slate-500 focus:border-blue-500 outline-none transition-all" />
+                            class="w-full px-8 py-5 bg-slate-800 border-2 border-transparent rounded-[2rem] text-lg font-bold text-white placeholder:text-slate-600 focus:border-brand-purple outline-none transition-all shadow-inner" />
                     </div>
 
-                    <div class="space-y-2">
-                        <label asp-for="Price" class="text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 ml-1">Entry Fee (INR)</label>
+                    <div class="space-y-3">
+                        <label asp-for="Price" class="text-[10px] font-black uppercase tracking-widest text-brand-purple ml-2">Access Fee (INR)</label>
                         <input asp-for="Price" type="number" step="0.01" placeholder="0.00" 
-                            class="w-full px-6 py-4 bg-slate-800 border-2 border-transparent rounded-2xl text-lg font-bold text-white placeholder:text-slate-500 focus:border-blue-500 outline-none transition-all" />
+                            class="w-full px-8 py-5 bg-slate-800 border-2 border-transparent rounded-[2rem] text-lg font-bold text-white placeholder:text-slate-600 focus:border-brand-purple outline-none transition-all shadow-inner" />
                     </div>
 
-                    <div class="pt-4">
+                    <div class="pt-6">
                         <button type="submit" 
-                            class="group relative w-full py-6 bg-blue-600 text-white font-black text-xs uppercase tracking-widest rounded-2xl transition-all duration-300 hover:bg-blue-700 hover:scale-[1.02] active:scale-95 shadow-xl shadow-blue-500/25">
-                            <span class="relative z-10">Confirm Launch</span>
+                            class="group relative w-full py-6 bg-white text-slate-900 font-black text-xs uppercase tracking-widest rounded-[2rem] overflow-hidden transition-all duration-300 hover:scale-[1.05] active:scale-95 shadow-2xl shadow-brand-purple/20">
+                            <span class="relative z-10 flex items-center justify-center gap-2 group-hover:text-white transition-colors duration-500">
+                                Launch Event
+                                <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+                            </span>
+                            <div class="absolute inset-0 bg-brand-gradient translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out"></div>
                         </button>
                     </div>
                 </div>
+            </div>
+
+            <div class="p-8 bg-brand-purple/5 border-2 border-dashed border-brand-purple/20 rounded-[2.5rem]">
+                <p class="text-[10px] font-black text-brand-purple uppercase tracking-widest mb-2 flex items-center gap-2">
+                    <span class="text-lg">💡</span> Pro Tip
+                </p>
+                <p class="text-sm font-medium text-slate-500 dark:text-slate-400 leading-relaxed">
+                    Event slugs are generated automatically based on the title. Ensure your title is unique to avoid identity conflicts.
+                </p>
             </div>
         </div>
     </form>

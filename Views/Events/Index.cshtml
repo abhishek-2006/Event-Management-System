@@ -9,7 +9,7 @@
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
             <div class="animate-in fade-in slide-in-from-left-8 duration-700">
                 <h2 class="text-4xl md:text-7xl font-black text-slate-900 dark:text-white tracking-tighter mb-4 uppercase italic">
-                    Campus <span class="text-blue-600">Events</span>
+                    Campus <span class="text-transparent bg-clip-text bg-brand-gradient">Events</span>
                 </h2>
                 <p class="text-slate-500 dark:text-slate-400 font-medium text-xl">
                     Discover workshops, fests, and seminars happening across College.
@@ -17,18 +17,18 @@
             </div>
             
             <div class="flex flex-wrap gap-3 animate-in fade-in slide-in-from-right-8 duration-700" id="filter-buttons">
-                <button onclick="filterEvents('all')" class="filter-btn active px-6 py-3 rounded-full bg-blue-600 text-white text-sm font-black uppercase tracking-widest shadow-lg shadow-blue-500/20 transition-all">All</button>
-                <button onclick="filterEvents('Technical')" class="filter-btn px-6 py-3 rounded-full bg-white dark:bg-slate-800 border-2 border-slate-100 dark:border-slate-700 text-slate-600 dark:text-slate-400 text-sm font-black uppercase tracking-widest hover:border-blue-600 transition-all">Technical</button>
-                <button onclick="filterEvents('Cultural')" class="filter-btn px-6 py-3 rounded-full bg-white dark:bg-slate-800 border-2 border-slate-100 dark:border-slate-700 text-slate-600 dark:text-slate-400 text-sm font-black uppercase tracking-widest hover:border-blue-600 transition-all">Cultural</button>
-                <button onclick="filterEvents('Sports')" class="filter-btn px-6 py-3 rounded-full bg-white dark:bg-slate-800 border-2 border-slate-100 dark:border-slate-700 text-slate-600 dark:text-slate-400 text-sm font-black uppercase tracking-widest hover:border-blue-600 transition-all">Sports</button>
-                <button onclick="filterEvents('Education')" class="filter-btn px-6 py-3 rounded-full bg-white dark:bg-slate-800 border-2 border-slate-100 dark:border-slate-700 text-slate-600 dark:text-slate-400 text-sm font-black uppercase tracking-widest hover:border-blue-600 transition-all">Education</button>
+                <button onclick="filterEvents('all', this)" class="filter-btn active px-6 py-3 rounded-full bg-brand-gradient text-white text-sm font-black uppercase tracking-widest shadow-lg shadow-brand-purple/20 transition-all">All</button>
+                <button onclick="filterEvents('Technical', this)" class="filter-btn px-6 py-3 rounded-full bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-400 text-sm font-black uppercase tracking-widest hover:border-brand-purple transition-all">Technical</button>
+                <button onclick="filterEvents('Cultural', this)" class="filter-btn px-6 py-3 rounded-full bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-400 text-sm font-black uppercase tracking-widest hover:border-brand-purple transition-all">Cultural</button>
+                <button onclick="filterEvents('Sports', this)" class="filter-btn px-6 py-3 rounded-full bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-400 text-sm font-black uppercase tracking-widest hover:border-brand-purple transition-all">Sports</button>
+                <button onclick="filterEvents('Education', this)" class="filter-btn px-6 py-3 rounded-full bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-400 text-sm font-black uppercase tracking-widest hover:border-brand-purple transition-all">Education</button>
             </div>
         </div>
 
         <div class="relative max-w-3xl group">
             <input type="text" id="event-search" onkeyup="searchEvents()" placeholder="Search for events, workshops..." 
-                   class="w-full pl-16 pr-8 py-6 bg-white/50 dark:bg-slate-800/50 backdrop-blur-xl border-2 border-slate-100 dark:border-slate-700 rounded-[2.5rem] text-xl text-slate-900 dark:text-white placeholder:text-slate-400 focus:ring-8 focus:ring-blue-500/5 focus:border-blue-600 outline-none transition-all shadow-2xl shadow-slate-200/50 dark:shadow-none" />
-            <div class="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-600 transition-colors">
+                   class="w-full pl-16 pr-8 py-6 bg-white/50 dark:bg-slate-900/50 backdrop-blur-xl border-2 border-slate-100 dark:border-slate-800 rounded-[2.5rem] text-xl text-slate-900 dark:text-white placeholder:text-slate-400 focus:ring-8 focus:ring-brand-purple/5 focus:border-brand-purple outline-none transition-all shadow-2xl shadow-slate-200/50 dark:shadow-none" />
+            <div class="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-brand-purple transition-colors">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
             </div>
         </div>
@@ -39,18 +39,18 @@
         {
             var categoryColor = item.Category switch {
                 "Technical" => "text-emerald-600 bg-emerald-50 dark:bg-emerald-900/30 dark:text-emerald-400 border-emerald-100 dark:border-emerald-800",
-                "Cultural" => "text-purple-600 bg-purple-50 dark:bg-purple-900/30 dark:text-purple-400 border-purple-100 dark:border-purple-800",
+                "Cultural" => "text-brand-purple bg-purple-50 dark:bg-purple-900/30 dark:text-purple-400 border-purple-100 dark:border-purple-800",
                 "Sports" => "text-amber-600 bg-amber-50 dark:bg-amber-900/30 dark:text-amber-400 border-amber-100 dark:border-amber-800",
-                "Education" => "text-green-600 bg-green-50 dark:bg-green-900/30 dark:text-green-400 border-green-100 dark:border-green-800",
-                _ => "text-blue-600 bg-blue-50 dark:bg-blue-900/30 dark:text-blue-400 border-blue-100 dark:border-blue-800"
+                "Education" => "text-brand-blue bg-blue-50 dark:bg-blue-900/30 dark:text-blue-400 border-blue-100 dark:border-blue-800",
+                _ => "text-slate-600 bg-slate-50 dark:bg-slate-800 dark:text-slate-400 border-slate-100 dark:border-slate-800"
             };
 
-            <div class="event-card group bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-[3rem] p-2 transition-all duration-500 hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-2" 
+            <div class="event-card group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[2.5rem] p-3 transition-all duration-500 hover:shadow-[0_0_50px_-10px_rgba(139,92,246,0.25)] hover:-translate-y-2" 
                  data-category="@item.Category" data-title="@item.Title.ToLower()">
-                <div class="relative bg-slate-50 dark:bg-slate-900 rounded-[2.8rem] p-10 h-full flex flex-col">
+                <div class="relative bg-slate-50 dark:bg-slate-950 rounded-[2.8rem] p-10 h-full flex flex-col overflow-hidden">
                     
                     <div class="flex justify-between items-center mb-10">
-                        <span class="px-5 py-2 rounded-full text-xs font-black uppercase tracking-widest border @categoryColor">
+                        <span class="px-5 py-2 rounded-full text-[9px] font-black uppercase tracking-widest border @categoryColor">
                             @item.Category
                         </span>
                         <div class="text-right">
@@ -59,24 +59,24 @@
                         </div>
                     </div>
 
-                    <h3 class="text-3xl font-black text-slate-900 dark:text-white mb-6 leading-tight group-hover:text-blue-600 transition-colors">
+                    <h3 class="text-2xl font-black text-slate-900 dark:text-white mb-4 leading-tight group-hover:text-brand-purple transition-colors">
                         @item.Title
                     </h3>
-                    <p class="text-slate-500 dark:text-slate-400 text-lg leading-relaxed mb-12 line-clamp-2">
+                    <p class="text-slate-500 dark:text-slate-400 text-base leading-relaxed mb-12 line-clamp-2">
                         @item.Description
                     </p>
 
-                    <div class="flex items-center gap-8 mb-12 text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-[0.2em] border-y border-slate-200/50 dark:border-slate-800 py-6">
-                        <div class="flex items-center gap-3">
-                            <span class="text-xl">📍</span> @item.Location
+                    <div class="flex items-center gap-8 mb-12 text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-[0.2em] border-y border-slate-200/50 dark:border-slate-800 py-6">
+                        <div class="flex items-center gap-2">
+                            <span class="text-lg">📍</span> @item.Location
                         </div>
-                        <div class="flex items-center gap-3">
-                            <span class="text-xl">💰</span> @(item.Price == 0 ? "Free" : $"₹{item.Price}")
+                        <div class="flex items-center gap-2">
+                            <span class="text-lg">💰</span> @(item.Price == 0 ? "Free" : $"₹{item.Price}")
                         </div>
                     </div>
 
                     <a asp-action="Details" asp-route-slug="@item.Slug" 
-                       class="mt-auto w-full py-5 bg-slate-900 dark:bg-slate-700 text-white font-black text-sm uppercase tracking-[0.3em] rounded-[1.5rem] text-center transition-all hover:bg-blue-600 hover:scale-[1.02] shadow-xl shadow-slate-900/20 dark:shadow-none">
+                       class="mt-auto w-full py-5 bg-slate-900 dark:bg-slate-800 text-white dark:text-slate-200 font-black text-xs uppercase tracking-[0.3em] rounded-2xl text-center transition-all hover:bg-brand-gradient hover:text-white hover:scale-[1.02] shadow-xl">
                         Explore Event
                     </a>
                 </div>
@@ -85,26 +85,20 @@
     </section>
 </div>
 
-<style>
-    .filter-btn.active {
-        background-color: #2563eb;
-        color: white;
-        border-color: #2563eb;
-    }
-</style>
-
 <script>
-    function filterEvents(category) {
+    function filterEvents(category, btn) {
         const cards = document.querySelectorAll('.event-card');
         const buttons = document.querySelectorAll('.filter-btn');
 
-        // Update Button Styles
-        buttons.forEach(btn => {
-            btn.classList.remove('bg-blue-600', 'text-white', 'shadow-lg', 'shadow-blue-500/20');
-            btn.classList.add('bg-white', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-400');
+        // Reset all buttons to default state
+        buttons.forEach(b => {
+            b.classList.remove('bg-brand-gradient', 'text-white', 'shadow-lg', 'shadow-brand-purple/20');
+            b.classList.add('bg-white', 'dark:bg-slate-900', 'text-slate-600', 'dark:text-slate-400');
         });
-        event.currentTarget.classList.add('bg-blue-600', 'text-white', 'shadow-lg', 'shadow-blue-500/20');
-        event.currentTarget.classList.remove('bg-white', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-400');
+
+        // Activate current button
+        btn.classList.add('bg-brand-gradient', 'text-white', 'shadow-lg', 'shadow-brand-purple/20');
+        btn.classList.remove('bg-white', 'dark:bg-slate-900', 'text-slate-600', 'dark:text-slate-400');
 
         // Filter Logic
         cards.forEach(card => {

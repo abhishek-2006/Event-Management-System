@@ -4,6 +4,7 @@ using EventManagementSystem.Models;
 using EventManagementSystem.ViewModels;
 using EventManagementSystem.Filters;
 using Microsoft.AspNetCore.Authorization;
+using System.Text;
 
 namespace EventManagementSystem.Controllers
 {
@@ -182,6 +183,40 @@ namespace EventManagementSystem.Controllers
         {
             HttpContext.Session.Clear();
             return RedirectToAction("Login");
+        }
+
+        [HttpGet("Admin/ExportAttendees")]
+        public IActionResult ExportAttendees()
+        {
+            if (HttpContext.Session.GetString("Admin") == null)
+                return RedirectToAction("Login");
+
+            // Fetch all registrations with Event details
+            var data = _context.Registrations
+                .Select(r => new {
+                    r.StudentName,
+                    r.RollNumber,
+                    r.Email,
+                    r.PhoneNumber,
+                    r.Department,
+                    r.Semester,
+                    Event = r.Event.Title,
+                    Date = r.RegisteredAt.ToString("yyyy-MM-dd HH:mm")
+                }).ToList();
+
+            // Create the CSV Header
+            var csv = new StringBuilder();
+            csv.AppendLine("Student Name,Roll Number,Email,Phone,Department,Semester,Event Name,Registration Date");
+
+            // Add rows
+            foreach (var row in data)
+            {
+                csv.AppendLine($"\"{row.StudentName}\",\"{row.RollNumber}\",\"{row.Email}\",\"{row.PhoneNumber}\",\"{row.Department}\",\"{row.Semester}\",\"{row.Event}\",\"{row.Date}\"");
+            }
+
+            // Return as a downloadable file
+            byte[] buffer = Encoding.UTF8.GetBytes(csv.ToString());
+            return File(buffer, "text/csv", $"EventHub_Report_{DateTime.Now:yyyyMMdd}.csv");
         }
     }
 }

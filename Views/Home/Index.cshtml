@@ -3,98 +3,99 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="space-y-16 pb-16 overflow-x-hidden">
-    <section class="relative min-h-[65vh] flex flex-col items-center justify-center text-center px-4">
+<div class="space-y-24 pb-20 overflow-x-hidden">
+    <section class="relative min-h-[85vh] flex flex-col items-center justify-center text-center px-6">
         <div class="absolute inset-0 -z-10">
-            <div class="absolute top-1/4 left-1/4 w-72 h-72 bg-blue-500/10 rounded-full blur-[120px] animate-pulse"></div>
-            <div class="absolute bottom-1/4 right-1/4 w-[30rem] h-[30rem] bg-indigo-500/10 rounded-full blur-[120px] animate-pulse delay-1000"></div>
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-purple/10 rounded-full blur-[120px] animate-pulse"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-[35rem] h-[35rem] bg-brand-blue/10 rounded-full blur-[120px] animate-pulse delay-700"></div>
         </div>
 
-        <div class="animate-in fade-in slide-in-from-bottom-8 duration-1000">
+        <div class="animate-in fade-in slide-in-from-bottom-12 duration-1000">
+            <div class="inline-flex mb-8 p-1 bg-gradient-to-tr from-brand-purple to-brand-blue rounded-3xl shadow-2xl shadow-brand-purple/20 rotate-3 hover:rotate-0 transition-transform duration-500">
+                <img src="~/favicon.ico" alt="EH Icon" class="w-20 h-20 rounded-[1.4rem] object-cover" />
+            </div>
             
-            <h1 class="text-4xl md:text-[6rem] font-black text-slate-900 dark:text-white tracking-tighter leading-[0.95] mb-6">
-                Every Moment <br />
-                <span class="text-transparent bg-clip-text bg-gradient-to-br from-blue-600 to-indigo-400">Becomes an Event.</span>
+            <h1 class="text-4xl md:text-[6rem] font-black text-slate-900 dark:text-white tracking-tighter leading-[0.9] mb-8">
+                Curating <br />
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-purple to-brand-blue">Unforgettable</span> <br />
+                Moments.
             </h1>
             
-            <p class="mt-4 text-lg md:text-xl text-slate-500 dark:text-slate-400 max-w-2xl mx-auto font-medium leading-relaxed">
-                The official platform for College's premier workshops, 
-                cultural fests, and technical symposiums. Experience campus life like never before.
+            <p class="mt-6 text-lg md:text-2xl text-slate-500 dark:text-slate-400 max-w-3xl mx-auto font-medium leading-relaxed">
+                The official platform for campus engagement. Experience <span class="text-slate-900 dark:text-white font-black italic">EventHub</span> — where technology meets community.
             </p>
 
-            <div class="flex flex-wrap justify-center gap-4 mt-8">
+            <div class="flex flex-wrap justify-center gap-6 mt-12">
                 <a asp-controller="Events" asp-action="Index" 
-                   class="group relative px-10 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black rounded-[2rem] overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-2xl">
-                    <span class="relative z-10">EXPLORE EVENTS</span>
-                    <div class="absolute inset-0 bg-blue-600 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                   class="group relative px-12 py-5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black rounded-2xl overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-2xl shadow-brand-purple/20">
+                    <span class="relative z-10 uppercase tracking-[0.2em] text-xs">Explore Catalog</span>
+                    <div class="absolute inset-0 bg-gradient-to-r from-brand-purple to-brand-blue translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
                 </a>
                 <a asp-controller="Home" asp-action="Contact" 
-                   class="px-10 py-4 bg-transparent text-slate-900 dark:text-white font-black rounded-[2rem] border-2 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
-                    GET SUPPORT
+                   class="px-12 py-5 bg-transparent text-slate-900 dark:text-white font-black rounded-2xl border-2 border-slate-200 dark:border-slate-700 hover:border-brand-purple transition-all uppercase tracking-[0.2em] text-xs">
+                    Get Support
                 </a>
             </div>
         </div>
     </section>
 
     <section class="container mx-auto px-6">
-        <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4 border-b border-slate-100 dark:border-slate-800 pb-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6 border-b border-slate-100 dark:border-slate-800 pb-10">
             <div class="max-w-xl">
-                <h2 class="text-5xl font-black text-slate-900 dark:text-white tracking-tight">
-                    Upcoming <span class="italic text-blue-600">Events</span>
+                <h2 class="text-5xl font-black text-slate-900 dark:text-white tracking-tight italic">
+                    Live <span class="text-brand-purple">Experiences</span>
                 </h2>
-                <p class="text-slate-500 dark:text-slate-400 font-medium text-lg">Handpicked experiences waiting for you.</p>
+                <p class="text-slate-500 dark:text-slate-400 font-medium text-lg mt-2">Premium events selected for the community.</p>
             </div>
-            <a asp-controller="Events" asp-action="Index" class="group flex items-center gap-4 text-xs font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors">
-                Browse All 
-                <span class="w-10 h-10 rounded-full border border-slate-200 dark:border-slate-700 flex items-center justify-center group-hover:border-blue-600 transition-all">
+            <a asp-controller="Events" asp-action="Index" class="group flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 hover:text-brand-purple transition-all">
+                Full Schedule 
+                <span class="w-12 h-12 rounded-full border-2 border-slate-100 dark:border-slate-800 flex items-center justify-center group-hover:border-brand-purple group-hover:bg-brand-purple group-hover:text-white transition-all">
                     &rarr;
                 </span>
             </a>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
             @if(Model != null && Model.Any())
             {
                 @foreach (var item in Model.Take(3))    
                 {
-                    <div class="group relative bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-[2.5rem] p-8 shadow-sm hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500 hover:-translate-y-2 flex flex-col min-h-[420px] overflow-hidden">
-                        <div class="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-transparent dark:from-blue-900/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-
-                        <div class="mb-6 relative z-10">
-                            <span class="px-4 py-1.5 bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 text-[10px] font-black rounded-full uppercase tracking-widest">
-                                @item.Category
-                            </span>
-                        </div>
-
-                        <h3 class="text-2xl font-black text-slate-900 dark:text-white mb-4 leading-tight group-hover:text-blue-600 transition-colors relative z-10">
-                            @item.Title
-                        </h3>
-
-                        <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-8 line-clamp-3 relative z-10">
-                            @item.Description
-                        </p>
-
-                        <div class="mt-auto pt-6 border-t border-slate-50 dark:border-slate-700/50 flex items-center justify-between relative z-10">
-                            <div class="flex flex-col">
-                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Event Date</span>
-                                <span class="text-sm font-bold text-slate-700 dark:text-slate-300">@item.EventDate.ToString("MMM dd, yyyy")</span>
+                    <div class="group relative bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[3rem] p-4 shadow-sm hover:shadow-[0_40px_80px_-20px_rgba(139,92,246,0.15)] transition-all duration-700 hover:-translate-y-3 flex flex-col min-h-[480px] overflow-hidden">
+                        
+                        <div class="relative bg-slate-50 dark:bg-slate-950 rounded-[2.6rem] p-10 h-full flex flex-col z-10">
+                            <div class="mb-8">
+                                <span class="px-5 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-[9px] font-black rounded-full uppercase tracking-[0.2em] group-hover:border-brand-purple group-hover:text-brand-purple transition-colors">
+                                    @item.Category
+                                </span>
                             </div>
-                            <a asp-controller="Events" asp-action="Details" asp-route-slug="@item.Slug" 
-                               class="group/btn inline-flex items-center gap-2 bg-slate-900 dark:bg-slate-700 text-white px-5 py-3 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-600 transition-all shadow-lg">
-                                View Details
-                                <svg class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-                                </svg>
-                            </a>
+
+                            <h3 class="text-3xl font-black text-slate-900 dark:text-white mb-6 leading-tight group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-brand-gradient transition-all">
+                                @item.Title
+                            </h3>
+
+                            <p class="text-slate-500 dark:text-slate-400 text-base leading-relaxed mb-10 line-clamp-3">
+                                @item.Description
+                            </p>
+
+                            <div class="mt-auto pt-8 border-t border-slate-100 dark:border-slate-800/50 flex items-center justify-between">
+                                <div class="flex flex-col">
+                                    <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Timeline</span>
+                                    <span class="text-sm font-bold text-slate-700 dark:text-slate-300">@item.EventDate.ToString("MMM dd, yyyy")</span>
+                                </div>
+                                <a asp-controller="Events" asp-action="Details" asp-route-slug="@item.Slug" 
+                                   class="inline-flex items-center justify-center w-12 h-12 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-2xl hover:bg-brand-purple hover:text-white transition-all shadow-lg">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 }
             }
             else
             {
-                <div class="col-span-full py-24 text-center bg-slate-50 dark:bg-slate-900/50 border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-[3rem]">
-                    <span class="text-4xl mb-4 block">🏮</span>
-                    <p class="text-slate-500 font-bold">No upcoming events scheduled yet.</p>
+                <div class="col-span-full py-32 text-center bg-white dark:bg-slate-900 border-4 border-dashed border-slate-100 dark:border-slate-800 rounded-[4rem]">
+                    <div class="w-20 h-20 bg-slate-50 dark:bg-slate-800 rounded-3xl flex items-center justify-center text-4xl mx-auto mb-6">🛰️</div>
+                    <p class="text-slate-400 font-black uppercase tracking-[0.3em]">System stands ready. No live events.</p>
                 </div>
             }
         </div>

@@ -7,65 +7,67 @@
 <div class="py-10 space-y-12">
     <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 px-2">
         <div class="animate-in fade-in slide-in-from-left-6 duration-700">
-            <h1 class="text-5xl md:text-7xl font-black text-slate-900 dark:text-white tracking-tighter uppercase italic">
-                Manage <span class="text-blue-600">Events</span>
+            <h1 class="text-5xl md:text-7xl font-black text-slate-900 dark:text-white tracking-tighter uppercase italic leading-none">
+                Manage <span class="text-transparent bg-clip-text bg-brand-gradient">Events</span>
             </h1>
-            <p class="text-slate-500 dark:text-slate-400 font-medium text-lg mt-2">
-                Update, monitor, or remove active campus experiences.
+            <p class="text-slate-500 dark:text-slate-400 font-medium text-lg mt-4">
+                Update, monitor, or decommission active campus experiences.
             </p>
         </div>
 
-        <a href="/Admin/CreateEvent" class="group inline-flex items-center gap-3 px-8 py-4 bg-blue-600 text-white font-black text-xs uppercase tracking-[0.2em] rounded-2xl shadow-xl shadow-blue-500/20 hover:bg-blue-700 hover:scale-[1.02] active:scale-95 transition-all">
-            <span>Add New Event</span>
-            <span class="text-xl group-hover:rotate-12 transition-transform">✨</span>
+        <a href="/Admin/CreateEvent" class="group relative inline-flex items-center gap-3 px-10 py-5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black text-xs uppercase tracking-[0.3em] rounded-2xl overflow-hidden shadow-2xl shadow-brand-purple/20 hover:scale-[1.02] active:scale-95 transition-all">
+            <span class="relative z-10 flex items-center gap-2">
+                Add New Event <span class="group-hover:rotate-12 transition-transform">✨</span>
+            </span>
+            <div class="absolute inset-0 bg-brand-gradient translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out"></div>
         </a>
     </div>
 
-    <div class="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-2xl shadow-slate-200/50 dark:shadow-none overflow-hidden animate-in fade-in zoom-in duration-700">
+    <div class="bg-white dark:bg-slate-900 rounded-[3rem] border border-slate-100 dark:border-slate-800 shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-700">
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse">
                 <thead>
                     <tr class="bg-slate-50/50 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800">
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Event Identity</th>
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Category</th>
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Timeline</th>
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Fees (INR)</th>
-                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">Operations</th>
+                        <th class="px-10 py-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Event Identity</th>
+                        <th class="px-10 py-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Category</th>
+                        <th class="px-10 py-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Timeline</th>
+                        <th class="px-10 py-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Fees (INR)</th>
+                        <th class="px-10 py-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] text-right">Operations</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-50 dark:divide-slate-800/60">
                     @foreach (var ev in Model)
                     {
-                        <tr class="group hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
-                            <td class="px-8 py-6">
+                        <tr class="group hover:bg-slate-50/30 dark:hover:bg-brand-purple/[0.02] transition-colors">
+                            <td class="px-10 py-8">
                                 <div class="flex flex-col">
-                                    <span class="text-lg font-black text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors">@ev.Title</span>
-                                    <span class="text-[10px] font-bold text-slate-400 tracking-widest mt-1 italic">Slug: @ev.Slug</span>
+                                    <span class="text-xl font-black text-slate-900 dark:text-white group-hover:text-brand-purple transition-colors italic">@ev.Title</span>
+                                    <span class="text-[9px] font-bold text-slate-400 tracking-widest mt-1 uppercase opacity-60">ID: @ev.Slug</span>
                                 </div>
                             </td>
-                            <td class="px-8 py-6">
-                                <span class="px-4 py-1.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-[10px] font-black rounded-full uppercase tracking-widest shadow-sm">
+                            <td class="px-10 py-8">
+                                <span class="px-5 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-[9px] font-black rounded-full uppercase tracking-widest shadow-sm">
                                     @ev.Category
                                 </span>
                             </td>
-                            <td class="px-8 py-6">
+                            <td class="px-10 py-8">
                                 <div class="flex flex-col">
-                                    <span class="text-sm font-black text-slate-700 dark:text-slate-300">@ev.EventDate.ToString("MMM dd, yyyy")</span>
-                                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">@ev.Location</span>
+                                    <span class="text-sm font-black text-slate-700 dark:text-slate-200">@ev.EventDate.ToString("MMM dd, yyyy")</span>
+                                    <span class="text-[10px] font-bold text-brand-blue uppercase tracking-widest mt-0.5">@ev.Location</span>
                                 </div>
                             </td>
-                            <td class="px-8 py-6">
-                                <span class="text-sm font-bold text-slate-900 dark:text-white">@ev.Price.ToString("C0")</span>
+                            <td class="px-10 py-8">
+                                <span class="text-base font-black text-slate-900 dark:text-white">₹@ev.Price</span>
                             </td>
-                            <td class="px-8 py-6">
-                                <div class="flex items-center justify-end gap-3">
+                            <td class="px-10 py-8">
+                                <div class="flex items-center justify-end gap-4">
                                     <a href="/Admin/EditEvent/@ev.Slug" 
-                                       class="p-3 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white rounded-xl hover:bg-blue-600 hover:text-white transition-all shadow-sm" title="Edit">
+                                       class="p-4 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white rounded-2xl hover:bg-brand-purple hover:text-white transition-all shadow-sm border border-transparent hover:border-brand-purple/20" title="Edit">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                                     </a>
                                     <button type="button" 
                                         onclick="confirmDelete('@ev.Slug', '@ev.Title')"
-                                        class="p-3 bg-slate-100 dark:bg-slate-800 text-red-600 rounded-xl hover:bg-red-600 hover:text-white transition-all shadow-sm" 
+                                        class="p-4 bg-slate-50 dark:bg-slate-800 text-red-500 rounded-2xl hover:bg-red-600 hover:text-white transition-all shadow-sm border border-transparent hover:border-red-200" 
                                         title="Delete">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
@@ -80,38 +82,41 @@
         </div>
     </div>
 </div>
+
 <div id="deleteModal" class="fixed inset-0 z-[100] hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
     <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-        <div class="fixed inset-0 transition-opacity bg-slate-900/60 backdrop-blur-sm" aria-hidden="true" onclick="closeDeleteModal()"></div>
+        <div class="fixed inset-0 transition-opacity bg-slate-950/80 backdrop-blur-md" aria-hidden="true" onclick="closeDeleteModal()"></div>
 
         <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
-        <div class="inline-block overflow-hidden text-left align-bottom transition-all transform bg-white dark:bg-slate-900 rounded-[2.5rem] shadow-2xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full border border-slate-100 dark:border-slate-800 animate-in zoom-in duration-300">
-            <div class="px-8 pt-10 pb-8 bg-white dark:bg-slate-900">
+        <div class="inline-block overflow-hidden text-left align-bottom transition-all transform bg-white dark:bg-slate-900 rounded-[3.5rem] shadow-2xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full border-2 border-slate-100 dark:border-slate-800 animate-in zoom-in duration-300">
+            <div class="px-10 pt-12 pb-10">
                 <div class="sm:flex sm:items-start">
-                    <div class="flex items-center justify-center flex-shrink-0 w-16 h-16 mx-auto bg-red-100 dark:bg-red-900/30 rounded-2xl sm:mx-0">
-                        <span class="text-3xl">⚠️</span>
+                    <div class="flex items-center justify-center flex-shrink-0 w-20 h-20 mx-auto bg-red-500/10 rounded-[1.5rem] sm:mx-0">
+                        <span class="text-4xl">☣️</span>
                     </div>
-                    <div class="mt-6 text-center sm:mt-0 sm:ml-6 sm:text-left">
-                        <h3 class="text-2xl font-black text-slate-900 dark:text-white leading-tight uppercase italic tracking-tighter" id="modal-title">
+                    <div class="mt-8 text-center sm:mt-0 sm:ml-8 sm:text-left">
+                        <h3 class="text-3xl font-black text-slate-900 dark:text-white leading-tight uppercase italic tracking-tighter" id="modal-title">
                             Confirm <span class="text-red-600">Deletion</span>
                         </h3>
                         <div class="mt-4">
-                            <p class="text-sm font-medium text-slate-500 dark:text-slate-400 leading-relaxed">
-                                Are you sure you want to permanently delete <span id="eventNameDisplay" class="font-black text-slate-900 dark:text-white underline decoration-red-500/30"></span>? This action is irreversible.
+                            <p class="text-base font-medium text-slate-500 dark:text-slate-400 leading-relaxed">
+                                You are about to permanently erase <span id="eventNameDisplay" class="font-black text-slate-900 dark:text-white underline decoration-brand-purple/30"></span> from the system. 
+                                <br/><br/>
+                                <span class="text-[10px] font-black uppercase tracking-[0.2em] text-red-500/60">Warning: This action is irreversible.</span>
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="px-8 py-6 bg-slate-50/50 dark:bg-slate-800/50 flex flex-col-reverse sm:flex-row sm:justify-end gap-4">
+            <div class="px-10 py-8 bg-slate-50/50 dark:bg-slate-800/30 flex flex-col-reverse sm:flex-row sm:justify-end gap-6 border-t border-slate-100 dark:border-slate-800">
                 <button type="button" onclick="closeDeleteModal()" 
-                        class="w-full px-6 py-4 text-xs font-black uppercase tracking-widest text-slate-500 bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-700 transition-all sm:w-auto">
+                        class="w-full px-8 py-5 text-[10px] font-black uppercase tracking-widest text-slate-400 bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 rounded-2xl hover:text-slate-900 dark:hover:text-white transition-all sm:w-auto">
                     Cancel
                 </button>
                 <a id="confirmDeleteBtn" href="#" 
-                   class="w-full px-8 py-4 text-xs font-black uppercase tracking-widest text-white bg-red-600 rounded-2xl shadow-xl shadow-red-600/20 hover:bg-red-700 hover:scale-[1.02] active:scale-95 transition-all sm:w-auto text-center">
-                    Delete Permanently
+                   class="w-full px-10 py-5 text-[10px] font-black uppercase tracking-widest text-white bg-red-600 rounded-2xl shadow-2xl shadow-red-600/20 hover:bg-red-700 hover:scale-[1.05] active:scale-95 transition-all sm:w-auto text-center">
+                    Delete Event
                 </a>
             </div>
         </div>
@@ -127,7 +132,7 @@
         display.innerText = name;
         confirmBtn.href = `/Admin/DeleteEvent/${slug}`;
         modal.classList.remove('hidden');
-        document.body.classList.add('overflow-hidden'); // Prevent background scrolling
+        document.body.classList.add('overflow-hidden');
     }
 
     function closeDeleteModal() {
@@ -135,7 +140,6 @@
         document.body.classList.remove('overflow-hidden');
     }
 
-    // Close modal on Escape key
     window.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') closeDeleteModal();
     });

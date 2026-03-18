@@ -1,89 +1,100 @@
 @model EventManagementSystem.Models.Event
 
 @{
-    ViewData["Title"] = "Edit-"+@Model.Slug;
+    ViewData["Title"] = "Edit — " + @Model.Slug;
 }
 
 <div class="py-10 max-w-7xl mx-auto px-6">
     <div class="mb-12">
-        <a href="/Admin/ManageEvents" class="group inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors mb-6">
+        <a href="/Admin/ManageEvents" class="group inline-flex items-center gap-3 px-4 py-2 rounded-full border border-transparent hover:border-brand-purple/20 hover:bg-brand-purple/5 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-brand-purple transition-all mb-6">
             <span class="group-hover:-translate-x-1 transition-transform">&larr;</span> Back to Manage Events
         </a>
-        <h1 class="text-5xl md:text-7xl font-black text-slate-900 dark:text-white tracking-tighter uppercase italic">
-            Edit <span class="text-blue-600">Event</span>
+        <h1 class="text-5xl md:text-7xl font-black text-slate-900 dark:text-white tracking-tighter uppercase italic leading-none">
+            Edit <span class="text-transparent bg-clip-text bg-brand-gradient">Event</span>
         </h1>
-        <p class="text-slate-500 dark:text-slate-400 font-medium text-lg mt-2">
-            Modifying: <span class="text-slate-900 dark:text-white font-black uppercase tracking-widest text-sm">@Model.Title</span>
+        <p class="text-slate-500 dark:text-slate-400 font-medium text-lg mt-4">
+            Modifying: <span class="text-slate-900 dark:text-white font-black uppercase tracking-widest text-sm underline decoration-brand-purple decoration-2 underline-offset-4">@Model.Title</span>
         </p>
     </div>
 
-    <form action="/Admin/EditEvent" method="post" class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+    <form asp-action="EditEvent" method="post" class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
         @Html.AntiForgeryToken()
         <input type="hidden" asp-for="EventId" />
         <input type="hidden" asp-for="Slug" />
 
-        <div class="lg:col-span-7 space-y-8 bg-white dark:bg-slate-900 p-10 rounded-[3rem] border border-slate-100 dark:border-slate-800 shadow-2xl shadow-slate-200/50 dark:shadow-none">
+        <div class="lg:col-span-7 space-y-10 bg-white dark:bg-slate-900 p-10 md:p-12 rounded-[3.5rem] border border-slate-100 dark:border-slate-800 shadow-2xl">
             
-            <div class="space-y-2">
-                <label asp-for="Title" class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1">Event Title</label>
+            <div class="space-y-3">
+                <label asp-for="Title" class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-2">Event Title</label>
                 <input asp-for="Title" placeholder="Update title..." 
-                       class="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-2xl text-xl font-bold text-slate-900 dark:text-white placeholder:text-slate-300 focus:border-blue-600 focus:bg-white dark:focus:bg-slate-900 outline-none transition-all" />
+                       class="w-full px-8 py-5 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-[2rem] text-xl font-bold text-slate-900 dark:text-white placeholder:text-slate-300 focus:border-brand-purple focus:bg-white dark:focus:bg-slate-900 outline-none transition-all shadow-inner" />
             </div>
 
-            <div class="space-y-2">
-                <label asp-for="Description" class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1">Description</label>
-                <textarea asp-for="Description" rows="5" placeholder="Update the event highlights..." 
-                    class="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-2xl text-lg font-bold text-slate-900 dark:text-white placeholder:text-slate-300 focus:border-blue-600 focus:bg-white dark:focus:bg-slate-900 outline-none transition-all resize-none"></textarea>
+            <div class="space-y-3">
+                <label asp-for="Description" class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-2">Description Update</label>
+                <textarea asp-for="Description" rows="6" placeholder="Update the event highlights..." 
+                    class="w-full px-8 py-5 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-[2.5rem] text-lg font-bold text-slate-900 dark:text-white placeholder:text-slate-300 focus:border-brand-purple focus:bg-white dark:focus:bg-slate-900 outline-none transition-all resize-none shadow-inner"></textarea>
             </div>
 
-            <div class="space-y-2">
-                <label asp-for="Category" class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1">Update Category</label>
-                <select asp-for="Category" class="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-2xl text-lg font-bold text-slate-900 dark:text-white focus:border-blue-600 focus:bg-white dark:focus:bg-slate-900 outline-none transition-all appearance-none cursor-pointer">
-                    <option value="Technical">Technical</option>
-                    <option value="Sports">Sports</option>
-                    <option value="Cultural">Cultural</option>
-                    <option value="Education">Education</option>
-                </select>
+            <div class="space-y-3">
+                <label asp-for="Category" class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-2">Re-Classify Event</label>
+                <div class="relative group">
+                    <select asp-for="Category" class="w-full px-8 py-5 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-[2rem] text-lg font-bold text-slate-900 dark:text-white focus:border-brand-purple focus:bg-white dark:focus:bg-slate-900 outline-none appearance-none cursor-pointer transition-all shadow-inner">
+                        <option value="Technical">Technical</option>
+                        <option value="Sports">Sports</option>
+                        <option value="Cultural">Cultural</option>
+                        <option value="Education">Education</option>
+                    </select>
+                    <div class="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400 group-focus-within:text-brand-purple transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div class="lg:col-span-5 space-y-8 lg:sticky lg:top-32">
             
-            <div class="bg-slate-900 rounded-[2.5rem] p-10 border border-slate-800 shadow-2xl">
-                <div class="space-y-8">
-                    <div class="space-y-2">
-                        <label asp-for="EventDate" class="text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 ml-1">Event Timeline</label>
+            <div class="bg-slate-900 rounded-[3rem] p-10 md:p-12 border-2 border-slate-800 shadow-2xl relative overflow-hidden">
+                <div class="absolute -top-12 -right-12 w-32 h-32 bg-brand-purple/20 rounded-full blur-3xl"></div>
+
+                <div class="space-y-10 relative z-10">
+                    <div class="space-y-3">
+                        <label asp-for="EventDate" class="text-[10px] font-black uppercase tracking-widest text-brand-purple ml-2">Update Timeline</label>
                         <input asp-for="EventDate" type="date" 
-                            class="w-full px-6 py-4 bg-slate-800 border-2 border-transparent rounded-2xl text-lg font-bold text-white focus:border-blue-500 outline-none transition-all [color-scheme:dark]" />
+                            class="w-full px-8 py-5 bg-slate-800 border-2 border-transparent rounded-[2rem] text-lg font-bold text-white focus:border-brand-purple outline-none transition-all [color-scheme:dark] shadow-inner" />
                     </div>
 
-                    <div class="space-y-2">
-                        <label asp-for="Location" class="text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 ml-1">Update Venue</label>
+                    <div class="space-y-3">
+                        <label asp-for="Location" class="text-[10px] font-black uppercase tracking-widest text-brand-purple ml-2">Update Venue</label>
                         <input asp-for="Location" placeholder="Enter new location..." 
-                            class="w-full px-6 py-4 bg-slate-800 border-2 border-transparent rounded-2xl text-lg font-bold text-white placeholder:text-slate-500 focus:border-blue-500 outline-none transition-all" />
+                            class="w-full px-8 py-5 bg-slate-800 border-2 border-transparent rounded-[2rem] text-lg font-bold text-white placeholder:text-slate-600 focus:border-brand-purple outline-none transition-all shadow-inner" />
                     </div>
 
-                    <div class="space-y-2">
-                        <label asp-for="Price" class="text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 ml-1">Adjust Price (INR)</label>
+                    <div class="space-y-3">
+                        <label asp-for="Price" class="text-[10px] font-black uppercase tracking-widest text-brand-purple ml-2">Adjust Fee (INR)</label>
                         <input asp-for="Price" type="number" step="0.01" 
-                            class="w-full px-6 py-4 bg-slate-800 border-2 border-transparent rounded-2xl text-lg font-bold text-white placeholder:text-slate-500 focus:border-blue-500 outline-none transition-all" />
+                            class="w-full px-8 py-5 bg-slate-800 border-2 border-transparent rounded-[2rem] text-lg font-bold text-white placeholder:text-slate-600 focus:border-brand-purple outline-none transition-all shadow-inner" />
                     </div>
 
-                    <div class="pt-4">
+                    <div class="pt-6">
                         <button type="submit" 
-                            class="group relative w-full py-6 bg-blue-600 text-white font-black text-xs uppercase tracking-widest rounded-2xl transition-all duration-300 hover:bg-blue-700 hover:scale-[1.02] active:scale-95 shadow-xl shadow-blue-500/25">
-                            <span class="relative z-10 flex items-center justify-center gap-2">
+                            class="group relative w-full py-6 bg-white text-slate-900 font-black text-xs uppercase tracking-widest rounded-[2rem] overflow-hidden transition-all duration-300 hover:scale-[1.05] active:scale-95 shadow-2xl shadow-brand-purple/20">
+                            <span class="relative z-10 flex items-center justify-center gap-3 group-hover:text-white transition-colors duration-500">
                                 Save Changes
-                                <svg class="w-4 h-4 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                                <svg class="w-5 h-5 group-hover:-translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
                             </span>
+                            <div class="absolute inset-0 bg-brand-gradient translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out"></div>
                         </button>
                     </div>
                 </div>
             </div>
 
-            <div class="px-6 py-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-100 dark:border-amber-800/50 rounded-2xl">
-                <p class="text-[9px] font-black text-amber-600 dark:text-amber-400 uppercase tracking-widest leading-relaxed">
-                    Note: Changes to event details will be visible to all registered students immediately.
+            <div class="p-8 bg-amber-500/5 border-2 border-dashed border-amber-500/20 rounded-[2.5rem]">
+                <p class="text-[10px] font-black text-amber-600 dark:text-amber-500 uppercase tracking-widest mb-2 flex items-center gap-2">
+                    <span class="text-lg">⚠️</span> System Alert
+                </p>
+                <p class="text-sm font-medium text-slate-500 dark:text-slate-400 leading-relaxed">
+                    Modifying live records will trigger an instant update across all delegate passes and the public catalog.
                 </p>
             </div>
         </div>

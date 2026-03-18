@@ -3,69 +3,71 @@
     ViewData["Title"] = "Admin Dashboard";
 }
 
-<div class="max-w-7xl mx-auto py-10 px-6 space-y-10">
-    <div class="relative overflow-hidden rounded-[2.5rem] bg-slate-900 p-8 md:p-14 shadow-2xl border border-slate-800">
+<div class="max-w-7xl mx-auto py-10 px-6 space-y-12">
+    <div class="relative overflow-hidden rounded-[3.5rem] bg-slate-900 p-10 md:p-16 shadow-2xl border border-slate-800">
+        <div class="absolute -right-20 -top-20 h-96 w-96 rounded-full bg-brand-purple/10 blur-[100px] animate-pulse"></div>
+        <div class="absolute -left-20 -bottom-20 h-96 w-96 rounded-full bg-brand-blue/10 blur-[100px] animate-pulse delay-700"></div>
+
         <div class="relative z-10 animate-in fade-in slide-in-from-left-6 duration-1000">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 mb-6">
-                <span class="flex h-2 w-2 rounded-full bg-blue-500 animate-pulse"></span>
-                <span class="text-[9px] font-black text-blue-400 uppercase tracking-[0.3em]">System Live</span>
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-purple/10 border border-brand-purple/20 mb-8">
+                <span class="flex h-2 w-2 rounded-full bg-brand-purple animate-pulse"></span>
+                <span class="text-[9px] font-black text-brand-purple uppercase tracking-[0.4em]">Central Command Live</span>
             </div>
-            <h2 class="text-4xl md:text-6xl font-black text-white tracking-tighter leading-none">
-                Welcome, @Context.Session.GetString("Admin")! 👋
+            <h2 class="text-4xl md:text-7xl font-black text-white tracking-tighter leading-none italic uppercase">
+                Welcome, <span class="text-transparent bg-clip-text bg-brand-gradient">@Context.Session.GetString("Admin")!</span>
             </h2>
-            <p class="text-slate-400 mt-4 text-base md:text-lg font-medium max-w-xl leading-relaxed">
-                Manage your campus ecosystem and track real-time engagement from your central hub.
+            <p class="text-slate-400 mt-6 text-lg md:text-xl font-medium max-w-2xl leading-relaxed">
+                Analyze campus engagement, manage event lifecycles, and curate moments for the <span class="text-white font-bold">AMTICS</span> community.
             </p>
         </div>
-        <div class="absolute -right-16 -top-16 h-64 w-64 rounded-full bg-blue-600/10 blur-[80px]"></div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div class="bg-white dark:bg-slate-800 p-10 rounded-[2.5rem] border border-slate-100 dark:border-slate-700 transition-all hover:border-blue-500 shadow-sm">
-            <div class="flex items-center justify-between mb-6">
-                <span class="text-4xl">📅</span>
-                <span class="text-[10px] font-black text-blue-500 bg-blue-50 dark:bg-blue-900/30 px-3 py-1 rounded-full uppercase tracking-widest">Current</span>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <div class="group bg-white dark:bg-slate-900 p-12 rounded-[3rem] border border-slate-100 dark:border-slate-800 transition-all hover:border-brand-purple shadow-sm hover:shadow-[0_20px_50px_-15px_rgba(139,92,246,0.15)]">
+            <div class="flex items-center justify-between mb-8">
+                <div class="w-16 h-16 bg-slate-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center text-4xl group-hover:scale-110 transition-transform">📅</div>
+                <span class="text-[10px] font-black text-brand-purple bg-brand-purple/10 px-4 py-2 rounded-full uppercase tracking-widest border border-brand-purple/20">Active</span>
             </div>
-            <p class="text-slate-400 text-[10px] font-black uppercase tracking-[0.3em]">Active Events</p>
-            <h3 class="text-5xl font-black text-slate-900 dark:text-white mt-2 tracking-tighter">@ViewData["TotalEvents"]</h3>
+            <p class="text-slate-400 text-[10px] font-black uppercase tracking-[0.4em]">Total Cataloged Events</p>
+            <h3 class="text-5xl font-black text-slate-900 dark:text-white mt-4 tracking-tighter italic">@ViewData["TotalEvents"]</h3>
         </div>
 
-        <div class="bg-white dark:bg-slate-800 p-10 rounded-[2.5rem] border border-slate-100 dark:border-slate-700 transition-all hover:border-purple-500 shadow-sm">
-            <div class="flex items-center justify-between mb-6">
-                <span class="text-4xl">👥</span>
-                <span class="text-[10px] font-black text-purple-500 bg-purple-50 dark:bg-purple-900/30 px-3 py-1 rounded-full uppercase tracking-widest">Realtime</span>
+        <div class="group bg-white dark:bg-slate-900 p-12 rounded-[3rem] border border-slate-100 dark:border-slate-800 transition-all hover:border-brand-blue shadow-sm hover:shadow-[0_20px_50px_-15px_rgba(59,130,246,0.15)]">
+            <div class="flex items-center justify-between mb-8">
+                <div class="w-16 h-16 bg-slate-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center text-4xl group-hover:scale-110 transition-transform">👥</div>
+                <span class="text-[10px] font-black text-brand-blue bg-brand-blue/10 px-4 py-2 rounded-full uppercase tracking-widest border border-brand-blue/20">Realtime</span>
             </div>
-            <p class="text-slate-400 text-[10px] font-black uppercase tracking-[0.3em]">Total Registrations</p>
-            <h3 class="text-5xl font-black text-slate-900 dark:text-white mt-2 tracking-tighter">@ViewData["TotalRegistrations"]</h3>
+            <p class="text-slate-400 text-[10px] font-black uppercase tracking-[0.4em]">Delegate Registrations</p>
+            <h3 class="text-5xl font-black text-slate-900 dark:text-white mt-4 tracking-tighter italic">@ViewData["TotalRegistrations"]</h3>
         </div>
     </div>
 
-    <div class="space-y-6 pt-6">
-        <div class="flex items-center gap-3 px-1">
-            <span class="h-6 w-1.5 bg-blue-600 rounded-full"></span>
-            <h3 class="text-2xl font-black text-slate-900 dark:text-slate-100 tracking-tight uppercase italic">Operations</h3>
+    <div class="space-y-8 pt-8">
+        <div class="flex items-center gap-4 px-2">
+            <span class="h-8 w-2 bg-brand-gradient rounded-full"></span>
+            <h3 class="text-3xl font-black text-slate-900 dark:text-slate-100 tracking-tight uppercase italic leading-none">Management Operations</h3>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <a href="/Admin/CreateEvent" class="group bg-white dark:bg-slate-800 p-8 rounded-[2rem] border border-slate-100 dark:border-slate-700 hover:border-blue-600 transition-all shadow-lg hover:shadow-blue-500/5">
-                <div class="text-3xl mb-4 group-hover:scale-110 transition-transform">✨</div>
-                <h4 class="text-xl font-black text-slate-900 dark:text-white">Create Event</h4>
-                <p class="text-slate-500 text-sm mt-2 leading-relaxed">Launch a new seminar or workshop.</p>
-                <p class="mt-8 text-blue-600 font-black text-[10px] uppercase tracking-[0.2em]">Open Builder &rarr;</p>
+            <a href="/Admin/CreateEvent" class="group bg-white dark:bg-slate-900 p-10 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 hover:border-brand-purple transition-all shadow-lg hover:shadow-brand-purple/5 flex flex-col min-h-[300px]">
+                <div class="w-14 h-14 bg-slate-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:rotate-12 transition-transform">✨</div>
+                <h4 class="text-2xl font-black text-slate-900 dark:text-white italic uppercase tracking-tighter">Create Event</h4>
+                <p class="text-slate-500 dark:text-slate-400 text-sm mt-4 leading-relaxed font-medium">Launch high-impact seminars and campus workshops.</p>
+                <p class="mt-auto pt-8 text-brand-purple font-black text-[10px] uppercase tracking-[0.3em] flex items-center gap-2">Open Builder <span class="group-hover:translate-x-2 transition-transform">&rarr;</span></p>
             </a>
 
-            <a href="/Admin/ManageEvents" class="group bg-white dark:bg-slate-800 p-8 rounded-[2rem] border border-slate-100 dark:border-slate-700 hover:border-purple-600 transition-all shadow-lg hover:shadow-purple-500/5">
-                <div class="text-3xl mb-4 group-hover:scale-110 transition-transform">⚙️</div>
-                <h4 class="text-xl font-black text-slate-900 dark:text-white">Manage Events</h4>
-                <p class="text-slate-500 text-sm mt-2 leading-relaxed">Edit details or delete active events.</p>
-                <p class="mt-8 text-purple-600 font-black text-[10px] uppercase tracking-[0.2em]">View All &rarr;</p>
+            <a href="/Admin/ManageEvents" class="group bg-white dark:bg-slate-900 p-10 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 hover:border-brand-blue transition-all shadow-lg hover:shadow-brand-blue/5 flex flex-col min-h-[300px]">
+                <div class="w-14 h-14 bg-slate-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:rotate-12 transition-transform">⚙️</div>
+                <h4 class="text-2xl font-black text-slate-900 dark:text-white italic uppercase tracking-tighter">Event Control</h4>
+                <p class="text-slate-500 dark:text-slate-400 text-sm mt-4 leading-relaxed font-medium">Full administrative control over active event records.</p>
+                <p class="mt-auto pt-8 text-brand-blue font-black text-[10px] uppercase tracking-[0.3em] flex items-center gap-2">Manage All <span class="group-hover:translate-x-2 transition-transform">&rarr;</span></p>
             </a>
 
-            <a href="/Admin/Registrations" class="group bg-white dark:bg-slate-800 p-8 rounded-[2rem] border border-slate-100 dark:border-slate-700 hover:border-amber-600 transition-all shadow-lg hover:shadow-amber-500/5">
-                <div class="text-3xl mb-4 group-hover:scale-110 transition-transform">📋</div>
-                <h4 class="text-xl font-black text-slate-900 dark:text-white">Student Registrations</h4>
-                <p class="text-slate-500 text-sm mt-2 leading-relaxed">Verify registrations and student records.</p>
-                <p class="mt-8 text-amber-600 font-black text-[10px] uppercase tracking-[0.2em]">View Records &rarr;</p>
+            <a href="/Admin/ViewRegistrations" class="group bg-white dark:bg-slate-900 p-10 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 hover:border-brand-purple transition-all shadow-lg hover:shadow-brand-purple/5 flex flex-col min-h-[300px]">
+                <div class="w-14 h-14 bg-slate-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:rotate-12 transition-transform">📋</div>
+                <h4 class="text-2xl font-black text-slate-900 dark:text-white italic uppercase tracking-tighter">Attendee Logs</h4>
+                <p class="text-slate-500 dark:text-slate-400 text-sm mt-4 leading-relaxed font-medium">Access student registration lists and analytics.</p>
+                <p class="mt-auto pt-8 text-brand-purple font-black text-[10px] uppercase tracking-[0.3em] flex items-center gap-2">Review Logs <span class="group-hover:translate-x-2 transition-transform">&rarr;</span></p>
             </a>
         </div>
     </div>

@@ -27,7 +27,8 @@ namespace EventManagementSystem.Controllers
             var ev = _context.Events.FirstOrDefault(e => e.Slug == slug);
             if (ev == null) return NotFound();
 
-            ViewBag.EventTitle = ev.Title;
+            ViewData["EventTitle"] = ev.Title;
+            ViewData["EventSlug"] = ev.Slug;
 
             return View(new Registration { EventId = ev.EventId });
         }
@@ -40,24 +41,13 @@ namespace EventManagementSystem.Controllers
             
             registration.RegisteredAt = DateTime.Now;
 
-            if (!ModelState.IsValid)
-            {
-                var errors = ModelState.Values.SelectMany(v => v.Errors);
-                foreach (var error in errors)
-                {
-                    Console.WriteLine($"Error: {error.ErrorMessage}");
-                }
-            }
-
             if (ModelState.IsValid)
             {
-                Console.WriteLine("MODEL STATE IS VALID");
                 var isAlreadyRegistered = _context.Registrations.Any(r => 
                     r.RollNumber == registration.RollNumber && 
                     r.EventId == registration.EventId);
                 if (isAlreadyRegistered)                {
                     ModelState.AddModelError("RollNumber", "You have already registered for this event.");
-                    Console.WriteLine("ROLL NUMBER ALREADY EXISTS");
                     return View("RegistrationSuccess");
                 }
                 else
@@ -73,14 +63,7 @@ namespace EventManagementSystem.Controllers
             if (ev != null)
             {
                 ViewBag.EventTitle = ev.Title;
-                ViewData["EventSlug"] = ev.Slug;
-                Console.WriteLine($"EVENT FOUND: {ev.Title}");
-                Console.WriteLine($"EVENT SLUG: {ev.Slug}");
-                Console.WriteLine($"EVENT ID: {ev.EventId}");
-            }
-            else
-            {
-                Console.WriteLine("EVENT NOT FOUND");
+                ViewBag.EventSlug = ev.Slug;
             }
             
             return View(registration);
@@ -115,7 +98,8 @@ namespace EventManagementSystem.Controllers
             var ev = _context.Events.FirstOrDefault(e => e.Slug == slug);
             if (ev == null) return NotFound();
 
-            ViewBag.EventTitle = ev.Title;
+            ViewData["EventSlug"] = ev.Slug;
+            ViewData["EventTitle"] = ev.Title;
 
             return View(ev);
         }
