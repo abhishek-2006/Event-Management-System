@@ -18,7 +18,7 @@ The platform follows a **Deep Space** aesthetic, featuring:
 
   * **Live Catalog:** Real-time browsing of Technical, Cultural, Sports, and Educational events.
   * **Instant Registration:** Simplified enrollment with automated data validation.
-  * **Digital Event Pass:** Procedurally generated boarding passes with unique security keys (EH-ID-Roll) for gate entry.
+  * **Digital Event Pass:** Procedurally generated boarding passes with unique security keys for gate entry.
   * **Responsive Design:** Fully optimized for mobile screens for on-the-go access.
 
 ### 🛡️ For Administrators
