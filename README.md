@@ -1,98 +1,89 @@
-# EventHub — Curating Unforgettable Moments
+# 🚀 EventHub — Curating Unforgettable Moments
 
-**EventHub** is a premium, full-stack event management ecosystem. It streamlines the lifecycle of campus events, from administrative architecting to student registration and digital pass generation.
+**EventHub** is a premium, full-stack event management ecosystem engineered for the campus. It digitizes the entire event lifecycle—from administrative "Architecting" to seamless student registration and procedural security pass generation.
 
-## 🎨 Brand Identity
-
-The platform follows a **Deep Space** aesthetic, featuring:
-
-  * **Primary Palette:** Brand Purple (`#8B5CF6`) & Brand Blue (`#3B82F6`).
-  * **UI Style:** Glassmorphic cards, metallic silver accents, and high-contrast dark mode.
-  * **UX Focus:** Seamless navigation, real-time filtering, and procedural digital pass generation.
-
----
+## 🎨 Brand Identity: "Deep Space"
+The platform is built on a custom design language that balances high-end aesthetics with administrative utility.
+* **Core Palette:** High-vibrancy **Brand Purple** (`#8B5CF6`) and **Strategic Blue** (`#3B82F6`).
+* **Visual Philosophy:** Glassmorphic containers, metallic silver accents, and a high-contrast "Deep Space" dark mode.
+* **Signature UI:** Rounded-corner architecture ($3.5rem$ radius) and animated gradient transitions.
 
 ## ✨ Key Features
 
-### 🎓 For Students
+### 🎓 For Students (The Experience)
+* **Live Catalog:** A real-time, filtered interface for Technical, Cultural, Sports, and Educational events.
+* **Metallic Identity System:** Procedural student avatars based on their initial identity.
+* **Elite Event Pass:** High-fidelity digital boarding passes featuring:
+    * Unique **Security Auth Keys** (`EH-REG-ROLL`).
+    * Procedural **CSS Barcoding** for gate verification.
+    * Print-optimized layouts for physical archival.
 
-  * **Live Catalog:** Real-time browsing of Technical, Cultural, Sports, and Educational events.
-  * **Instant Registration:** Simplified enrollment with automated data validation.
-  * **Digital Event Pass:** Procedurally generated boarding passes with unique security keys for gate entry.
-  * **Responsive Design:** Fully optimized for mobile screens for on-the-go access.
-
-### 🛡️ For Administrators
-
-  * **Central Command Dashboard:** Real-time analytics showing total engagement and active event counts.
-  * **Event Architect:** A high-end builder to launch, modify, or decommission campus experiences.
-  * **Attendee Intelligence:** Comprehensive logs of all registered students with academic filters.
-  * **Data Export:** Generate official CSV reports and formatted print views for university records.
-  * **Security:** Role-based access control with a dedicated, themed Admin Portal.
-
----
+### 🛡️ For Administrators (The Command Center)
+* **Central Command Dashboard:** High-impact analytics tracking student engagement and catalog health.
+* **Event Architect:** A specialized builder to launch, modify, or decommission campus experiences.
+* **Attendee Intelligence:** Searchable logs with academic filters (Semester/Department).
+* **Data Sovereignty:** Professional CSV export and "Official Report" print formatting for university records.
+* **Session Security:** Secure Admin Portal with background-persistence prevention.
 
 ## 🛠️ Technical Stack
 
-  * **Framework:** ASP.NET Core MVC (C\#)
-  * **Database:** Entity Framework Core (SQL Server)
-  * **Styling:** Tailwind CSS 3.0
-  * **Frontend Logic:** JavaScript (ES6+), Razor Syntax
-  * **Icons/Graphics:** Custom SVG Library & Procedural CSS Barcoding
+* **Core:** ASP.NET Core 8.0 MVC (C#)
+* **Data:** Entity Framework Core (SQL Server)
+* **Styling:** Tailwind CSS 3.0 (Custom JIT Configuration)
+* **Interactions:** JavaScript ES6+ & Razor Templating
+* **Assets:** Optimized Metallic Logo & High-Res Favicon System
 
----
-
-## 🚀 Getting Started
+## 🚀 Deployment & Local Access
 
 ### Prerequisites
+* .NET 8.0 SDK
+* SQL Server (Express or LocalDB)
+* Visual Studio 2022 / VS Code
 
-  * .NET 8.0 SDK or later
-  * SQL Server (LocalDB or Express)
-  * Visual Studio 2022 / VS Code
-
-### Installation
-
-1.  **Clone the repository**
-
+### Standard Installation
+1.  **Clone & Enter:**
     ```bash
     git clone https://github.com/abhishek-2006/EventManagementSystem.git
     cd EventManagementSystem
     ```
-
-2.  **Configure Connection String**
-    Update `appsettings.json` with your local database credentials.
-
-3.  **Apply Migrations**
-
+2.  **Database Sync:**
+    Update `appsettings.json` with your connection string, then run:
     ```bash
     dotnet ef database update
     ```
-
-4.  **Run the Application**
-
+3.  **Launch:**
     ```bash
     dotnet run
     ```
 
-    Open `http://localhost:5199` to view the portal.
+### 🌐 Cross-Device Testing (Same Network)
+To demo the **Mobile Pass** on a real phone while the server runs on your laptop:
 
----
+1.  **Host on all Interfaces:**
+    ```bash
+    dotnet run --urls "http://0.0.0.0:5199"
+    ```
+2.  **Firewall Configuration:**
+    * Open **Windows Defender Firewall** > **Advanced Settings**.
+    * **Inbound Rules** > **New Rule** > **Port (TCP)**.
+    * Specify Port: **5199** > **Allow Connection**.
+    * Name it: `EventHub-Mobile-Demo`.
+3.  **Connect:**
+    Find your IPv4 (via `ipconfig`) and visit `http://[YOUR-IP]:5199` on any mobile device on the same Wi-Fi.
 
-## 📁 Project Structure
-
+## 📁 Project Architecture
 ```text
 EventManagementSystem/
-├── Controllers/         # Logic for Admin & Public Routes
-├── Models/              # Database Entities (Event, Registration, Admin)
-├── ViewModels/          # Data Transfer Objects for optimized views
-├── Views/               # Razor Templates (Themed with Tailwind)
-│   ├── Admin/           # Protected Administrative Suite
-│   ├── Events/          # Public Catalog & Registration
-│   └── Shared/          # Layout, Header, and Footer
-└── wwwroot/             # Brand Assets (logo.jpg, favicon.jpg)
+├── Controllers/       # Administrative & Public Route Logic
+├── Models/            # EF Core Entities (Event, Registration, Admin)
+├── ViewModels/        # Optimized Data Transfer Objects
+├── Views/             # High-Gloss Razor Templates
+│   ├── Admin/         # Secure Management Suite
+│   ├── Events/        # Discovery & Registration Flow
+│   └── Shared/        # Layout Architect (Navigation & Footer)
+└── wwwroot/           # Brand Identity Assets (logo.jpg, favicon.jpg)
 ```
 
----
-
-## 👨‍💻 Developer
+## 👨‍💻 Developed By
 
 **Made with ❤️ by Abhishek Shah**
