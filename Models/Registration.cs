@@ -11,17 +11,19 @@ namespace EventManagementSystem.Models
         [Required(ErrorMessage = "Full name is required")]
         public string StudentName { get; set; }
 
-        [Required(ErrorMessage = "Roll Number is required")]
+        [Required(ErrorMessage = "Enrollment Number is required")]
         public string RollNumber { get; set; }
 
         [Required]
         [EmailAddress]
         public string Email { get; set; }
-
+        [Required(ErrorMessage = "Phone Number is required")]
         public string PhoneNumber { get; set; }
 
+        [Required(ErrorMessage = "Semester is required")]
         public int Semester { get; set; }
 
+        [Required(ErrorMessage = "Department is required")]
         public string Department { get; set; }
 
         public int EventId { get; set; }

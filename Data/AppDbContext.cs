@@ -23,7 +23,7 @@ namespace EventManagementSystem.Data
                     Description = "A deep dive into AI, Machine Learning, and Cloud Computing with industry experts.", 
                     Category = "Technical", 
                     EventDate = new DateTime(2026, 03, 25, 10, 0, 0), 
-                    Location = "Main Auditorium", 
+                    Location = "Pushpam Auditorium", 
                     Price = 0 
                 },
                 new Event { 
@@ -32,7 +32,7 @@ namespace EventManagementSystem.Data
                     Description = "Inter-departmental sports competition including Cricket, Football, and Athletics.", 
                     Category = "Sports", 
                     EventDate = new DateTime(2026, 04, 05, 8, 30, 0), 
-                    Location = "College Ground", 
+                    Location = "Sports Ground", 
                     Price = 50 
                 },
                 new Event { 
@@ -41,7 +41,7 @@ namespace EventManagementSystem.Data
                     Description = "A vibrant evening of dance, music, and drama performances by students.", 
                     Category = "Cultural", 
                     EventDate = new DateTime(2026, 04, 12, 18, 0, 0), 
-                    Location = "Open Air Theater", 
+                    Location = "Sports Ground", 
                     Price = 150 
                 },
                 new Event { 
@@ -50,7 +50,7 @@ namespace EventManagementSystem.Data
                     Description = "Practical session on modern banking systems and insurance policies.", 
                     Category = "Education", 
                     EventDate = new DateTime(2026, 03, 20, 11, 0, 0), 
-                    Location = "Seminar Hall B", 
+                    Location = "JD Hall", 
                     Price = 0 
                 }
             );
