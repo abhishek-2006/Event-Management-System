@@ -195,7 +195,7 @@ namespace EventManagementSystem.Controllers
             var data = _context.Registrations
                 .Select(r => new {
                     r.StudentName,
-                    r.RollNumber,
+                    r.EnrollNumber,
                     r.Email,
                     r.PhoneNumber,
                     r.Department,
@@ -211,7 +211,7 @@ namespace EventManagementSystem.Controllers
             // Add rows
             foreach (var row in data)
             {
-                csv.AppendLine($"\"{row.StudentName}\",\"{row.RollNumber}\",\"{row.Email}\",\"{row.PhoneNumber}\",\"{row.Department}\",\"{row.Semester}\",\"{row.Event}\",\"{row.Date}\"");
+                csv.AppendLine($"\"{row.StudentName}\",\"{row.EnrollNumber}\",\"{row.Email}\",\"{row.PhoneNumber}\",\"{row.Department}\",\"{row.Semester}\",\"{row.Event}\",\"{row.Date}\"");
             }
 
             // Return as a downloadable file

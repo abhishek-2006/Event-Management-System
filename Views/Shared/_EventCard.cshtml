@@ -1,0 +1,86 @@
+@model EventManagementSystem.Models.Event
+
+@{
+    var today = DateTime.Today;
+    bool isPast = Model.EventDate.Date < today;
+    bool isLive = Model.EventDate.Date == today;
+    bool isUpcoming = Model.EventDate.Date > today;
+
+    // Default policy: registrations open 7 days prior to the event, or adjust to your preference
+    bool registrationStarted = isLive || (isUpcoming && (Model.EventDate.Date - today).TotalDays <= 7);
+
+    var categoryColor = Model.Category switch {
+        "Technical" => "text-emerald-600 bg-emerald-50 dark:bg-emerald-900/30 dark:text-emerald-400 border-emerald-100 dark:border-emerald-800",
+        "Cultural" => "text-brand-purple bg-purple-50 dark:bg-purple-900/30 dark:text-purple-400 border-purple-100 dark:border-purple-800",
+        "Sports" => "text-amber-600 bg-amber-50 dark:bg-amber-900/30 dark:text-amber-400 border-amber-100 dark:border-amber-800",
+        "Education" => "text-brand-blue bg-blue-50 dark:bg-blue-900/30 dark:text-blue-400 border-blue-100 dark:border-blue-800",
+        _ => "text-slate-600 bg-slate-50 dark:bg-slate-800 dark:text-slate-400 border-slate-100 dark:border-slate-800"
+    };
+}
+
+<div class="event-card group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[2.5rem] p-3 transition-all duration-500 hover:shadow-[0_0_50px_-10px_rgba(139,92,246,0.25)] hover:-translate-y-2" 
+     data-category="@Model.Category" data-title="@Model.Title.ToLower()">
+    <div class="relative bg-slate-50 dark:bg-slate-950 rounded-[2.8rem] p-10 h-full flex flex-col overflow-hidden">
+        
+        <div class="flex justify-between items-center mb-8">
+            <span class="px-5 py-2 rounded-full text-[9px] font-black uppercase tracking-widest border @categoryColor">
+                @Model.Category
+            </span>
+            <div class="text-right">
+                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                    @(isPast ? "Ended" : isLive ? "Today" : "Date")
+                </p>
+                <p class="text-sm font-bold text-slate-700 dark:text-slate-300">@Model.EventDate.ToString("MMM dd, yyyy")</p>
+            </div>
+        </div>
+
+        <h3 class="text-2xl font-black text-slate-900 dark:text-white mb-4 leading-tight group-hover:text-brand-purple transition-colors">
+            @Model.Title
+        </h3>
+        <p class="text-slate-500 dark:text-slate-400 text-base leading-relaxed mb-8 line-clamp-2">
+            @Model.Description
+        </p>
+
+        <!-- Status Tag / Gate Info -->
+        <div class="mb-8">
+            @if (isPast)
+            {
+                <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-200/60 dark:bg-slate-800 text-slate-500 dark:text-slate-400 text-[10px] font-black uppercase tracking-widest">
+                    <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> Event Concluded
+                </span>
+            }
+            else if (isLive)
+            {
+                <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 text-[10px] font-black uppercase tracking-widest">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Live &bull; Registration Active
+                </span>
+            }
+            else if (registrationStarted)
+            {
+                <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-purple/10 border border-brand-purple/20 text-brand-purple text-[10px] font-black uppercase tracking-widest">
+                    <span class="w-1.5 h-1.5 rounded-full bg-brand-purple"></span> Registration Open
+                </span>
+            }
+            else
+            {
+                <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-500 text-[10px] font-black uppercase tracking-widest">
+                    <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Registration Soon
+                </span>
+            }
+        </div>
+
+        <div class="flex items-center gap-8 mb-10 text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-[0.2em] border-y border-slate-200/50 dark:border-slate-800 py-6">
+            <div class="flex items-center gap-2">
+                <span class="text-lg">📍</span> @Model.Location
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="text-lg">💰</span> @(Model.Price == 0 ? "Free" : $"₹{Model.Price}")
+            </div>
+        </div>
+
+        <a asp-action="Details" asp-route-slug="@Model.Slug" 
+           class="mt-auto w-full py-5 bg-slate-900 dark:bg-slate-800 text-white dark:text-slate-200 font-black text-xs uppercase tracking-[0.3em] rounded-2xl text-center transition-all hover:bg-brand-gradient hover:text-white hover:scale-[1.02] shadow-xl">
+            View Details
+        </a>
+    </div>
+</div>
