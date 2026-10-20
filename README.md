@@ -37,14 +37,14 @@ The platform is built on a custom design language that balances high-end aesthet
 
 ### Prerequisites
 * .NET 8.0 SDK
-* SQL Server (Express or LocalDB)
+* MySQL
 * Visual Studio 2022 / VS Code
 
 ### Standard Installation
 1.  **Clone & Enter:**
     ```bash
-    git clone https://github.com/abhishek-2006/EventManagementSystem.git
-    cd EventManagementSystem
+    git clone https://github.com/abhishek-2006/Event-Management-System.git
+    cd Event-Management-System
     ```
 2.  **Database Sync:**
     Update `appsettings.json` with your connection string, then run:
@@ -69,7 +69,7 @@ To demo the **Mobile Pass** on a real phone while the server runs on your laptop
     * Specify Port: **5199** > **Allow Connection**.
     * Name it: `EventHub-Mobile-Demo`.
 3.  **Connect:**
-    Find your IPv4 (via `ipconfig`) and visit `http://[YOUR-IP]:5199` on any mobile device on the same Wi-Fi.
+    Visit `http://localhost:5199` on any mobile device on the same Wi-Fi.
 
 ## 📁 Project Architecture
 ```text
