@@ -12,7 +12,8 @@ namespace EventManagementSystem.Models
         public string StudentName { get; set; }
 
         [Required(ErrorMessage = "Enrollment Number is required")]
-        public string RollNumber { get; set; }
+        [Display(Name = "Enrollment Number")]
+        public long EnrollNumber { get; set; }
 
         [Required]
         [EmailAddress]

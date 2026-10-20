@@ -44,10 +44,10 @@ namespace EventManagementSystem.Controllers
             if (ModelState.IsValid)
             {
                 var isAlreadyRegistered = _context.Registrations.Any(r => 
-                    r.RollNumber == registration.RollNumber && 
+                    r.EnrollNumber == registration.EnrollNumber && 
                     r.EventId == registration.EventId);
                 if (isAlreadyRegistered)                {
-                    ModelState.AddModelError("RollNumber", "You have already registered for this event.");
+                    ModelState.AddModelError("EnrollNumber", "You have already registered for this event.");
                     return View("RegistrationSuccess");
                 }
                 else
@@ -79,7 +79,7 @@ namespace EventManagementSystem.Controllers
                 {
                     RegistrationId = r.Id,
                     Name = r.StudentName,
-                    RollNumber = r.RollNumber,
+                    EnrollNumber = r.EnrollNumber,
                     EventTitle = r.Event.Title,
                     Semester = r.Semester,
                     Department = r.Department,

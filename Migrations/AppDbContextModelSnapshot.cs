@@ -135,6 +135,9 @@ namespace EventManagementSystem.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<long>("EnrollNumber")
+                        .HasColumnType("bigint");
+
                     b.Property<int>("EventId")
                         .HasColumnType("int");
 
@@ -144,10 +147,6 @@ namespace EventManagementSystem.Migrations
 
                     b.Property<DateTime>("RegisteredAt")
                         .HasColumnType("datetime(6)");
-
-                    b.Property<string>("RollNumber")
-                        .IsRequired()
-                        .HasColumnType("longtext");
 
                     b.Property<int>("Semester")
                         .HasColumnType("int");
