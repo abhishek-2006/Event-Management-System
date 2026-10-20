@@ -86,4 +86,4 @@ EventManagementSystem/
 
 ## 👨‍💻 Developed By
 
-**Made with ❤️ by Abhishek Shah**
+**Made with ❤️ by [Abhishek Shah](https://abhishekshah-portfolio.vercel.app/)**
