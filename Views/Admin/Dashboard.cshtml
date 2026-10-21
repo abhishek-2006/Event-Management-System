@@ -9,11 +9,7 @@
         <div class="absolute -left-20 -bottom-20 h-96 w-96 rounded-full bg-brand-blue/10 blur-[100px] animate-pulse delay-700"></div>
 
         <div class="relative z-10 animate-in fade-in slide-in-from-left-6 duration-1000">
-            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-purple/10 border border-brand-purple/20 mb-8">
-                <span class="flex h-2 w-2 rounded-full bg-brand-purple animate-pulse"></span>
-                <span class="text-[9px] font-black text-brand-purple uppercase tracking-[0.4em]">Central Command Live</span>
-            </div>
-            <h2 class="text-4xl md:text-7xl font-black text-white tracking-tighter leading-none italic uppercase">
+            <h2 class="text-3xl md:text-5xl font-black text-white leading-none uppercase">
                 Welcome, <span class="text-transparent bg-clip-text bg-brand-gradient">@Context.Session.GetString("Admin")!</span>
             </h2>
             <p class="text-slate-400 mt-6 text-lg md:text-xl font-medium max-w-2xl leading-relaxed">
@@ -28,7 +24,7 @@
                 <div class="w-16 h-16 bg-slate-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center text-4xl group-hover:scale-110 transition-transform">📅</div>
                 <span class="text-[10px] font-black text-brand-purple bg-brand-purple/10 px-4 py-2 rounded-full uppercase tracking-widest border border-brand-purple/20">Active</span>
             </div>
-            <p class="text-slate-400 text-[10px] font-black uppercase tracking-[0.4em]">Total Cataloged Events</p>
+            <p class="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em]">Total Cataloged Events</p>
             <h3 class="text-5xl font-black text-slate-900 dark:text-white mt-4 tracking-tighter italic">@ViewData["TotalEvents"]</h3>
         </div>
 
@@ -37,7 +33,7 @@
                 <div class="w-16 h-16 bg-slate-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center text-4xl group-hover:scale-110 transition-transform">👥</div>
                 <span class="text-[10px] font-black text-brand-blue bg-brand-blue/10 px-4 py-2 rounded-full uppercase tracking-widest border border-brand-blue/20">Realtime</span>
             </div>
-            <p class="text-slate-400 text-[10px] font-black uppercase tracking-[0.4em]">Delegate Registrations</p>
+            <p class="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em]">Total Registrations</p>
             <h3 class="text-5xl font-black text-slate-900 dark:text-white mt-4 tracking-tighter italic">@ViewData["TotalRegistrations"]</h3>
         </div>
     </div>
@@ -53,21 +49,21 @@
                 <div class="w-14 h-14 bg-slate-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:rotate-12 transition-transform">✨</div>
                 <h4 class="text-2xl font-black text-slate-900 dark:text-white italic uppercase tracking-tighter">Create Event</h4>
                 <p class="text-slate-500 dark:text-slate-400 text-sm mt-4 leading-relaxed font-medium">Launch high-impact seminars and campus workshops.</p>
-                <p class="mt-auto pt-8 text-brand-purple font-black text-[10px] uppercase tracking-[0.3em] flex items-center gap-2">Open Builder <span class="group-hover:translate-x-2 transition-transform">&rarr;</span></p>
+                <p class="mt-auto pt-8 text-brand-purple font-black text-[10px] uppercase tracking-[0.2em] flex items-center gap-2">Create Event <span class="group-hover:translate-x-2 transition-transform">&rarr;</span></p>
             </a>
 
             <a href="/Admin/ManageEvents" class="group bg-white dark:bg-slate-900 p-10 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 hover:border-brand-blue transition-all shadow-lg hover:shadow-brand-blue/5 flex flex-col min-h-[300px]">
                 <div class="w-14 h-14 bg-slate-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:rotate-12 transition-transform">⚙️</div>
                 <h4 class="text-2xl font-black text-slate-900 dark:text-white italic uppercase tracking-tighter">Event Control</h4>
                 <p class="text-slate-500 dark:text-slate-400 text-sm mt-4 leading-relaxed font-medium">Full administrative control over active event records.</p>
-                <p class="mt-auto pt-8 text-brand-blue font-black text-[10px] uppercase tracking-[0.3em] flex items-center gap-2">Manage All <span class="group-hover:translate-x-2 transition-transform">&rarr;</span></p>
+                <p class="mt-auto pt-8 text-brand-blue font-black text-[10px] uppercase tracking-[0.2em] flex items-center gap-2">Manage All Events <span class="group-hover:translate-x-2 transition-transform">&rarr;</span></p>
             </a>
 
             <a href="/Admin/ViewRegistrations" class="group bg-white dark:bg-slate-900 p-10 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 hover:border-brand-purple transition-all shadow-lg hover:shadow-brand-purple/5 flex flex-col min-h-[300px]">
                 <div class="w-14 h-14 bg-slate-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:rotate-12 transition-transform">📋</div>
                 <h4 class="text-2xl font-black text-slate-900 dark:text-white italic uppercase tracking-tighter">Attendee Logs</h4>
-                <p class="text-slate-500 dark:text-slate-400 text-sm mt-4 leading-relaxed font-medium">Access student registration lists and analytics.</p>
-                <p class="mt-auto pt-8 text-brand-purple font-black text-[10px] uppercase tracking-[0.3em] flex items-center gap-2">Review Logs <span class="group-hover:translate-x-2 transition-transform">&rarr;</span></p>
+                <p class="text-slate-500 dark:text-slate-400 text-sm mt-4 leading-relaxed font-medium">View and analyze student registration lists and analytics.</p>
+                <p class="mt-auto pt-8 text-brand-purple font-black text-[10px] uppercase tracking-[0.2em] flex items-center gap-2">Review Logs <span class="group-hover:translate-x-2 transition-transform">&rarr;</span></p>
             </a>
         </div>
     </div>

@@ -52,8 +52,8 @@
                         @if (isAdmin)
                         {
                             <a href="/Admin/Dashboard" class="px-5 py-2.5 rounded-xl transition-all @(currentAction == "Dashboard" ? "bg-brand-purple text-white shadow-lg shadow-brand-purple/20" : "text-slate-500 hover:text-brand-purple hover:bg-slate-50 dark:hover:bg-slate-900")">Dashboard</a>
-                            <a href="/Admin/ManageEvents" class="px-5 py-2.5 rounded-xl transition-all @(currentAction == "ManageEvents" ? "bg-brand-purple text-white shadow-lg shadow-brand-purple/20" : "text-slate-500 hover:text-brand-purple hover:bg-slate-50 dark:hover:bg-slate-900")">Management</a>
-                            <a href="/Admin/ViewRegistrations" class="px-5 py-2.5 rounded-xl transition-all @(currentAction == "ViewRegistrations" ? "bg-brand-purple text-white shadow-lg shadow-brand-purple/20" : "text-slate-500 hover:text-brand-purple hover:bg-slate-50 dark:hover:bg-slate-900")">Attendees</a>
+                            <a href="/Admin/ManageEvents" class="px-5 py-2.5 rounded-xl transition-all @(currentAction == "ManageEvents" ? "bg-brand-purple text-white shadow-lg shadow-brand-purple/20" : "text-slate-500 hover:text-brand-purple hover:bg-slate-50 dark:hover:bg-slate-900")">Manage Events</a>
+                            <a href="/Admin/ViewRegistrations" class="px-5 py-2.5 rounded-xl transition-all @(currentAction == "ViewRegistrations" ? "bg-brand-purple text-white shadow-lg shadow-brand-purple/20" : "text-slate-500 hover:text-brand-purple hover:bg-slate-50 dark:hover:bg-slate-900")">View Registrations</a>
                             <a href="/Admin/Logout" class="px-5 py-2.5 rounded-xl text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all border border-transparent hover:border-red-200">Logout</a>
                         }
                         else
@@ -101,22 +101,22 @@
                 </div>
 
                 <div class="md:col-span-3 flex flex-col items-center md:items-start">
-                    <h4 class="text-[10px] font-black uppercase tracking-[0.3em] text-brand-purple mb-6">Navigation</h4>
+                    <h4 class="text-[10px] font-black uppercase tracking-widest text-brand-purple mb-6">Navigation</h4>
                     <div class="flex flex-col gap-4 text-xs font-bold text-slate-600 dark:text-slate-400">
                         @if (isAdmin) {
                             <a href="/Admin/Dashboard" class="hover:text-brand-purple transition-all">Dashboard</a>
-                            <a href="/Admin/ManageEvents" class="hover:text-brand-purple transition-all">Event Management</a>
-                            <a href="/Admin/ViewRegistrations" class="hover:text-brand-purple transition-all">Attendee Logs</a>
+                            <a href="/Admin/ManageEvents" class="hover:text-brand-purple transition-all">Manage Events</a>
+                            <a href="/Admin/ViewRegistrations" class="hover:text-brand-purple transition-all">View Registrations</a>
                         } else {
                             <a asp-controller="Home" asp-action="Index" class="hover:text-brand-purple transition-all">Portal Home</a>
-                            <a asp-controller="Events" asp-action="Index" class="hover:text-brand-purple transition-all">Live Catalog</a>
-                            <a asp-controller="Home" asp-action="Contact" class="hover:text-brand-purple transition-all">Support Desk</a>
+                            <a asp-controller="Events" asp-action="Index" class="hover:text-brand-purple transition-all">Event Catalog</a>
+                            <a asp-controller="Home" asp-action="Contact" class="hover:text-brand-purple transition-all">Contact Us</a>
                         }
                     </div>
                 </div>
 
                 <div class="md:col-span-3 flex flex-col items-center md:items-end">
-                    <h4 class="text-[10px] font-black uppercase tracking-[0.3em] text-brand-purple mb-6">System Access</h4>
+                    <h4 class="text-[10px] font-black uppercase tracking-widest text-brand-purple mb-6">System Access</h4>
                     @if (isAdmin) {
                         <a href="/Admin/Logout" class="px-6 py-3 bg-red-500 text-white font-black text-[10px] uppercase tracking-widest rounded-xl hover:bg-red-600 transition-all shadow-lg shadow-red-500/10">
                             Secure Logout
@@ -133,12 +133,36 @@
                 <div class="flex items-center gap-3 mb-4">
                     <p class="text-[11px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">
                         Made with ❤️ by
-                    </p>
-                    <a href="https://abhishekshah-portfolio.vercel.app/" target="_blank" class="group relative">
-                        <span class="text-sm font-black text-slate-900 dark:text-white group-hover:text-brand-purple transition-colors uppercase tracking-widest">
+                    </p>                                        
+                    <a
+                        href="https://abhishekshah-portfolio.vercel.app/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="group relative inline-flex items-center gap-2 rounded-xl px-3 py-2
+                            transition-all duration-300 ease-out
+                            hover:-translate-y-0.5
+                            hover:bg-purple-500/[0.08]
+                            focus-visible:outline-none focus-visible:ring-2
+                            focus-visible:ring-purple-500/60"
+                    >
+                        <!-- Subtle glow behind the brand -->
+                        <span
+                            class="absolute inset-0 rounded-xl bg-gradient-to-r
+                                from-violet-500/[0.08] via-fuchsia-500/[0.06] to-transparent
+                                opacity-0 blur-md transition-opacity duration-300
+                                group-hover:opacity-100"
+                        ></span>
+
+                        <!-- Brand name -->
+                        <span
+                            class="relative text-sm font-black uppercase tracking-[0.16em]
+                                text-slate-900 dark:text-white
+                                transition-colors duration-300
+                                group-hover:text-violet-600
+                                dark:group-hover:text-violet-400"
+                        >
                             Abhishek Shah
-                        </span>
-                        <span class="absolute -bottom-1 left-0 w-full h-1 bg-brand-purple rounded-full scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+                        </span> 
                     </a>
                 </div>
                 <p class="text-[9px] font-bold text-slate-400 dark:text-slate-600 uppercase tracking-widest">

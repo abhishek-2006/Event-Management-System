@@ -9,7 +9,7 @@ namespace EventManagementSystem.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Full name is required")]
-        public string StudentName { get; set; }
+        public string StudentName { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Enrollment Number is required")]
         [Display(Name = "Enrollment Number")]
@@ -17,15 +17,15 @@ namespace EventManagementSystem.Models
 
         [Required]
         [EmailAddress]
-        public string Email { get; set; }
+        public string Email { get; set; } = string.Empty;
         [Required(ErrorMessage = "Phone Number is required")]
-        public string PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Semester is required")]
         public int Semester { get; set; }
 
         [Required(ErrorMessage = "Department is required")]
-        public string Department { get; set; }
+        public string Department { get; set; } = string.Empty;
 
         public int EventId { get; set; }
 

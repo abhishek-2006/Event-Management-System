@@ -111,34 +111,75 @@ namespace EventManagementSystem.Controllers
             if (ev == null)
                 return NotFound();
 
+            if (ev.RegistrationStartDate.Year < 2000)
+            {
+                ev.RegistrationStartDate = DateTime.Today;
+            }
+            if (ev.RegistrationEndDate.Year < 2000)
+            {
+                ev.RegistrationEndDate = ev.EventDate.Year >= 2000 ? ev.EventDate : DateTime.Today.AddDays(7);
+            }
+            if (ev.EventDate.Year < 2000)
+            {
+                ev.EventDate = DateTime.Today.AddDays(7);
+            }
+
             return View(ev);
         }
 
-        [HttpPost("Admin/EditEvent")]
+        [HttpPost("Admin/EditEvent/{slug?}")]
         [ValidateAntiForgeryToken]
-        public IActionResult EditEvent(Event ev)
+        public IActionResult EditEvent(Event ev, string? slug = null)
+        {
+            if (HttpContext.Session.GetString("Admin") == null)
+                return RedirectToAction("Login");
+
+            if (ev.RegistrationStartDate.Year < 2000)
             {
-                if (HttpContext.Session.GetString("Admin") == null)
-                    return RedirectToAction("Login");
-
-                if (ModelState.IsValid)
-                {
-                    ev.Slug = ev.Title
-                        .ToLower()
-                        .Trim()
-                        .Replace(" ","-")
-                        .Replace("--", "-")
-                        .Replace(".", "-")
-                        .Replace(",", "-");
-
-                    _context.Events.Update(ev);
-                    _context.SaveChanges();
-                    
-                    return RedirectToAction("ManageEvents");
-                }
-
-                return View(ev);
+                ev.RegistrationStartDate = DateTime.Today;
             }
+            if (ev.RegistrationEndDate.Year < 2000)
+            {
+                ev.RegistrationEndDate = ev.EventDate.Year >= 2000 ? ev.EventDate : DateTime.Today.AddDays(7);
+            }
+            if (ev.EventDate.Year < 2000)
+            {
+                ev.EventDate = DateTime.Today.AddDays(7);
+            }
+
+            if (ModelState.IsValid)
+            {
+                // Fetch the tracked entity from the DB to avoid EF Core
+                // "instance with the same key is already being tracked" crash.
+                var existing = _context.Events.Find(ev.EventId);
+                if (existing == null)
+                    return NotFound();
+
+                existing.Title                = ev.Title;
+                existing.Description         = ev.Description;
+                existing.Category            = ev.Category;
+                existing.Location            = ev.Location;
+                existing.Price               = ev.Price;
+                existing.EventDate           = ev.EventDate;
+                existing.RegistrationStartDate = ev.RegistrationStartDate;
+                existing.RegistrationEndDate   = ev.RegistrationEndDate;
+
+                // Regenerate slug from the (possibly updated) title.
+                existing.Slug = ev.Title
+                    .ToLower()
+                    .Trim()
+                    .Replace(" ", "-")
+                    .Replace("--", "-")
+                    .Replace(".", "-")
+                    .Replace(",", "-");
+
+                _context.SaveChanges();
+
+                return RedirectToAction("ManageEvents");
+            }
+
+            return View(ev);
+        }
 
         [HttpGet("Admin/DeleteEvent/{slug}")]
         public IActionResult DeleteEvent(string slug)
@@ -166,7 +207,7 @@ namespace EventManagementSystem.Controllers
                 .Select(r => new RegistrationViewModel
                 {
                     RegistrationId = r.Id,
-                    EventTitle = r.Event.Title,
+                    EventTitle = r.Event!.Title,
                     Name = r.StudentName,
                     Phone = r.PhoneNumber,
                     Department = r.Department,
@@ -174,9 +215,9 @@ namespace EventManagementSystem.Controllers
                     Email = r.Email,
                     EnrollNumber = r.EnrollNumber,
                     RegisteredAt = r.RegisteredAt,
-                    EventDate = r.Event.EventDate,
-                    RegistrationStartDate = r.Event.RegistrationStartDate,
-                    RegistrationEndDate = r.Event.RegistrationEndDate
+                    EventDate = r.Event!.EventDate,
+                    RegistrationStartDate = r.Event!.RegistrationStartDate,
+                    RegistrationEndDate = r.Event!.RegistrationEndDate
                 })
                 .ToList();
 
@@ -204,10 +245,10 @@ namespace EventManagementSystem.Controllers
                     r.PhoneNumber,
                     r.Department,
                     r.Semester,
-                    Event = r.Event.Title,
-                    EventDate = r.Event.EventDate.ToString("yyyy-MM-dd"),
-                    RegStart = r.Event.RegistrationStartDate.ToString("yyyy-MM-dd"),
-                    RegEnd = r.Event.RegistrationEndDate.ToString("yyyy-MM-dd"),
+                    Event = r.Event!.Title,
+                    EventDate = r.Event!.EventDate.ToString("yyyy-MM-dd"),
+                    RegStart = r.Event!.RegistrationStartDate.ToString("yyyy-MM-dd"),
+                    RegEnd = r.Event!.RegistrationEndDate.ToString("yyyy-MM-dd"),
                     Date = r.RegisteredAt.ToString("yyyy-MM-dd HH:mm")
                 }).ToList();
 

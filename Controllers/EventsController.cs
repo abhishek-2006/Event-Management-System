@@ -132,15 +132,15 @@ namespace EventManagementSystem.Controllers
                     RegistrationId = r.Id,
                     Name = r.StudentName,
                     EnrollNumber = r.EnrollNumber,
-                    EventTitle = r.Event.Title,
+                    EventTitle = r.Event!.Title,
                     Semester = r.Semester,
                     Department = r.Department,
                     Email = r.Email,
                     Phone = r.PhoneNumber,
                     RegisteredAt = r.RegisteredAt,
-                    EventDate = r.Event.EventDate,
-                    RegistrationStartDate = r.Event.RegistrationStartDate,
-                    RegistrationEndDate = r.Event.RegistrationEndDate
+                    EventDate = r.Event!.EventDate,
+                    RegistrationStartDate = r.Event!.RegistrationStartDate,
+                    RegistrationEndDate = r.Event!.RegistrationEndDate
                 })
                 .FirstOrDefault();
 

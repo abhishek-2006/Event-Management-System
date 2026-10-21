@@ -9,7 +9,7 @@
         <a href="/Admin/ManageEvents" class="group inline-flex items-center gap-3 px-4 py-2 rounded-full border border-transparent hover:border-brand-purple/20 hover:bg-brand-purple/5 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-brand-purple transition-all mb-6">
             <span class="group-hover:-translate-x-1 transition-transform">&larr;</span> Back to Manage Events
         </a>
-        <h1 class="text-5xl md:text-7xl font-black text-slate-900 dark:text-white tracking-tighter uppercase italic leading-none">
+        <h1 class="text-4xl md:text-6xl font-black text-slate-900 dark:text-white tracking-tighter uppercase leading-none">
             Edit <span class="text-transparent bg-clip-text bg-brand-gradient">Event</span>
         </h1>
         <p class="text-slate-500 dark:text-slate-400 font-medium text-lg mt-4">
@@ -17,10 +17,15 @@
         </p>
     </div>
 
-    <form asp-action="EditEvent" method="post" class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+    <form asp-action="EditEvent" asp-controller="Admin" asp-route-slug="@Model.Slug" method="post" class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
         @Html.AntiForgeryToken()
         <input type="hidden" asp-for="EventId" />
         <input type="hidden" asp-for="Slug" />
+
+        @if (!ViewData.ModelState.IsValid && ViewData.ModelState.ErrorCount > 0)
+        {
+            <div asp-validation-summary="All" class="col-span-full p-6 bg-rose-500/10 border-2 border-rose-500/30 text-rose-500 rounded-[2rem] text-sm font-bold shadow-lg"></div>
+        }
 
         <div class="lg:col-span-7 space-y-10 bg-white dark:bg-slate-900 p-10 md:p-12 rounded-[3.5rem] border border-slate-100 dark:border-slate-800 shadow-2xl">
             
@@ -28,12 +33,14 @@
                 <label asp-for="Title" class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-2">Event Title</label>
                 <input asp-for="Title" placeholder="Update title..." 
                        class="w-full px-8 py-5 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-[2rem] text-xl font-bold text-slate-900 dark:text-white placeholder:text-slate-300 focus:border-brand-purple focus:bg-white dark:focus:bg-slate-900 outline-none transition-all shadow-inner" />
+                <span asp-validation-for="Title" class="text-xs text-red-400 ml-2"></span>
             </div>
 
             <div class="space-y-3">
                 <label asp-for="Description" class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-2">Description Update</label>
                 <textarea asp-for="Description" rows="6" placeholder="Update the event highlights..." 
                     class="w-full px-8 py-5 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-[2.5rem] text-lg font-bold text-slate-900 dark:text-white placeholder:text-slate-300 focus:border-brand-purple focus:bg-white dark:focus:bg-slate-900 outline-none transition-all resize-none shadow-inner"></textarea>
+                <span asp-validation-for="Description" class="text-xs text-red-400 ml-2"></span>
             </div>
 
             <div class="space-y-3">
@@ -49,6 +56,7 @@
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
                     </div>
                 </div>
+                <span asp-validation-for="Category" class="text-xs text-red-400 ml-2"></span>
             </div>
         </div>
 
@@ -60,21 +68,21 @@
                 <div class="space-y-10 relative z-10">
                     <div class="space-y-3">
                         <label asp-for="EventDate" class="text-[10px] font-black uppercase tracking-widest text-brand-purple ml-2">Update Event Date</label>
-                        <input asp-for="EventDate" type="date" 
+                        <input asp-for="EventDate" type="date" asp-format="{0:yyyy-MM-dd}" 
                             class="w-full px-8 py-5 bg-slate-800 border-2 border-transparent rounded-[2rem] text-lg font-bold text-white focus:border-brand-purple outline-none transition-all [color-scheme:dark] shadow-inner" />
                         <span asp-validation-for="EventDate" class="text-xs text-red-400 ml-2"></span>
                     </div>
 
                     <div class="space-y-3">
                         <label asp-for="RegistrationStartDate" class="text-[10px] font-black uppercase tracking-widest text-emerald-400 ml-2">Registration Opens</label>
-                        <input asp-for="RegistrationStartDate" type="date"
+                        <input asp-for="RegistrationStartDate" type="date" asp-format="{0:yyyy-MM-dd}"
                             class="w-full px-8 py-5 bg-slate-800 border-2 border-transparent rounded-[2rem] text-lg font-bold text-white focus:border-emerald-400 outline-none transition-all [color-scheme:dark] shadow-inner" />
                         <span asp-validation-for="RegistrationStartDate" class="text-xs text-red-400 ml-2"></span>
                     </div>
 
                     <div class="space-y-3">
                         <label asp-for="RegistrationEndDate" class="text-[10px] font-black uppercase tracking-widest text-rose-400 ml-2">Registration Closes</label>
-                        <input asp-for="RegistrationEndDate" type="date"
+                        <input asp-for="RegistrationEndDate" type="date" asp-format="{0:yyyy-MM-dd}"
                             class="w-full px-8 py-5 bg-slate-800 border-2 border-transparent rounded-[2rem] text-lg font-bold text-white focus:border-rose-400 outline-none transition-all [color-scheme:dark] shadow-inner" />
                         <span asp-validation-for="RegistrationEndDate" class="text-xs text-red-400 ml-2"></span>
                     </div>
@@ -83,12 +91,14 @@
                         <label asp-for="Location" class="text-[10px] font-black uppercase tracking-widest text-brand-purple ml-2">Update Venue</label>
                         <input asp-for="Location" placeholder="Enter new location..." 
                             class="w-full px-8 py-5 bg-slate-800 border-2 border-transparent rounded-[2rem] text-lg font-bold text-white placeholder:text-slate-600 focus:border-brand-purple outline-none transition-all shadow-inner" />
+                        <span asp-validation-for="Location" class="text-xs text-red-400 ml-2"></span>
                     </div>
 
                     <div class="space-y-3">
                         <label asp-for="Price" class="text-[10px] font-black uppercase tracking-widest text-brand-purple ml-2">Adjust Fee (INR)</label>
                         <input asp-for="Price" type="number" step="0.01" 
                             class="w-full px-8 py-5 bg-slate-800 border-2 border-transparent rounded-[2rem] text-lg font-bold text-white placeholder:text-slate-600 focus:border-brand-purple outline-none transition-all shadow-inner" />
+                        <span asp-validation-for="Price" class="text-xs text-red-400 ml-2"></span>
                     </div>
 
                     <div class="pt-6">
