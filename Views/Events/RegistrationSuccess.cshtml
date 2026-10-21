@@ -1,126 +1,285 @@
 @model EventManagementSystem.ViewModels.RegistrationViewModel
+@using System.Security.Cryptography
+@using System.Text
 
 @{
     Layout = "_Layout";
-    ViewData["Title"] = "Elite Event Pass";
+    ViewData["Title"] = "Event Pass — " + Model.EventTitle;
+
+    // Cryptographic anti-tamper security checksum
+    string rawToken = $"{Model.RegistrationId}-{Model.EnrollNumber}-{Model.EventTitle}-{Model.RegisteredAt:yyyyMMddHHmmss}-EH_SECURE_SALT_2026";
+    string securityHash;
+    using (var sha = SHA256.Create())
+    {
+        var bytes = sha.ComputeHash(Encoding.UTF8.GetBytes(rawToken));
+        string hex = BitConverter.ToString(bytes).Replace("-", "");
+        securityHash = $"{hex.Substring(0, 4)}-{hex.Substring(4, 4)}-{hex.Substring(8, 4)}-{hex.Substring(12, 4)}";
+    }
 }
 
-<div class="py-16 min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col items-center justify-center px-6 transition-colors selection:bg-brand-purple/30">
+<style>
+    /* Holographic Foil Shimmer */
+    .holo-foil {
+        background: linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.45) 0%, 
+            rgba(168, 85, 247, 0.4) 25%, 
+            rgba(59, 130, 246, 0.4) 50%, 
+            rgba(236, 72, 153, 0.4) 75%, 
+            rgba(255, 255, 255, 0.45) 100%);
+        background-size: 250% 250%;
+        animation: holoMove 5s ease infinite;
+    }
+
+    @@keyframes holoMove {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    /* Ambient Glow Pulse */
+    .ambient-glow {
+        animation: glowPulse 6s ease-in-out infinite alternate;
+    }
+
+    @@keyframes glowPulse {
+        from { opacity: 0.3; transform: scale(0.97); }
+        to { opacity: 0.55; transform: scale(1.02); }
+    }
+
+    /* Print Styles */
+    @@media print {
+        @@page {
+            size: landscape;
+            margin: 8mm;
+        }
+        header, footer, .no-print {
+            display: none !important;
+        }
+        body, html {
+            background: #ffffff !important;
+            color: #000000 !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        #printablePass {
+            box-shadow: none !important;
+            border: 2px solid #000000 !important;
+            background: #ffffff !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 auto !important;
+            page-break-inside: avoid;
+        }
+        #printablePass * {
+            -webkit-text-fill-color: #000000 !important;
+            color: #000000 !important;
+            text-shadow: none !important;
+            border-color: #dddddd !important;
+            background-color: transparent !important;
+        }
+        #printablePass h2 {
+            -webkit-text-fill-color: #000000 !important;
+            color: #000000 !important;
+            background: none !important;
+        }
+        .watermark-overlay {
+            opacity: 0.08 !important;
+        }
+        .barcode-bar {
+            background-color: #000000 !important;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+    }
+</style>
+
+<!-- Fullscreen Responsive Viewport Wrapper -->
+<div class="w-full min-h-[calc(100vh-4.5rem)] bg-slate-50 dark:bg-slate-950 flex flex-col items-center justify-center py-6 md:py-10 px-4 sm:px-6 lg:px-8 relative overflow-hidden transition-colors selection:bg-brand-purple/30">
     
-    <div class="text-center mb-16 animate-in fade-in slide-in-from-bottom-4 duration-1000">
-        <div class="flex items-center justify-center gap-4 mb-4">
-            <div class="h-[1px] w-12 bg-slate-200 dark:bg-slate-800"></div>
-            <span class="text-[10px] font-black text-brand-purple uppercase tracking-[0.5em]">Identity Verified</span>
-            <div class="h-[1px] w-12 bg-slate-200 dark:bg-slate-800"></div>
-        </div>
-        <h1 class="text-6xl md:text-8xl font-black text-slate-900 dark:text-white tracking-tighter uppercase italic leading-none">
-            Entry<span class="text-transparent bg-clip-text bg-brand-gradient">.01</span>
+    <!-- Ambient Neon Blur in Background -->
+    <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[48rem] h-[32rem] bg-brand-gradient rounded-full blur-[140px] pointer-events-none opacity-20 dark:opacity-25 ambient-glow no-print"></div>
+
+    <!-- Header Section -->
+    <div class="text-center mb-6 no-print animate-in fade-in slide-in-from-bottom-4 duration-700 relative z-10">
+        <h1 class="text-2xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight uppercase italic leading-none">
+            Official <span class="text-transparent bg-clip-text bg-brand-gradient">Event Pass</span>
         </h1>
+        <p class="text-slate-500 dark:text-slate-400 font-medium text-xs md:text-sm mt-1.5">
+            Single admission ticket &bull; Present at venue entrance desk
+        </p>
     </div>
 
-    <div id="printablePass" class="relative w-full max-w-5xl group perspective-1000">
+    <!-- WIDE LANDSCAPE RECTANGULAR PASS -->
+    <div id="printablePass" class="relative w-full max-w-4xl rounded-[2rem] bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white border-2 border-slate-800 shadow-[0_25px_80px_-20px_rgba(139,92,246,0.35)] overflow-hidden transition-all duration-500 hover:shadow-[0_30px_90px_-15px_rgba(139,92,246,0.5)]">
         
-        <div class="absolute -inset-2 bg-brand-gradient rounded-[3rem] blur-2xl opacity-0 group-hover:opacity-20 transition duration-1000"></div>
-        
-        <div class="relative flex flex-col bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden border-4 border-slate-900 dark:border-white shadow-[0_40px_80px_-15px_rgba(0,0,0,0.3)]">
-            
-            <div class="bg-slate-900 dark:bg-white px-10 py-4 flex justify-between items-center border-b-4 border-slate-900 dark:border-white">
-                <div class="flex items-center gap-4">
-                    <div class="w-3 h-3 rounded-full bg-brand-purple animate-ping"></div>
-                    <span class="text-white dark:text-slate-900 font-black text-[10px] uppercase tracking-[0.4em]">Official Event Hub Delegate</span>
+        <!-- Central Logo Watermark Crest -->
+        <div class="watermark-overlay absolute inset-0 flex items-center justify-center pointer-events-none z-0">
+            <img src="~/logo.png" alt="" class="w-60 h-60 object-contain opacity-[0.05] dark:opacity-[0.07] filter grayscale contrast-125 select-none" />
+        </div>
+
+        <!-- Diagonal Anti-Copy Microprint Watermark Layer -->
+        <div class="watermark-overlay absolute inset-0 pointer-events-none opacity-[0.035] overflow-hidden select-none flex flex-wrap gap-x-10 gap-y-6 items-center justify-center p-4 rotate-[-8deg] scale-110 z-0">
+            @for (int i = 0; i < 50; i++)
+            {
+                <span class="text-[9px] font-mono font-black uppercase tracking-[0.3em] text-white whitespace-nowrap">
+                    EventHub • AUTHENTIC PASS • ENROLL #@Model.EnrollNumber • ID #@Model.RegistrationId • NON TRANSFERABLE •
+                </span>
+            }
+        </div>
+
+        <!-- Top Official Strip (Full Landscape Width) -->
+        <div class="relative z-10 px-6 sm:px-8 py-3 border-b border-white/10 flex items-center justify-between bg-white/[0.03] backdrop-blur-md">
+            <div class="flex items-center gap-3">
+                <div class="w-7 h-7 rounded-lg overflow-hidden border border-white/20 bg-white p-0.5 shadow-sm">
+                    <img src="~/logo.png" alt="EH" class="w-full h-full object-cover" />
                 </div>
-                <span class="text-white/40 dark:text-slate-900/40 font-mono text-[10px]">AUTH_ID: @Model.RegistrationId</span>
+                <div class="flex items-center gap-2">
+                    <span class="font-black text-xs uppercase tracking-[0.25em] text-white">EventHub</span>
+                    <span class="text-slate-500 text-xs">&bull;</span>
+                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Campus Access Pass</span>
+                </div>
             </div>
 
-            <div class="flex flex-col lg:flex-row">
-                <div class="flex-[3] p-10 md:p-14 relative overflow-hidden">
-                    <div class="absolute -right-20 -bottom-20 text-[15rem] font-black text-slate-50 dark:text-slate-800/10 select-none pointer-events-none italic tracking-tighter uppercase">
-                        EH
+            <div class="flex items-center gap-3">
+                <!-- Live Security Pulse (Live screen proof) -->
+                <div class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[9px] font-mono font-bold no-print">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                    <span id="liveTimestamp">LIVE SYNC</span>
+                </div>
+
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-brand-purple/20 text-purple-300 text-[9px] font-black uppercase tracking-wider border border-purple-500/30">
+                    Verified Ticket
+                </span>
+                <span class="text-slate-400 font-mono text-[10px]">#EH-@Model.RegistrationId.ToString("D5")</span>
+            </div>
+        </div>
+
+        <!-- Landscape Ticket Layout: 72% Left Main Pass + 28% Right Stub -->
+        <div class="relative z-10 flex flex-col md:flex-row items-stretch">
+            
+            <!-- Left: Wide Main Pass Body -->
+            <div class="flex-[3] p-6 sm:p-8 flex flex-col justify-between space-y-6">
+                
+                <!-- Event Header & Holographic Seal -->
+                <div class="flex items-start justify-between gap-6">
+                    <div class="space-y-1.5">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[9px] font-black uppercase tracking-widest text-slate-400">
+                            <span>🎟️</span> Confirmed Admission
+                        </span>
+                        <h2 class="text-2xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-purple-200 tracking-tight uppercase italic leading-tight">
+                            @Model.EventTitle
+                        </h2>
                     </div>
 
-                    <div class="relative z-10 space-y-12">
-                        <div class="flex items-start justify-between">
-                            <div>
-                                <p class="text-[10px] font-black text-brand-purple uppercase tracking-[0.3em] mb-3">Priority Access For</p>
-                                <h2 class="text-4xl md:text-6xl font-black text-slate-900 dark:text-white tracking-tighter uppercase italic leading-tight">
-                                    @Model.EventTitle
-                                </h2>
-                            </div>
-                            <div class="w-20 h-20 rounded-2xl border-2 border-slate-100 dark:border-slate-800 p-1 bg-white dark:bg-slate-900 rotate-12 group-hover:rotate-0 transition-transform duration-700 shadow-xl">
-                                <img src="~/logo.png" class="w-full h-full object-cover rounded-xl" alt="EH" />
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 pt-8 border-t-2 border-slate-100 dark:border-slate-800">
-                            <div class="space-y-1">
-                                <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Delegate</label>
-                                <p class="text-sm font-black text-slate-900 dark:text-white uppercase truncate">@Model.Name</p>
-                            </div>
-                            <div class="space-y-1">
-                                <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Enrollment</label>
-                                <p class="text-sm font-black text-slate-900 dark:text-white">#@Model.EnrollNumber</p>
-                            </div>
-                            <div class="space-y-1">
-                                <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Department</label>
-                                <p class="text-sm font-black text-slate-900 dark:text-white uppercase">@Model.Department</p>
-                            </div>
-                            <div class="space-y-1">
-                                <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Semester</label>
-                                <p class="text-sm font-black text-slate-900 dark:text-white uppercase">@Model.Semester</p>
-                            </div>
-                            <div class="space-y-1">
-                                <label class="text-[9px] font-black text-brand-purple uppercase tracking-widest">📅 Event Date</label>
-                                <p class="text-sm font-black text-slate-900 dark:text-white">@Model.EventDate.ToString("MMM dd, yyyy")</p>
-                            </div>
-                            <div class="space-y-1">
-                                <label class="text-[9px] font-black text-emerald-500 uppercase tracking-widest">🟢 Reg. Opens</label>
-                                <p class="text-sm font-black text-slate-900 dark:text-white">@Model.RegistrationStartDate.ToString("MMM dd, yyyy")</p>
-                            </div>
-                            <div class="space-y-1">
-                                <label class="text-[9px] font-black text-rose-500 uppercase tracking-widest">🔴 Reg. Closes</label>
-                                <p class="text-sm font-black text-slate-900 dark:text-white">@Model.RegistrationEndDate.ToString("MMM dd, yyyy")</p>
-                            </div>
-                        </div>
+                    <!-- Holographic Seal Badge -->
+                    <div class="flex-shrink-0 w-14 h-14 rounded-2xl p-0.5 holo-foil border border-white/40 shadow-xl flex flex-col items-center justify-center text-center rotate-0 transition-transform">
+                        <span class="text-[7px] font-black uppercase tracking-widest text-slate-900 leading-none">VERIFIED</span>
+                        <span class="text-base my-0.5">⚡</span>
+                        <span class="text-[7px] font-black uppercase tracking-widest text-slate-900 leading-none">ORIGINAL</span>
                     </div>
                 </div>
 
-                <div class="flex-1 bg-slate-900 dark:bg-slate-50 p-10 flex flex-col items-center justify-center text-center relative border-t-4 lg:border-t-0 lg:border-l-4 border-dashed border-white/20 dark:border-slate-900/10">
-                    
-                    <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-slate-50 dark:bg-slate-950 rounded-full border-4 border-slate-900 dark:border-white hidden lg:block"></div>
-                    <div class="absolute -bottom-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-slate-50 dark:bg-slate-950 rounded-full border-4 border-slate-900 dark:border-white hidden lg:block"></div>
-
-                    <div class="w-full space-y-6">
-                        <div class="p-4 bg-white dark:bg-slate-900 rounded-3xl shadow-inner border border-white/10">
-                             <div class="flex gap-1 h-20 items-end justify-center">
-                                @for(int i=0; i<24; i++) {
-                                    <div class="w-1 bg-slate-900 dark:bg-brand-purple rounded-full @(i % 4 == 0 ? "h-16" : i % 2 == 0 ? "h-10" : "h-14")"></div>
-                                }
-                            </div>
-                        </div>
-                        
-                        <div class="space-y-1">
-                            <p class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.4em]">Entry Key</p>
-                            <p class="text-xl font-black text-white dark:text-slate-900 tracking-tighter italic">EH-@Model.RegistrationId-@Model.EnrollNumber</p>
-                        </div>
-
-                        <div class="pt-4 border-t border-white/10 dark:border-slate-900/10">
-                             <p class="text-[8px] font-bold text-slate-400 uppercase leading-relaxed tracking-widest">
-                                Valid for individual <br/> entry only. <br/> Campus 2026.
-                            </p>
-                        </div>
+                <!-- 2x2 Student Details Grid: Spacious, Never Truncated -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+                    <div class="p-4 rounded-2xl bg-white/[0.04] border border-white/5 backdrop-blur-sm space-y-1">
+                        <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Student Name</p>
+                        <p class="text-base font-black text-white uppercase break-words leading-snug">@Model.Name</p>
                     </div>
+
+                    <div class="p-4 rounded-2xl bg-white/[0.04] border border-white/5 backdrop-blur-sm space-y-1">
+                        <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Enrollment No.</p>
+                        <p class="text-base font-mono font-black text-brand-purple break-all leading-snug">#@Model.EnrollNumber</p>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-white/[0.04] border border-white/5 backdrop-blur-sm space-y-1">
+                        <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Department & Semester</p>
+                        <p class="text-sm font-bold text-slate-200 uppercase break-words leading-snug">@Model.Department &bull; Sem @Model.Semester</p>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-white/[0.04] border border-white/5 backdrop-blur-sm space-y-1">
+                        <p class="text-[9px] font-black text-brand-purple uppercase tracking-widest">Event Date</p>
+                        <p class="text-sm font-bold text-slate-200 break-words leading-snug">@Model.EventDate.ToString("ddd, MMM dd, yyyy")</p>
+                    </div>
+                </div>
+
+                <!-- Footer Strip: Security Checksum + Issue Time -->
+                <div class="pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-3 text-[9px] font-bold text-slate-400 uppercase tracking-wider">
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs">🛡️</span>
+                        <span>Checksum: <strong class="font-mono text-purple-300 font-black">SEC-@securityHash</strong></span>
+                    </div>
+                    <div>
+                        <span>Registered: @Model.RegisteredAt.ToString("MMM dd, yyyy &bull; hh:mm tt")</span>
+                        <span class="mx-2">&bull;</span>
+                        <span class="text-emerald-400 font-bold">Single Person Entry</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Vertical Landscape Stub with Cutout Notches -->
+            <div class="md:w-60 bg-white/[0.02] p-6 flex flex-col items-center justify-between text-center relative border-t-2 md:border-t-0 md:border-l-2 border-dashed border-white/15">
+                
+                <!-- Circular Ticket Notch Cutouts -->
+                <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 w-7 h-7 bg-slate-50 dark:bg-slate-950 rounded-full border-2 border-slate-800 hidden md:block"></div>
+                <div class="absolute -bottom-3.5 left-1/2 -translate-x-1/2 w-7 h-7 bg-slate-50 dark:bg-slate-950 rounded-full border-2 border-slate-800 hidden md:block"></div>
+
+                <div class="w-full space-y-4 my-auto">
+                    <!-- Ticket Pass Badge -->
+                    <div class="space-y-0.5">
+                        <p class="text-[8px] font-black text-slate-400 uppercase tracking-[0.25em]">Ticket ID</p>
+                        <p class="text-base font-mono font-black text-white tracking-widest">#EH-@Model.RegistrationId.ToString("D5")</p>
+                    </div>
+
+                    <!-- Glowing Barcode Graphic -->
+                    <div class="p-2.5 bg-white/[0.05] rounded-xl border border-white/10 flex items-end justify-center gap-0.5 h-16 shadow-inner">
+                        @for (int i = 0; i < 30; i++)
+                        {
+                            <div class="barcode-bar w-1 bg-white/90 rounded-sm @(i % 5 == 0 ? "h-14 bg-brand-purple" : i % 3 == 0 ? "h-8" : i % 2 == 0 ? "h-12" : "h-10")"></div>
+                        }
+                    </div>
+
+                    <!-- Security Gate Code -->
+                    <div class="space-y-0.5">
+                        <p class="text-[8px] font-mono text-slate-400 uppercase tracking-wider">Gate ID</p>
+                        <p class="text-xs font-mono font-bold text-purple-300 tracking-wider break-all">EH-@Model.RegistrationId-@Model.EnrollNumber</p>
+                    </div>
+
+                    <p class="text-[8px] font-bold text-slate-400 uppercase leading-snug tracking-wider pt-2 border-t border-white/10">
+                        Scan at entrance desk <br /> for verification & entry. <br /> Non-transferable.
+                    </p>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="mt-16 flex flex-wrap gap-6 justify-center no-print">
-        <button onclick="window.print()" class="group relative px-12 py-5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black text-xs uppercase tracking-[0.4em] rounded-2xl overflow-hidden hover:scale-105 active:scale-95 transition-all shadow-2xl">
-            <span class="relative z-10 flex items-center gap-2">Download Pass <span class="group-hover:translate-y-1 transition-transform">↓</span></span>
-            <div class="absolute inset-0 bg-brand-gradient translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
+    <!-- Action Buttons (No Print) -->
+    <div class="mt-8 flex flex-wrap gap-4 justify-center no-print relative z-10">
+        <button onclick="window.print()" 
+                class="inline-flex items-center justify-center gap-2.5 px-8 py-3 rounded-full bg-brand-gradient hover:opacity-95 text-white font-black text-xs uppercase tracking-wider transition-all duration-300 shadow-xl shadow-brand-purple/25 hover:shadow-brand-purple/40 hover:scale-105 active:scale-95">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
+            </svg>
+            <span>Print / Save Pass</span>
         </button>
-        <a href="/Events" class="px-12 py-5 bg-white dark:bg-slate-900 text-slate-900 dark:text-white font-black text-xs uppercase tracking-[0.4em] rounded-2xl border-4 border-slate-900 dark:border-white hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-slate-900 transition-all">
-            Exit
+
+        <a href="/Events" 
+           class="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-brand-purple hover:border-brand-purple/30 text-xs font-black uppercase tracking-wider transition-all duration-300 shadow-sm hover:scale-105 active:scale-95">
+            <span>Explore More Events</span>
+            <span class="text-sm">&rarr;</span>
         </a>
     </div>
 </div>
+
+<script>
+    // Live security timestamp clock to defeat static screenshot forgery
+    function updateSecurityClock() {
+        const el = document.getElementById('liveTimestamp');
+        if (el) {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('en-US', { hour12: false });
+            el.textContent = 'LIVE: ' + timeStr;
+        }
+    }
+    updateSecurityClock();
+    setInterval(updateSecurityClock, 1000);
+</script>

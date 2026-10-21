@@ -9,33 +9,38 @@
     var pastEvents = Model.Where(e => e.EventDate.Date < now).OrderByDescending(e => e.EventDate).ToList();
 }
 
-<div class="py-12 space-y-20">
+<div class="py-10 max-w-7xl mx-auto px-6 space-y-16">
     <!-- Search & Category Filter Header -->
-    <section class="relative">
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
+    <section class="space-y-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div class="animate-in fade-in slide-in-from-left-8 duration-700">
-                <h2 class="text-4xl md:text-7xl font-black text-slate-900 dark:text-white tracking-tighter mb-4 uppercase italic">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-purple/10 text-brand-purple text-[10px] font-black uppercase tracking-widest mb-4 border border-brand-purple/20">
+                    <span>✨</span> College Experience Hub
+                </div>
+                <h1 class="text-4xl md:text-6xl font-black text-slate-900 dark:text-white tracking-tight uppercase italic leading-none">
                     Campus <span class="text-transparent bg-clip-text bg-brand-gradient">Events</span>
-                </h2>
-                <p class="text-slate-500 dark:text-slate-400 font-medium text-xl">
-                    Discover active, upcoming, and past experiences across college.
+                </h1>
+                <p class="text-slate-500 dark:text-slate-400 font-medium text-base md:text-lg mt-3 max-w-xl">
+                    Explore hackathons, sports meets, cultural nights, and academic workshops.
                 </p>
             </div>
             
-            <div class="flex flex-wrap gap-3 animate-in fade-in slide-in-from-right-8 duration-700" id="filter-buttons">
-                <button onclick="filterEvents('all', this)" class="filter-btn active px-6 py-3 rounded-full bg-brand-gradient text-white text-xs font-black uppercase tracking-widest shadow-lg shadow-brand-purple/20 transition-all">All</button>
-                <button onclick="filterEvents('Technical', this)" class="filter-btn px-6 py-3 rounded-full bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-400 text-xs font-black uppercase tracking-widest hover:border-brand-purple transition-all">Technical</button>
-                <button onclick="filterEvents('Cultural', this)" class="filter-btn px-6 py-3 rounded-full bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-400 text-xs font-black uppercase tracking-widest hover:border-brand-purple transition-all">Cultural</button>
-                <button onclick="filterEvents('Sports', this)" class="filter-btn px-6 py-3 rounded-full bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-400 text-xs font-black uppercase tracking-widest hover:border-brand-purple transition-all">Sports</button>
-                <button onclick="filterEvents('Education', this)" class="filter-btn px-6 py-3 rounded-full bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-400 text-xs font-black uppercase tracking-widest hover:border-brand-purple transition-all">Education</button>
+            <!-- Category Filter Pills -->
+            <div class="flex flex-wrap gap-2 animate-in fade-in slide-in-from-right-8 duration-700" id="filter-buttons">
+                <button onclick="filterEvents('all', this)" class="filter-btn active px-5 py-2.5 rounded-full bg-brand-gradient text-white text-[11px] font-black uppercase tracking-widest shadow-md shadow-brand-purple/25 transition-all">All</button>
+                <button onclick="filterEvents('Technical', this)" class="filter-btn px-5 py-2.5 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 text-[11px] font-black uppercase tracking-widest hover:border-brand-purple hover:text-brand-purple transition-all">Technical</button>
+                <button onclick="filterEvents('Cultural', this)" class="filter-btn px-5 py-2.5 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 text-[11px] font-black uppercase tracking-widest hover:border-brand-purple hover:text-brand-purple transition-all">Cultural</button>
+                <button onclick="filterEvents('Sports', this)" class="filter-btn px-5 py-2.5 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 text-[11px] font-black uppercase tracking-widest hover:border-brand-purple hover:text-brand-purple transition-all">Sports</button>
+                <button onclick="filterEvents('Education', this)" class="filter-btn px-5 py-2.5 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 text-[11px] font-black uppercase tracking-widest hover:border-brand-purple hover:text-brand-purple transition-all">Education</button>
             </div>
         </div>
 
-        <div class="relative max-w-3xl group">
-            <input type="text" id="event-search" onkeyup="searchEvents()" placeholder="Search active or archived events..." 
-                   class="w-full pl-16 pr-8 py-6 bg-white/50 dark:bg-slate-900/50 backdrop-blur-xl border-2 border-slate-100 dark:border-slate-800 rounded-[2.5rem] text-xl text-slate-900 dark:text-white placeholder:text-slate-400 focus:ring-8 focus:ring-brand-purple/5 focus:border-brand-purple outline-none transition-all shadow-2xl shadow-slate-200/50 dark:shadow-none" />
-            <div class="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-brand-purple transition-colors">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        <!-- Search Bar -->
+        <div class="relative max-w-xl group">
+            <input type="text" id="event-search" onkeyup="searchEvents()" placeholder="Search events by title..." 
+                   class="w-full pl-14 pr-6 py-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full text-base text-slate-900 dark:text-white placeholder:text-slate-400 focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple outline-none transition-all shadow-sm" />
+            <div class="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-brand-purple transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
             </div>
         </div>
     </section>
@@ -43,15 +48,15 @@
     <!-- 1. LIVE NOW (Current Events) -->
     @if (liveEvents.Any())
     {
-        <section class="space-y-8 event-section">
+        <section class="space-y-6 event-section">
             <div class="flex items-center gap-3">
-                <span class="flex h-3 w-3 rounded-full bg-emerald-500 animate-ping"></span>
-                <span class="w-2 h-7 bg-emerald-500 rounded-full"></span>
-                <h3 class="text-3xl font-black text-slate-900 dark:text-white uppercase italic tracking-tight">Happening Today</h3>
-                <span class="ml-2 text-xs font-black uppercase tracking-widest px-3 py-1 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-full border border-emerald-200 dark:border-emerald-800">Registration Open</span>
+                <span class="flex h-2.5 w-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+                <span class="w-1.5 h-6 bg-emerald-500 rounded-full"></span>
+                <h2 class="text-2xl font-black text-slate-900 dark:text-white uppercase italic tracking-tight">Happening Today</h2>
+                <span class="ml-2 text-[10px] font-black uppercase tracking-widest px-3 py-1 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600 dark:text-emerald-400 rounded-full border border-emerald-200 dark:border-emerald-800">Live</span>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 @foreach (var item in liveEvents)
                 {
                     @await Html.PartialAsync("_EventCard", item)
@@ -61,22 +66,22 @@
     }
 
     <!-- 2. UPCOMING EVENTS -->
-    <section class="space-y-8 event-section">
+    <section class="space-y-6 event-section">
         <div class="flex items-center gap-3">
-            <span class="w-2 h-7 bg-brand-gradient rounded-full"></span>
-            <h3 class="text-3xl font-black text-slate-900 dark:text-white uppercase italic tracking-tight">Upcoming Experiences</h3>
+            <span class="w-1.5 h-6 bg-brand-gradient rounded-full"></span>
+            <h2 class="text-2xl font-black text-slate-900 dark:text-white uppercase italic tracking-tight">Upcoming Experiences</h2>
             <span class="text-xs font-bold text-slate-400">(@upcomingEvents.Count)</span>
         </div>
 
         @if (!upcomingEvents.Any())
         {
-            <div class="p-12 text-center rounded-[2.5rem] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+            <div class="p-12 text-center rounded-[2rem] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm">
                 <p class="text-slate-400 font-bold uppercase tracking-widest text-xs">No upcoming events scheduled right now.</p>
             </div>
         }
         else
         {
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 @foreach (var item in upcomingEvents)
                 {
                     @await Html.PartialAsync("_EventCard", item)
@@ -88,14 +93,14 @@
     <!-- 3. PAST EVENTS (Archived) -->
     @if (pastEvents.Any())
     {
-        <section class="space-y-8 pt-10 border-t border-slate-100 dark:border-slate-800/80 event-section">
+        <section class="space-y-6 pt-10 border-t border-slate-200 dark:border-slate-800/80 event-section">
             <div class="flex items-center gap-3">
-                <span class="w-2 h-7 bg-slate-300 dark:bg-slate-700 rounded-full"></span>
-                <h3 class="text-3xl font-black text-slate-400 dark:text-slate-500 uppercase italic tracking-tight">Past Events</h3>
-                <span class="text-xs font-black uppercase tracking-widest px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-500 rounded-full">Archived</span>
+                <span class="w-1.5 h-6 bg-slate-300 dark:bg-slate-700 rounded-full"></span>
+                <h2 class="text-2xl font-black text-slate-400 dark:text-slate-500 uppercase italic tracking-tight">Past Events</h2>
+                <span class="text-[10px] font-black uppercase tracking-widest px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-500 rounded-full">Archived</span>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 opacity-75 hover:opacity-100 transition-opacity">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 opacity-80 hover:opacity-100 transition-opacity">
                 @foreach (var item in pastEvents)
                 {
                     @await Html.PartialAsync("_EventCard", item)
@@ -111,16 +116,16 @@
         const buttons = document.querySelectorAll('.filter-btn');
 
         buttons.forEach(b => {
-            b.classList.remove('bg-brand-gradient', 'text-white', 'shadow-lg', 'shadow-brand-purple/20');
-            b.classList.add('bg-white', 'dark:bg-slate-900', 'text-slate-600', 'dark:text-slate-400');
+            b.classList.remove('bg-brand-gradient', 'text-white', 'shadow-md', 'shadow-brand-purple/25');
+            b.classList.add('bg-white', 'dark:bg-slate-900', 'text-slate-600', 'dark:text-slate-400', 'border', 'border-slate-200', 'dark:border-slate-800');
         });
 
-        btn.classList.add('bg-brand-gradient', 'text-white', 'shadow-lg', 'shadow-brand-purple/20');
-        btn.classList.remove('bg-white', 'dark:bg-slate-900', 'text-slate-600', 'dark:text-slate-400');
+        btn.classList.add('bg-brand-gradient', 'text-white', 'shadow-md', 'shadow-brand-purple/25');
+        btn.classList.remove('bg-white', 'dark:bg-slate-900', 'text-slate-600', 'dark:text-slate-400', 'border-slate-200');
 
         cards.forEach(card => {
             if (category === 'all' || card.getAttribute('data-category') === category) {
-                card.style.display = 'block';
+                card.style.display = 'flex';
             } else {
                 card.style.display = 'none';
             }
@@ -134,7 +139,7 @@
         cards.forEach(card => {
             const title = card.getAttribute('data-title');
             if (title.includes(input)) {
-                card.style.display = 'block';
+                card.style.display = 'flex';
             } else {
                 card.style.display = 'none';
             }
