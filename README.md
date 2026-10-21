@@ -1,89 +1,238 @@
 # 🚀 EventHub — Curating Unforgettable Moments
 
-**EventHub** is a premium, full-stack event management ecosystem engineered for the campus. It digitizes the entire event lifecycle—from administrative "Architecting" to seamless student registration and procedural security pass generation.
+[![.NET Version](https://img.shields.io/badge/.NET-10.0-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
+[![MySQL](https://img.shields.io/badge/MySQL-Database-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
+[![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Entity Framework Core](https://img.shields.io/badge/EF_Core-ORM-blueviolet?style=for-the-badge&logo=nuget&logoColor=white)](https://learn.microsoft.com/ef/core/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 
-## 🎨 Brand Identity: "Deep Space"
-The platform is built on a custom design language that balances high-end aesthetics with administrative utility.
-* **Core Palette:** High-vibrancy **Brand Purple** (`#8B5CF6`) and **Strategic Blue** (`#3B82F6`).
-* **Visual Philosophy:** Glassmorphic containers, metallic silver accents, and a high-contrast "Deep Space" dark mode.
-* **Signature UI:** Rounded-corner architecture ($3.5rem$ radius) and animated gradient transitions.
+**EventHub** is a modern, full-stack campus event management web application engineered with **ASP.NET Core 10 MVC**, **Entity Framework Core**, and **MySQL**. It digitizes the entire campus event lifecycle—from administrative event orchestration, real-time discovery, and duplicate-safe student registrations to procedural digital boarding pass generation with cryptographic anti-tamper security.
 
-## ✨ Key Features
+---
 
-### 🎓 For Students (The Experience)
-* **Live Catalog:** A real-time, filtered interface for Technical, Cultural, Sports, and Educational events.
-* **Metallic Identity System:** Procedural student avatars based on their initial identity.
-* **Elite Event Pass:** High-fidelity digital boarding passes featuring:
-    * Unique **Security Auth Keys** (`EH-REG-ROLL`).
-    * Procedural **CSS Barcoding** for gate verification.
-    * Print-optimized layouts for physical archival.
+## 📸 Screenshots & UI Showcase
 
-### 🛡️ For Administrators (The Command Center)
-* **Central Command Dashboard:** High-impact analytics tracking student engagement and catalog health.
-* **Event Architect:** A specialized builder to launch, modify, or decommission campus experiences.
-* **Attendee Intelligence:** Searchable logs with academic filters (Semester/Department).
-* **Data Sovereignty:** Professional CSV export and "Official Report" print formatting for university records.
-* **Session Security:** Secure Admin Portal with background-persistence prevention.
+> **Note:** All visual screenshots and user interface captures of the website are included in the [`images/`](images/) folder of this repository.
+
+### 🎓 1. Public & Student Portal
+
+#### 🌟 Home / Landing Page
+The dynamic landing experience featuring animated ambient gradient pulses, dark/light theme switching, and quick access to live campus events.
+
+![EventHub Home Page](images/Home%20page.png)
+
+#### 📅 Campus Events Catalog
+Live catalog interface with real-time search by title, interactive category pills (*All, Technical, Cultural, Sports, Education*), and real-time status badges (*Happening Today, Upcoming, Archived*).
+
+![Campus Events Catalog](images/Events%20page.png)
+
+#### 💬 Contact & Support
+Campus support desk with direct inquiry details, location coordinates, and operational contact channels.
+
+![Contact & Support](images/Contact.png)
+
+---
+
+### 🛡️ 2. Admin Command Center
+
+#### 🔐 Secure Administrator Login
+Session-guarded portal utilizing custom `[AdminAuth]` action filter security to prevent back-button caching and unauthorized tampering.
+
+![Admin Login](images/Admin_Login.png)
+
+#### 📊 Central Command Dashboard
+High-impact analytics center reporting total live campus events and cumulative student registrations with instant navigation.
+
+![Admin Dashboard](images/Admin_Dashboard.png)
+
+#### 📋 Event Management Suite
+Consolidated administrative data table allowing administrators to monitor, edit, and decommission campus events.
+
+![Manage Events](images/Admin_ManageEvents.png)
+
+#### ✍️ Event Architect: Create & Edit
+Dedicated event builders with automated URL slug generation, registration window boundaries (start & end dates), pricing, and EF Core conflict-free updates.
+
+| Create Campus Event | Edit Campus Event |
+|:---:|:---:|
+| ![Create Event](images/Admin_CreateEvent.png) | ![Edit Event](images/Admin_EditEvent.png) |
+
+#### 👥 Attendee Intelligence & Registrations Registry
+Detailed roster of student registrations with academic filters (Enrollment Number, Semester, Department, Contact) and one-click CSV export capability.
+
+![View Registrations](images/Admin_ViewRegistrations.png)
+
+---
+
+### 📂 Visual Assets Index (`images/` Directory)
+
+All screenshots can be found directly inside the [`images/`](images/) directory:
+
+| Filename | View / Target |
+|---|---|
+| [`images/Home page.png`](images/Home%20page.png) | Public Landing & Hero Section |
+| [`images/Events page.png`](images/Events%20page.png) | Campus Events Catalog & Category Filters |
+| [`images/Contact.png`](images/Contact.png) | Campus Support & Contact Page |
+| [`images/Admin_Login.png`](images/Admin_Login.png) | Secure Admin Authentication Portal |
+| [`images/Admin_Dashboard.png`](images/Admin_Dashboard.png) | Administrative Metrics Dashboard |
+| [`images/Admin_ManageEvents.png`](images/Admin_ManageEvents.png) | Central Events Table & Actions |
+| [`images/Admin_CreateEvent.png`](images/Admin_CreateEvent.png) | New Event Builder with Date Ranges |
+| [`images/Admin_EditEvent.png`](images/Admin_EditEvent.png) | Event Editor & Entity Update Form |
+| [`images/Admin_ViewRegistrations.png`](images/Admin_ViewRegistrations.png) | Student Registrations & Attendee Registry |
+
+---
+
+## 🎨 Design Philosophy & Identity: "Deep Space"
+
+The user interface balances sleek futuristic aesthetics with effortless campus utility:
+* **Curated Palette:** Vibrant **Brand Purple** (`#8B5CF6`), **Strategic Blue** (`#3B82F6`), and **Metallic Slate** (`#E2E8F0`).
+* **Visual Styling:** Glassmorphic navigation headers, smooth gradient backdrops, ambient glow pulses, and holographic boarding passes.
+* **Theme Support:** Instant Dark/Light mode toggle with persistence and smooth transition animations.
+* **Responsive Architecture:** Fully responsive mobile-friendly layouts, dynamic filter pills, and adaptive touch-friendly cards.
+
+---
+
+## ✨ Key Modules & Features
+
+### 🎓 Public & Student Features
+* **Dynamic Landing Page (`/`)**:
+  * Hero section with ambient gradient backdrops and call-to-actions.
+  * Live event showcase featuring today's and upcoming campus activities.
+* **Campus Event Catalog (`/Events`)**:
+  * **Categorized Sections**:
+    * 🔴 **Happening Today (Live Now)** with live pulse indicator.
+    * 📅 **Upcoming Events** counter.
+    * 🗄️ **Past Events (Archived)**.
+  * **Real-Time Client-Side Search**: Instant event filtering by title.
+  * **Interactive Category Pills**: Seamlessly switch between `All`, `Technical`, `Cultural`, `Sports`, and `Education`.
+* **Detailed Event Overview (`/events/{slug}`)**:
+  * SEO-friendly slugged URLs.
+  * Venue information, event schedule, registration timeline, and ticket pricing.
+  * Real-time registration deadline calculations and status alerts (*Registration Not Started*, *Open*, or *Closed*).
+* **Smart Student Registration (`/events/register/{slug}`)**:
+  * Form fields: Student Full Name, Enrollment/Roll Number, Email, Phone Number, Semester, and Department.
+  * Strict registration window enforcement (validates today's date against start and end dates).
+  * **Anti-Duplicate Engine**: Prevents duplicate enrollment numbers from registering multiple times for the same event.
+* **Elite Digital Boarding Pass / E-Ticket (`/events/RegistrationSuccess`)**:
+  * **Procedural Student Avatar**: Metallic-styled avatar derived from the student's initial.
+  * **Cryptographic Anti-Tamper Security Key**: SHA-256 generated checksum verification key (`EH-REG-ROLL-...`).
+  * **Procedural CSS Barcode**: Gate-scan ready barcode simulation.
+  * **Holographic Foil & Ambient Shimmer**: Premium card aesthetics.
+  * **Print & PDF Optimization**: Clean `@media print` landscape styling hiding navigation elements for physical gate badges or PDF saves.
+* **Campus Support & Inquiries (`/Home/Contact`)**:
+  * Campus coordinates, support details, and inquiry channels.
+
+---
+
+### 🛡️ Admin Command Center Features
+* **Protected Session Security (`/Admin/Login`)**:
+  * Custom authorization filter (`[AdminAuth]`) protecting sensitive management routes.
+  * Prevents back-button navigation caching and URL tampering.
+* **Central Analytics Dashboard (`/Admin/Dashboard`)**:
+  * Quick metrics tracking: Total Events Launched and Total Student Registrations.
+  * Quick-launch management actions.
+* **Event Architect (Full CRUD)**:
+  * **Create Events (`/Admin/CreateEvent`)**: Title, category, price, event date, registration start/end dates, and location with auto-generated URL slugs.
+  * **Manage Events (`/Admin/ManageEvents`)**: Central table to review, update, or decommission events.
+  * **Edit Events (`/Admin/EditEvent/{slug}`)**: Real-time attribute modification with EF Core untracked entity conflict handling.
+  * **Delete Events (`/Admin/DeleteEvent/{slug}`)**: Safe removal of decommissioned events.
+* **Attendee Intelligence Registry (`/Admin/ViewRegistrations`)**:
+  * Comprehensive attendee roster displaying student name, roll number, email, phone, semester, department, and registration timestamp.
+* **Data Sovereignty & CSV Export (`/Admin/ExportAttendees`)**:
+  * One-click RFC-compliant CSV report generator (`EventHub_Report_YYYYMMDD.csv`) ready for campus administration, spreadsheets, and archiving.
+
+---
 
 ## 🛠️ Technical Stack
 
-* **Core:** ASP.NET Core 8.0 MVC (C#)
-* **Data:** Entity Framework Core (SQL Server)
-* **Styling:** Tailwind CSS 3.0 (Custom JIT Configuration)
-* **Interactions:** JavaScript ES6+ & Razor Templating
-* **Assets:** Optimized Metallic Logo & High-Res Favicon System
+| Layer | Technology |
+|---|---|
+| **Framework** | **ASP.NET Core 10.0 (MVC)** — C# |
+| **Database** | **MySQL** |
+| **ORM** | **Entity Framework Core 10.0** (`MySql.EntityFrameworkCore`) |
+| **Frontend Styling** | **Tailwind CSS 3.0** (Custom JIT configuration) |
+| **Scripting & Interactivity** | Vanilla JavaScript (ES6+), DOM APIs |
+| **Security & Hashing** | SHA-256 Cryptographic Checksums, Session State, Anti-Forgery Tokens (`[ValidateAntiForgeryToken]`) |
+| **Templating** | ASP.NET Core Razor Pages (`.cshtml`) & ViewModels |
 
-## 🚀 Deployment & Local Access
+---
 
-### Prerequisites
-* .NET 8.0 SDK
-* MySQL
-* Visual Studio 2022 / VS Code
+## ⚙️ Installation & Setup Guide
 
-### Standard Installation
-1.  **Clone & Enter:**
-    ```bash
-    git clone https://github.com/abhishek-2006/Event-Management-System.git
-    cd Event-Management-System
-    ```
-2.  **Database Sync:**
-    Update `appsettings.json` with your connection string, then run:
-    ```bash
-    dotnet ef database update
-    ```
-3.  **Launch:**
-    ```bash
-    dotnet run
-    ```
+### 📋 Prerequisites
+Make sure the following tools are installed on your machine:
+* [.NET 10.0 SDK](https://dotnet.microsoft.com/download) (or .NET 8.0+ SDK)
+* [MySQL Server](https://dev.mysql.com/downloads/mysql/) (via MySQL Community Server, XAMPP, or MariaDB)
+* [Visual Studio 2022](https://visualstudio.microsoft.com/) / [VS Code](https://code.visualstudio.com/) / [JetBrains Rider](https://www.jetbrains.com/rider/)
+* [Git](https://git-scm.com/)
 
-### 🌐 Cross-Device Testing (Same Network)
-To demo the **Mobile Pass** on a real phone while the server runs on your laptop:
+---
 
-1.  **Host on all Interfaces:**
-    ```bash
-    dotnet run --urls "http://0.0.0.0:5199"
-    ```
-2.  **Firewall Configuration:**
-    * Open **Windows Defender Firewall** > **Advanced Settings**.
-    * **Inbound Rules** > **New Rule** > **Port (TCP)**.
-    * Specify Port: **5199** > **Allow Connection**.
-    * Name it: `EventHub-Mobile-Demo`.
-3.  **Connect:**
-    Visit `http://localhost:5199` on any mobile device on the same Wi-Fi.
+### 🚀 Step-by-Step Installation
 
-## 📁 Project Architecture
-```text
-EventManagementSystem/
-├── Controllers/       # Administrative & Public Route Logic
-├── Models/            # EF Core Entities (Event, Registration, Admin)
-├── ViewModels/        # Optimized Data Transfer Objects
-├── Views/             # High-Gloss Razor Templates
-│   ├── Admin/         # Secure Management Suite
-│   ├── Events/        # Discovery & Registration Flow
-│   └── Shared/        # Layout Architect (Navigation & Footer)
-└── wwwroot/           # Brand Identity Assets (logo.jpg, favicon.jpg)
-```
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/abhishek-2006/Event-Management-System.git
+   cd Event-Management-System
+   ```
+
+2. **Configure Database Connection**:
+   Open [`appsettings.json`](appsettings.json) and configure your MySQL credentials:
+   ```json
+   {
+     "ConnectionStrings": {
+       "DefaultConnection": "Server=localhost;Port=3306;Database=EMS_DB;User ID=root;Password=your_password;"
+     }
+   }
+   ```
+
+3. **Apply Database Migrations**:
+   Run the EF Core migration command to automatically create tables and seed default campus events:
+   ```bash
+   dotnet ef database update
+   ```
+
+4. **Run the Application**:
+   ```bash
+   dotnet run
+   ```
+   Open your browser and navigate to:
+   * **Public Platform**: `https://localhost:7214` or `http://localhost:5199` (check terminal output for exact assigned port).
+   * **Admin Command Center**: `https://localhost:7214/Admin/Login`.
+
+---
+
+## 📱 Cross-Device Testing (Preview Digital Pass on Mobile)
+
+To demo or test the **Mobile Boarding Pass** on your smartphone connected to the same Wi-Fi network:
+
+1. **Run with all interface bindings**:
+   ```bash
+   dotnet run --urls "http://0.0.0.0:5199"
+   ```
+
+2. **Allow Inbound Port in Firewall (Windows)**:
+   * Open **Windows Defender Firewall with Advanced Security**.
+   * Click **Inbound Rules** > **New Rule** > Select **Port (TCP)**.
+   * Enter port `5199` and select **Allow the connection**.
+   * Name the rule `EventHub-Mobile-Demo`.
+
+3. **Connect from Mobile**:
+   Find your PC's local IP address (`ipconfig` on Windows, e.g., `192.168.1.15`) and visit:
+   ```text
+   http://192.168.1.X:5199
+   ```
+
+---
 
 ## 👨‍💻 Developed By
 
-**Made with ❤️ by [Abhishek Shah](https://abhishekshah-portfolio.vercel.app/)**
+**Abhishek Shah**  
+* 🌐 Portfolio: [abhishekshah-portfolio.vercel.app](https://abhishekshah-portfolio.vercel.app/)  
+* 🐙 GitHub: [@abhishek-2006](https://github.com/abhishek-2006)  
+
+---
+
+## 📄 License
+
+This project is open-source and licensed under the [MIT License](LICENSE).
