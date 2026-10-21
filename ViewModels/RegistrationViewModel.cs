@@ -10,7 +10,7 @@ namespace EventManagementSystem.ViewModels
 
         public string Phone { get; set; }
 
-        public long EnrollNumber {get; set; }
+        public long EnrollNumber { get; set; }
 
         public string Department { get; set; }
 
@@ -19,5 +19,11 @@ namespace EventManagementSystem.ViewModels
         public string Email { get; set; }
 
         public DateTime RegisteredAt { get; set; }
+
+        public DateTime EventDate { get; set; }
+
+        public DateTime RegistrationStartDate { get; set; }
+
+        public DateTime RegistrationEndDate { get; set; }
     }
 }

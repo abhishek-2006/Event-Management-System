@@ -66,6 +66,12 @@ namespace EventManagementSystem.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<DateTime>("RegistrationEndDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("RegistrationStartDate")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<string>("Slug")
                         .HasColumnType("longtext");
 
@@ -87,6 +93,8 @@ namespace EventManagementSystem.Migrations
                             EventDate = new DateTime(2026, 3, 25, 10, 0, 0, 0, DateTimeKind.Unspecified),
                             Location = "Pushpam Auditorium",
                             Price = 0m,
+                            RegistrationEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RegistrationStartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Tech Symposium 2026"
                         },
                         new
@@ -97,6 +105,8 @@ namespace EventManagementSystem.Migrations
                             EventDate = new DateTime(2026, 4, 5, 8, 30, 0, 0, DateTimeKind.Unspecified),
                             Location = "Sports Ground",
                             Price = 50m,
+                            RegistrationEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RegistrationStartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Annual Sports Meet"
                         },
                         new
@@ -107,6 +117,8 @@ namespace EventManagementSystem.Migrations
                             EventDate = new DateTime(2026, 4, 12, 18, 0, 0, 0, DateTimeKind.Unspecified),
                             Location = "Sports Ground",
                             Price = 150m,
+                            RegistrationEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RegistrationStartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Cultural Night"
                         },
                         new
@@ -117,6 +129,8 @@ namespace EventManagementSystem.Migrations
                             EventDate = new DateTime(2026, 3, 20, 11, 0, 0, 0, DateTimeKind.Unspecified),
                             Location = "JD Hall",
                             Price = 0m,
+                            RegistrationEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RegistrationStartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Banking Workshop"
                         });
                 });

@@ -172,7 +172,11 @@ namespace EventManagementSystem.Controllers
                     Department = r.Department,
                     Semester = r.Semester,
                     Email = r.Email,
-                    RegisteredAt = r.RegisteredAt
+                    EnrollNumber = r.EnrollNumber,
+                    RegisteredAt = r.RegisteredAt,
+                    EventDate = r.Event.EventDate,
+                    RegistrationStartDate = r.Event.RegistrationStartDate,
+                    RegistrationEndDate = r.Event.RegistrationEndDate
                 })
                 .ToList();
 
@@ -201,17 +205,20 @@ namespace EventManagementSystem.Controllers
                     r.Department,
                     r.Semester,
                     Event = r.Event.Title,
+                    EventDate = r.Event.EventDate.ToString("yyyy-MM-dd"),
+                    RegStart = r.Event.RegistrationStartDate.ToString("yyyy-MM-dd"),
+                    RegEnd = r.Event.RegistrationEndDate.ToString("yyyy-MM-dd"),
                     Date = r.RegisteredAt.ToString("yyyy-MM-dd HH:mm")
                 }).ToList();
 
             // Create the CSV Header
             var csv = new StringBuilder();
-            csv.AppendLine("Student Name,Roll Number,Email,Phone,Department,Semester,Event Name,Registration Date");
+            csv.AppendLine("Student Name,Roll Number,Email,Phone,Department,Semester,Event Name,Event Date,Reg. Start Date,Reg. End Date,Registration Date");
 
             // Add rows
             foreach (var row in data)
             {
-                csv.AppendLine($"\"{row.StudentName}\",\"{row.EnrollNumber}\",\"{row.Email}\",\"{row.PhoneNumber}\",\"{row.Department}\",\"{row.Semester}\",\"{row.Event}\",\"{row.Date}\"");
+                csv.AppendLine($"\"{row.StudentName}\",\"{row.EnrollNumber}\",\"{row.Email}\",\"{row.PhoneNumber}\",\"{row.Department}\",\"{row.Semester}\",\"{row.Event}\",\"{row.EventDate}\",\"{row.RegStart}\",\"{row.RegEnd}\",\"{row.Date}\"");
             }
 
             // Return as a downloadable file

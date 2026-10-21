@@ -51,7 +51,7 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 pt-8 border-t-2 border-slate-100 dark:border-slate-800">
+                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 pt-8 border-t-2 border-slate-100 dark:border-slate-800">
                             <div class="space-y-1">
                                 <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Delegate</label>
                                 <p class="text-sm font-black text-slate-900 dark:text-white uppercase truncate">@Model.Name</p>
@@ -67,6 +67,18 @@
                             <div class="space-y-1">
                                 <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Semester</label>
                                 <p class="text-sm font-black text-slate-900 dark:text-white uppercase">@Model.Semester</p>
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-[9px] font-black text-brand-purple uppercase tracking-widest">📅 Event Date</label>
+                                <p class="text-sm font-black text-slate-900 dark:text-white">@Model.EventDate.ToString("MMM dd, yyyy")</p>
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-[9px] font-black text-emerald-500 uppercase tracking-widest">🟢 Reg. Opens</label>
+                                <p class="text-sm font-black text-slate-900 dark:text-white">@Model.RegistrationStartDate.ToString("MMM dd, yyyy")</p>
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-[9px] font-black text-rose-500 uppercase tracking-widest">🔴 Reg. Closes</label>
+                                <p class="text-sm font-black text-slate-900 dark:text-white">@Model.RegistrationEndDate.ToString("MMM dd, yyyy")</p>
                             </div>
                         </div>
                     </div>
