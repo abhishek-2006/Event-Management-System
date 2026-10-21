@@ -29,13 +29,13 @@
             </div>
 
             <div class="space-y-3">
-                <label asp-for="Description" class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-2">Mission Statement / Description</label>
+                <label asp-for="Description" class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-2">Event Description</label>
                 <textarea asp-for="Description" rows="6" placeholder="Describe the objectives and student takeaways..." 
                     class="w-full px-8 py-5 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-[2.5rem] text-lg font-bold text-slate-900 dark:text-white placeholder:text-slate-300 focus:border-brand-purple focus:bg-white dark:focus:bg-slate-900 outline-none transition-all resize-none shadow-inner"></textarea>
             </div>
 
             <div class="space-y-3">
-                <label asp-for="Category" class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-2">Strategic Category</label>
+                <label asp-for="Category" class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-2">Event Category</label>
                 <div class="relative group">
                     <select asp-for="Category" class="w-full px-8 py-5 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-[2rem] text-lg font-bold text-slate-900 dark:text-white focus:border-brand-purple focus:bg-white dark:focus:bg-slate-900 outline-none transition-all appearance-none cursor-pointer shadow-inner">
                         <option value="">Select Classification</option>
@@ -58,7 +58,7 @@
 
                 <div class="space-y-10 relative z-10">
                     <div class="space-y-3">
-                        <label asp-for="EventDate" class="text-[10px] font-black uppercase tracking-widest text-brand-purple ml-2">Operation Date</label>
+                        <label asp-for="EventDate" class="text-[10px] font-black uppercase tracking-widest text-brand-purple ml-2">Event Date</label>
                         <input asp-for="EventDate" type="date" 
                             class="w-full px-8 py-5 bg-slate-800 border-2 border-transparent rounded-[2rem] text-lg font-bold text-white focus:border-brand-purple outline-none transition-all [color-scheme:dark] shadow-inner" />
                         <span asp-validation-for="EventDate" class="text-xs text-red-400 ml-2"></span>
@@ -79,13 +79,13 @@
                     </div>
 
                     <div class="space-y-3">
-                        <label asp-for="Location" class="text-[10px] font-black uppercase tracking-widest text-brand-purple ml-2">Deployment Venue</label>
+                        <label asp-for="Location" class="text-[10px] font-black uppercase tracking-widest text-brand-purple ml-2">Event Venue</label>
                         <input asp-for="Location" placeholder="e.g. Auditorium A" 
                             class="w-full px-8 py-5 bg-slate-800 border-2 border-transparent rounded-[2rem] text-lg font-bold text-white placeholder:text-slate-600 focus:border-brand-purple outline-none transition-all shadow-inner" />
                     </div>
 
                     <div class="space-y-3">
-                        <label asp-for="Price" class="text-[10px] font-black uppercase tracking-widest text-brand-purple ml-2">Access Fee (INR)</label>
+                        <label asp-for="Price" class="text-[10px] font-black uppercase tracking-widest text-brand-purple ml-2">Event Fee (INR)</label>
                         <input asp-for="Price" type="number" step="0.01" placeholder="0.00" 
                             class="w-full px-8 py-5 bg-slate-800 border-2 border-transparent rounded-[2rem] text-lg font-bold text-white placeholder:text-slate-600 focus:border-brand-purple outline-none transition-all shadow-inner" />
                     </div>
