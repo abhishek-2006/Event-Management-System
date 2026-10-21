@@ -10,75 +10,9 @@
 
 ---
 
-## 📸 Screenshots & UI Showcase
+## 📸 Screenshots
 
-> **Note:** All visual screenshots and user interface captures of the website are included in the [`images/`](images/) folder of this repository.
-
-### 🎓 1. Public & Student Portal
-
-#### 🌟 Home / Landing Page
-The dynamic landing experience featuring animated ambient gradient pulses, dark/light theme switching, and quick access to live campus events.
-
-![EventHub Home Page](images/Home%20page.png)
-
-#### 📅 Campus Events Catalog
-Live catalog interface with real-time search by title, interactive category pills (*All, Technical, Cultural, Sports, Education*), and real-time status badges (*Happening Today, Upcoming, Archived*).
-
-![Campus Events Catalog](images/Events%20page.png)
-
-#### 💬 Contact & Support
-Campus support desk with direct inquiry details, location coordinates, and operational contact channels.
-
-![Contact & Support](images/Contact.png)
-
----
-
-### 🛡️ 2. Admin Command Center
-
-#### 🔐 Secure Administrator Login
-Session-guarded portal utilizing custom `[AdminAuth]` action filter security to prevent back-button caching and unauthorized tampering.
-
-![Admin Login](images/Admin_Login.png)
-
-#### 📊 Central Command Dashboard
-High-impact analytics center reporting total live campus events and cumulative student registrations with instant navigation.
-
-![Admin Dashboard](images/Admin_Dashboard.png)
-
-#### 📋 Event Management Suite
-Consolidated administrative data table allowing administrators to monitor, edit, and decommission campus events.
-
-![Manage Events](images/Admin_ManageEvents.png)
-
-#### ✍️ Event Architect: Create & Edit
-Dedicated event builders with automated URL slug generation, registration window boundaries (start & end dates), pricing, and EF Core conflict-free updates.
-
-| Create Campus Event | Edit Campus Event |
-|:---:|:---:|
-| ![Create Event](images/Admin_CreateEvent.png) | ![Edit Event](images/Admin_EditEvent.png) |
-
-#### 👥 Attendee Intelligence & Registrations Registry
-Detailed roster of student registrations with academic filters (Enrollment Number, Semester, Department, Contact) and one-click CSV export capability.
-
-![View Registrations](images/Admin_ViewRegistrations.png)
-
----
-
-### 📂 Visual Assets Index (`images/` Directory)
-
-All screenshots can be found directly inside the [`images/`](images/) directory:
-
-| Filename | View / Target |
-|---|---|
-| [`images/Home page.png`](images/Home%20page.png) | Public Landing & Hero Section |
-| [`images/Events page.png`](images/Events%20page.png) | Campus Events Catalog & Category Filters |
-| [`images/Contact.png`](images/Contact.png) | Campus Support & Contact Page |
-| [`images/Admin_Login.png`](images/Admin_Login.png) | Secure Admin Authentication Portal |
-| [`images/Admin_Dashboard.png`](images/Admin_Dashboard.png) | Administrative Metrics Dashboard |
-| [`images/Admin_ManageEvents.png`](images/Admin_ManageEvents.png) | Central Events Table & Actions |
-| [`images/Admin_CreateEvent.png`](images/Admin_CreateEvent.png) | New Event Builder with Date Ranges |
-| [`images/Admin_EditEvent.png`](images/Admin_EditEvent.png) | Event Editor & Entity Update Form |
-| [`images/Admin_ViewRegistrations.png`](images/Admin_ViewRegistrations.png) | Student Registrations & Attendee Registry |
+All UI screenshots and platform captures are available directly in the [`images/`](images/) directory.
 
 ---
 
