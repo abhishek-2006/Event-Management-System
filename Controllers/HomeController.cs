@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using EventManagementSystem.Models;
+using EventManagementSystem.ViewModels;
 using EventManagementSystem.Data;
 using System.Linq;
 
@@ -17,14 +18,30 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        // Fetch top 3 upcoming events for the "Featured" section
-        var featuredEvents = _context.Events
-                                    .Where(e => e.EventDate >= DateTime.Now)
-                                    .OrderBy(e => e.EventDate)
-                                    .Take(3)
-                                    .ToList();
+        var today = DateTime.Today;
+        var tomorrow = today.AddDays(1);
 
-        return View(featuredEvents);
+        // Fetch up to 3 live events happening today
+        var liveEvents = _context.Events
+                                .Where(e => e.EventDate >= today && e.EventDate < tomorrow)
+                                .OrderBy(e => e.EventDate)
+                                .Take(3)
+                                .ToList();
+
+        // Fetch up to 3 past events (most recent first)
+        var pastEvents = _context.Events
+                                .Where(e => e.EventDate < today)
+                                .OrderByDescending(e => e.EventDate)
+                                .Take(3)
+                                .ToList();
+
+        var viewModel = new HomeViewModel
+        {
+            LiveEvents = liveEvents,
+            PastEvents = pastEvents
+        };
+
+        return View(viewModel);
     }
 
     [HttpGet("Home/Contact")]
