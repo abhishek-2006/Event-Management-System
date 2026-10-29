@@ -67,11 +67,15 @@ Application UI captures are available in the [`images/`](images/) directory.
    }
    ```
 
-3. **Apply Database Migrations:**
-   Run EF Core migrations to create the database schema and seed default events:
+**3. Apply Database Migrations:**
+   Install the EF Core CLI tool if it is not already installed, then apply the migrations to create or update the database schema.
+
    ```bash
+   dotnet tool install --global dotnet-ef
    dotnet ef database update
    ```
+
+   If `dotnet-ef` is already installed, the installation command may report that it already exists. In that case, skip the first command and run `dotnet ef database update`.
 
 4. **Add an Admin Account (Optional):**
    To log in to the admin dashboard, insert an administrator row into the `Admins` table in MySQL:
