@@ -1,6 +1,7 @@
 using EventManagementSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using MySql.EntityFrameworkCore.Extensions;
+using EventManagementSystem.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -13,6 +14,31 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSession();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider
+        .GetRequiredService<AppDbContext>();
+
+    var eventsWithoutSlugs = context.Events
+        .Where(e => e.Slug == null || e.Slug == "")
+        .ToList();
+
+    foreach (var ev in eventsWithoutSlugs)
+    {
+        ev.Slug = ev.Title
+            .ToLower()
+            .Trim()
+            .Replace(" ", "-")
+            .Replace(".", "")
+            .Replace(",", "");
+    }
+
+    if (eventsWithoutSlugs.Count > 0)
+    {
+        context.SaveChanges();
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
