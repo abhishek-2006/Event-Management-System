@@ -224,10 +224,12 @@ namespace EventManagementSystem.Controllers
             return View(registrations);
         }
 
+        [HttpGet("Admin/Logout")]
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
-            return RedirectToAction("Login");
+
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet("Admin/ExportAttendees")]

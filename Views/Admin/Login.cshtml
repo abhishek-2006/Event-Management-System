@@ -39,13 +39,15 @@
             <div class="relative bg-white dark:bg-slate-900 rounded-[3.5rem] p-12 border-2 border-slate-100 dark:border-slate-800 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.2)] animate-in fade-in zoom-in duration-700">
                 
                 <div class="text-center mb-12">
-                    <div class="inline-flex p-1 bg-brand-gradient rounded-3xl shadow-2xl shadow-brand-purple/20 mb-8 rotate-3 hover:rotate-0 transition-transform duration-500">
-                        <img src="~/logo.png" class="w-20 h-20 rounded-[1.2rem] object-cover" alt="EH" />
-                    </div>
+                    <a href="/" aria-label="Go to main website homepage" class="inline-block">
+                        <div class="inline-flex p-2.4 rounded-3xl shadow-2xl shadow-brand-purple/20 mb-8 transition-transform duration-500">
+                            <img src="~/logo.png" class="w-28 h-28 rounded-[1.2rem] object-cover" alt="EH" />
+                        </div>
+                    </a>
                     <h2 class="text-4xl font-black text-slate-900 dark:text-white tracking-tighter uppercase italic">
                         Admin <span class="text-transparent bg-clip-text bg-brand-gradient">Portal</span>
                     </h2>
-                    <p class="text-slate-400 font-bold mt-2 uppercase tracking-[0.2em] text-[10px]">Restricted Access</p>
+                    <p class="text-slate-400 font-bold mt-2 uppercase tracking-widest text-[10px]">Restricted Access</p>
                 </div>
 
                 <form asp-action="Login" method="post" class="space-y-8">

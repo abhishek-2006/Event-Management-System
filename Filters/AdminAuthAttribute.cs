@@ -21,12 +21,14 @@ namespace EventManagementSystem.Filters
             if (string.IsNullOrEmpty(context.HttpContext.Session.GetString("Admin")))
             {
                 context.Result = new RedirectToActionResult("Login", "Admin", null);
+
+                return;
             }
 
             // 2. PREVENT BROWSER CACHING
-            context.HttpContext.Response.Headers.CacheControl = "no-cache, no-store, must-revalidate";
-            context.HttpContext.Response.Headers.Pragma = "no-cache";
-            context.HttpContext.Response.Headers.Expires = "0";
+            context.HttpContext.Response.Headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
+            context.HttpContext.Response.Headers["Pragma"] = "no-cache";
+            context.HttpContext.Response.Headers["Expires"] = "0";
 
             base.OnActionExecuting(context);
         }
