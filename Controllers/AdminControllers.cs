@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using EventManagementSystem.Data;
 using EventManagementSystem.Models;
 using EventManagementSystem.ViewModels;
@@ -56,6 +57,21 @@ namespace EventManagementSystem.Controllers
             ViewBag.TotalEvents = _context.Events.Count();
             ViewBag.TotalRegistrations = _context.Registrations.Count();
             
+            var eventStats = _context.Events
+                .Select(e => new EventRegistrationSummary
+                {
+                    EventId = e.EventId,
+                    Title = e.Title,
+                    Slug = e.Slug,
+                    Category = e.Category,
+                    EventDate = e.EventDate,
+                    RegistrationsCount = _context.Registrations.Count(r => r.EventId == e.EventId)
+                })
+                .OrderByDescending(e => e.RegistrationsCount)
+                .ToList();
+
+            ViewBag.EventStats = eventStats;
+
             return View();
         }
 
@@ -97,7 +113,19 @@ namespace EventManagementSystem.Controllers
             if (HttpContext.Session.GetString("Admin") == null)
                 return RedirectToAction("Login");
 
-            var events = _context.Events.ToList();
+            var regCounts = _context.Registrations
+                .GroupBy(r => r.EventId)
+                .Select(g => new { EventId = g.Key, Count = g.Count() })
+                .ToDictionary(x => x.EventId, x => x.Count);
+
+            var events = _context.Events.OrderByDescending(e => e.EventDate).ToList();
+            foreach (var ev in events)
+            {
+                ev.TotalRegistrations = regCounts.TryGetValue(ev.EventId, out var count) ? count : 0;
+            }
+
+            ViewBag.TotalRegistrationsAllEvents = _context.Registrations.Count();
+
             return View(events);
         }
 
@@ -198,16 +226,49 @@ namespace EventManagementSystem.Controllers
         }
 
         [HttpGet("Admin/ViewRegistrations")]
-        public IActionResult ViewRegistrations()
+        public IActionResult ViewRegistrations(int? eventId = null, string? slug = null)
         {
             if (HttpContext.Session.GetString("Admin") == null)
                 return RedirectToAction("Login");
 
-            var registrations = _context.Registrations
+            // Resolve event by slug if eventId is null but slug is provided
+            if (!eventId.HasValue && !string.IsNullOrEmpty(slug))
+            {
+                var evBySlug = _context.Events.FirstOrDefault(e => e.Slug == slug);
+                if (evBySlug != null)
+                {
+                    eventId = evBySlug.EventId;
+                }
+            }
+
+            var events = _context.Events.OrderBy(e => e.Title).ToList();
+            var regCounts = _context.Registrations
+                .GroupBy(r => r.EventId)
+                .Select(g => new { EventId = g.Key, Count = g.Count() })
+                .ToDictionary(x => x.EventId, x => x.Count);
+
+            foreach (var ev in events)
+            {
+                ev.TotalRegistrations = regCounts.TryGetValue(ev.EventId, out var count) ? count : 0;
+            }
+
+            var query = _context.Registrations.Include(r => r.Event).AsQueryable();
+
+            Event? selectedEvent = null;
+            if (eventId.HasValue && eventId.Value > 0)
+            {
+                query = query.Where(r => r.EventId == eventId.Value);
+                selectedEvent = events.FirstOrDefault(e => e.EventId == eventId.Value);
+            }
+
+            var registrations = query
+                .OrderByDescending(r => r.RegisteredAt)
                 .Select(r => new RegistrationViewModel
                 {
                     RegistrationId = r.Id,
-                    EventTitle = r.Event!.Title,
+                    EventId = r.EventId,
+                    EventSlug = r.Event != null ? r.Event.Slug : null,
+                    EventTitle = r.Event != null ? r.Event.Title : "Unknown Event",
                     Name = r.StudentName,
                     Phone = r.PhoneNumber,
                     Department = r.Department,
@@ -215,11 +276,17 @@ namespace EventManagementSystem.Controllers
                     Email = r.Email,
                     EnrollNumber = r.EnrollNumber,
                     RegisteredAt = r.RegisteredAt,
-                    EventDate = r.Event!.EventDate,
-                    RegistrationStartDate = r.Event!.RegistrationStartDate,
-                    RegistrationEndDate = r.Event!.RegistrationEndDate
+                    EventDate = r.Event != null ? r.Event.EventDate : DateTime.MinValue,
+                    RegistrationStartDate = r.Event != null ? r.Event.RegistrationStartDate : DateTime.MinValue,
+                    RegistrationEndDate = r.Event != null ? r.Event.RegistrationEndDate : DateTime.MinValue
                 })
                 .ToList();
+
+            ViewBag.Events = events;
+            ViewBag.SelectedEventId = eventId;
+            ViewBag.SelectedEvent = selectedEvent;
+            ViewBag.OverallTotalRegistrations = _context.Registrations.Count();
+            ViewBag.FilteredTotalRegistrations = registrations.Count;
 
             return View(registrations);
         }
@@ -233,13 +300,23 @@ namespace EventManagementSystem.Controllers
         }
 
         [HttpGet("Admin/ExportAttendees")]
-        public IActionResult ExportAttendees()
+        public IActionResult ExportAttendees(int? eventId = null)
         {
             if (HttpContext.Session.GetString("Admin") == null)
                 return RedirectToAction("Login");
 
-            // Fetch all registrations with Event details
-            var data = _context.Registrations
+            var query = _context.Registrations.Include(r => r.Event).AsQueryable();
+
+            Event? selectedEvent = null;
+            if (eventId.HasValue && eventId.Value > 0)
+            {
+                query = query.Where(r => r.EventId == eventId.Value);
+                selectedEvent = _context.Events.Find(eventId.Value);
+            }
+
+            // Fetch registrations with Event details
+            var data = query
+                .OrderByDescending(r => r.RegisteredAt)
                 .Select(r => new {
                     r.StudentName,
                     r.EnrollNumber,
@@ -266,7 +343,8 @@ namespace EventManagementSystem.Controllers
 
             // Return as a downloadable file
             byte[] buffer = Encoding.UTF8.GetBytes(csv.ToString());
-            return File(buffer, "text/csv", $"EventHub_Report_{DateTime.Now:yyyyMMdd}.csv");
+            var filePrefix = selectedEvent != null ? $"EventHub_{selectedEvent.Slug}" : "EventHub_All";
+            return File(buffer, "text/csv", $"{filePrefix}_Report_{DateTime.Now:yyyyMMdd}.csv");
         }
     }
 }

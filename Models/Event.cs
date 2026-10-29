@@ -44,5 +44,8 @@ namespace EventManagementSystem.Models
         public string Location { get; set; } = string.Empty;
         public bool IsRegistrationOpen => DateTime.Now.Date >= RegistrationStartDate.Date && DateTime.Now.Date <= RegistrationEndDate.Date;
         public int DaysUntilDeadline => (RegistrationEndDate.Date - DateTime.Now.Date).Days;
+
+        [NotMapped]
+        public int TotalRegistrations { get; set; }
     }
 }

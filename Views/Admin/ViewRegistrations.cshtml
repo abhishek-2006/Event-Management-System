@@ -4,8 +4,8 @@
     ViewData["Title"] = "Attendee Logs";
 }
 
-<div class="py-10 space-y-12">
-    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 px-2">
+<div class="py-10 space-y-10">
+    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 px-2">
         <div class="animate-in fade-in slide-in-from-left-6 duration-700">
             <h1 class="text-5xl md:text-7xl font-black text-slate-900 dark:text-white tracking-tighter uppercase italic leading-none">
                 Attendee <span class="text-transparent bg-clip-text bg-brand-gradient">Logs</span>
@@ -15,86 +15,177 @@
             </p>
         </div>
 
-        <div class="flex flex-wrap gap-4 no-print">
-            <a href="/Admin/ExportAttendees" class="group relative inline-flex items-center gap-3 px-8 py-4 bg-emerald-600 text-white font-black text-[10px] uppercase tracking-widest rounded-2xl overflow-hidden shadow-2xl shadow-emerald-500/20 transition-all hover:scale-[1.02] active:scale-95">
-                <span class="relative z-10 flex items-center gap-2">
-                    Download CSV <span>📊</span>
-                </span>
-                <div class="absolute inset-0 bg-emerald-500 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out"></div>
-            </a>
+        <!-- Event Filter Selector & CSV Export Button -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 no-print">
+            <div class="relative min-w-[280px]">
+                <label for="eventFilter" class="block text-[9px] font-black uppercase tracking-widest text-slate-400 mb-1.5">Filter by Event</label>
+                <select id="eventFilter" onchange="filterRegistrations(this.value)" 
+                        class="w-full appearance-none px-5 py-3.5 pr-10 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider focus:ring-4 focus:ring-brand-purple/10 focus:border-brand-purple outline-none shadow-sm cursor-pointer transition-all">
+                    <option value="" selected="@(ViewBag.SelectedEventId == null)">All Events (@ViewBag.OverallTotalRegistrations Total Registrations)</option>
+                    @if (ViewBag.Events != null)
+                    {
+                        @foreach (var ev in (List<EventManagementSystem.Models.Event>)ViewBag.Events)
+                        {
+                            <option value="@ev.EventId" selected="@(ViewBag.SelectedEventId == ev.EventId)">
+                                @ev.Title (@ev.TotalRegistrations Registrations)
+                            </option>
+                        }
+                    }
+                </select>
+                <div class="pointer-events-none absolute right-4 top-[2.35rem] -translate-y-1/2 text-slate-400">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+            </div>
+
+            <div class="self-end">
+                @{
+                    var exportUrl = ViewBag.SelectedEventId != null 
+                        ? $"/Admin/ExportAttendees?eventId={ViewBag.SelectedEventId}" 
+                        : "/Admin/ExportAttendees";
+                }
+                <a href="@exportUrl" class="group relative inline-flex items-center gap-3 px-8 py-3.5 bg-emerald-600 text-white font-black text-[10px] uppercase tracking-widest rounded-2xl overflow-hidden shadow-2xl shadow-emerald-500/20 transition-all hover:scale-[1.02] active:scale-95">
+                    <span class="relative z-10 flex items-center gap-2">
+                        Download CSV <span>📊</span>
+                    </span>
+                    <div class="absolute inset-0 bg-emerald-500 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out"></div>
+                </a>
+            </div>
         </div>
     </div>
 
-    <div class="bg-white dark:bg-slate-900 rounded-[3rem] border border-slate-100 dark:border-slate-800 shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-700">
-        <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse">
-                <thead>
-                    <tr class="bg-slate-50/50 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800">
-                        <th class="px-10 py-8 text-[10px] font-black text-slate-400 uppercase tracking-widest">Student Identity</th>
-                        <th class="px-10 py-8 text-[10px] font-black text-slate-400 uppercase tracking-widest">Enrolled Event</th>
-                        <th class="px-10 py-8 text-[10px] font-black text-slate-400 uppercase tracking-widest">Academic Data</th>
-                        <th class="px-10 py-8 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">Auth Status</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-50 dark:divide-slate-800/60">
-                    @foreach (var reg in Model)
-                    {
-                        <tr class="group hover:bg-slate-50/30 dark:hover:bg-brand-purple/[0.02] transition-colors">
-                            <td class="px-10 py-8">
-                                <div class="flex items-center gap-5">
-                                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-purple to-brand-blue p-[2px] shadow-lg group-hover:rotate-6 transition-transform">
-                                        <div class="w-full h-full bg-white dark:bg-slate-900 rounded-[0.9rem] flex items-center justify-center text-slate-900 dark:text-white font-black text-sm uppercase">
-                                            @reg.Name.Substring(0, 1)
+    <!-- Active Filter Banner (When filtered by specific event) -->
+    @if (ViewBag.SelectedEvent != null)
+    {
+        var selEvent = (EventManagementSystem.Models.Event)ViewBag.SelectedEvent;
+        <div class="p-6 md:p-8 bg-gradient-to-r from-brand-purple/10 via-brand-blue/5 to-transparent border border-brand-purple/20 rounded-[2.5rem] flex flex-col md:flex-row md:items-center justify-between gap-6 animate-in fade-in duration-500 shadow-sm">
+            <div class="flex items-center gap-5">
+                <div class="w-14 h-14 rounded-2xl bg-brand-purple text-white flex items-center justify-center text-2xl shadow-lg shadow-brand-purple/20">
+                    🎟️
+                </div>
+                <div>
+                    <div class="flex items-center gap-3">
+                        <span class="px-3 py-1 bg-white dark:bg-slate-800 rounded-full text-[9px] font-black uppercase tracking-widest text-brand-purple border border-brand-purple/20">
+                            @selEvent.Category
+                        </span>
+                        <span class="text-[10px] font-bold text-slate-400">📅 @selEvent.EventDate.ToString("MMM dd, yyyy")</span>
+                        <span class="text-[10px] font-bold text-slate-400">📍 @selEvent.Location</span>
+                    </div>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white mt-1 italic">@selEvent.Title</h2>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <div class="text-left md:text-right">
+                    <p class="text-[9px] font-black uppercase tracking-widest text-slate-400">Total Event Registrations</p>
+                    <p class="text-3xl font-black text-brand-purple italic">@selEvent.TotalRegistrations <span class="text-xs font-bold text-slate-400 uppercase not-italic">Students</span></p>
+                </div>
+                <a href="/Admin/ViewRegistrations" class="p-3 bg-white dark:bg-slate-800 text-slate-400 hover:text-slate-900 dark:hover:text-white rounded-xl border border-slate-200 dark:border-slate-700 transition-colors shadow-sm" title="Clear filter (View all events)">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </a>
+            </div>
+        </div>
+    }
+
+    <!-- Registrations Table or Empty State -->
+    @if (!Model.Any())
+    {
+        <div class="py-24 text-center bg-white dark:bg-slate-900 border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-[3rem] p-10">
+            <div class="w-16 h-16 bg-slate-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4">📭</div>
+            <h3 class="text-xl font-black text-slate-900 dark:text-white uppercase tracking-wider mb-2">No Registrations Found</h3>
+            <p class="text-slate-400 font-medium text-sm max-w-md mx-auto">There are currently no attendees registered for this selection.</p>
+            @if (ViewBag.SelectedEventId != null)
+            {
+                <div class="mt-6">
+                    <a href="/Admin/ViewRegistrations" class="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-brand-purple text-white font-bold text-xs uppercase tracking-widest hover:opacity-90 transition-opacity">
+                        &larr; View All Registrations
+                    </a>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="bg-white dark:bg-slate-900 rounded-[3rem] border border-slate-100 dark:border-slate-800 shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-700">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-slate-50/50 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800">
+                            <th class="px-10 py-8 text-[10px] font-black text-slate-400 uppercase tracking-widest">Student Identity</th>
+                            <th class="px-10 py-8 text-[10px] font-black text-slate-400 uppercase tracking-widest">Enrolled Event</th>
+                            <th class="px-10 py-8 text-[10px] font-black text-slate-400 uppercase tracking-widest">Academic Data</th>
+                            <th class="px-10 py-8 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">Auth Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-50 dark:divide-slate-800/60">
+                        @foreach (var reg in Model)
+                        {
+                            <tr class="group hover:bg-slate-50/30 dark:hover:bg-brand-purple/[0.02] transition-colors">
+                                <td class="px-10 py-8">
+                                    <div class="flex items-center gap-5">
+                                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-purple to-brand-blue p-[2px] shadow-lg group-hover:rotate-6 transition-transform">
+                                            <div class="w-full h-full bg-white dark:bg-slate-900 rounded-[0.9rem] flex items-center justify-center text-slate-900 dark:text-white font-black text-sm uppercase">
+                                                @reg.Name.Substring(0, 1)
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <span class="text-lg font-black text-slate-900 dark:text-white group-hover:text-brand-purple transition-colors italic">@reg.Name</span>
+                                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-0.5 opacity-70">@reg.Email</span>
                                         </div>
                                     </div>
-                                    <div class="flex flex-col">
-                                        <span class="text-lg font-black text-slate-900 dark:text-white group-hover:text-brand-purple transition-colors italic">@reg.Name</span>
-                                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-0.5 opacity-70">@reg.Email</span>
+                                </td>
+                                <td class="px-10 py-8">
+                                    <div class="flex flex-col gap-1">
+                                        <a href="/Admin/ViewRegistrations?eventId=@reg.EventId" class="text-sm font-black text-slate-700 dark:text-slate-200 uppercase tracking-tight hover:text-brand-purple transition-colors">
+                                            @reg.EventTitle
+                                        </a>
+                                        <span class="text-[10px] font-bold text-brand-blue uppercase tracking-widest">📅 Event: @reg.EventDate.ToString("MMM dd, yyyy")</span>
+                                        <span class="text-[10px] font-bold text-emerald-500 uppercase tracking-widest">🟢 Opens: @reg.RegistrationStartDate.ToString("MMM dd, yyyy")</span>
+                                        <span class="text-[10px] font-bold text-rose-500 uppercase tracking-widest">🔴 Closes: @reg.RegistrationEndDate.ToString("MMM dd, yyyy")</span>
                                     </div>
-                                </div>
-                            </td>
-                            <td class="px-10 py-8">
-                                <div class="flex flex-col gap-1">
-                                    <span class="text-sm font-black text-slate-700 dark:text-slate-200 uppercase tracking-tight">
-                                        @reg.EventTitle
+                                </td>
+                                <td class="px-10 py-8">
+                                    <div class="flex flex-col">
+                                        <span class="text-xs font-black text-slate-700 dark:text-slate-300">
+                                            Enrollment: <span class="text-brand-blue">#@reg.EnrollNumber</span>
+                                        </span>
+                                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1 italic">
+                                            Sem @reg.Semester &bull; @reg.Department
+                                        </span>
+                                    </div>
+                                </td>
+                                <td class="px-10 py-8 text-right">
+                                    <span class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-emerald-500/10 text-emerald-500 text-[9px] font-black uppercase tracking-widest border border-emerald-500/20">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                        Verified
                                     </span>
-                                    <span class="text-[10px] font-bold text-brand-blue uppercase tracking-widest">📅 Event: @reg.EventDate.ToString("MMM dd, yyyy")</span>
-                                    <span class="text-[10px] font-bold text-emerald-500 uppercase tracking-widest">🟢 Opens: @reg.RegistrationStartDate.ToString("MMM dd, yyyy")</span>
-                                    <span class="text-[10px] font-bold text-rose-500 uppercase tracking-widest">🔴 Closes: @reg.RegistrationEndDate.ToString("MMM dd, yyyy")</span>
-                                </div>
-                            </td>
-                            <td class="px-10 py-8">
-                                <div class="flex flex-col">
-                                    <span class="text-xs font-black text-slate-700 dark:text-slate-300">
-                                        Enrollment: <span class="text-brand-blue">#@reg.EnrollNumber</span>
-                                    </span>
-                                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1 italic">
-                                        Sem @reg.Semester &bull; @reg.Department
-                                    </span>
-                                </div>
-                            </td>
-                            <td class="px-10 py-8 text-right">
-                                <span class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-emerald-500/10 text-emerald-500 text-[9px] font-black uppercase tracking-widest border border-emerald-500/20">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                                    Verified
-                                </span>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
+    }
 
     <div class="flex flex-col md:flex-row items-center justify-between gap-4 px-10 no-print">
         <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">
             &copy; 2026 Control Hub
         </p>
         <p class="px-6 py-3 bg-slate-100 dark:bg-slate-900 rounded-2xl text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest italic border border-slate-200 dark:border-slate-800">
-            Total Capacity Used: <span class="text-brand-purple">@Model.Count()</span> Delegates
+            Total Registrations: <span class="text-brand-purple">@Model.Count()</span> @(ViewBag.SelectedEventId != null ? $"Students (for this event)" : $"Students (Overall: {ViewBag.OverallTotalRegistrations})")
         </p>
     </div>
 </div>
+
+<script>
+    function filterRegistrations(eventId) {
+        if (eventId) {
+            window.location.href = '/Admin/ViewRegistrations?eventId=' + eventId;
+        } else {
+            window.location.href = '/Admin/ViewRegistrations';
+        }
+    }
+</script>
 
 <style>
     @@media print {

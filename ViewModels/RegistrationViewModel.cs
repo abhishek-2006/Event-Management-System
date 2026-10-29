@@ -4,6 +4,10 @@ namespace EventManagementSystem.ViewModels
     {
         public int RegistrationId { get; set; }
 
+        public int EventId { get; set; }
+
+        public string? EventSlug { get; set; }
+
         public string EventTitle { get; set; } = string.Empty;
 
         public string Name { get; set; } = string.Empty;
