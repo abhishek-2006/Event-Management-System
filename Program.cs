@@ -4,9 +4,15 @@ using MySql.EntityFrameworkCore.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDbContext>(options =>
+{
     options.UseMySQL(builder.Configuration.GetConnectionString("DefaultConnection") 
-        ?? throw new InvalidOperationException( "Connection string 'DefaultConnection' not found."))
-    .EnableSensitiveDataLogging());
+        ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found."));
+    
+    if (builder.Environment.IsDevelopment())
+    {
+        options.EnableSensitiveDataLogging();
+    }
+});
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

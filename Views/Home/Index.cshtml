@@ -24,8 +24,8 @@
             <p class="mt-6 text-lg md:text-2xl text-slate-500 dark:text-slate-400 max-w-3xl mx-auto font-medium leading-relaxed">
                 The official platform for campus engagement. Experience <span class="text-slate-900 dark:text-white font-black italic">EventHub</span> — where technology meets community.
             </p>
-
-            <div class="flex flex-wrap justify-center gap-6 mt-12">
+    
+            <div class="w-full flex flex-wrap justify-center gap-6 mt-12">
                 <a asp-controller="Events" asp-action="Index" 
                    class="group relative px-12 py-5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black rounded-2xl overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-2xl shadow-brand-purple/20">
                     <span class="relative z-10 uppercase tracking-[0.2em] text-xs">Explore Catalog</span>
@@ -36,17 +36,34 @@
                     Get Support
                 </a>
             </div>
+
+            <!-- Campus Highlight Stats -->
+            <div class="w-full mt-16 pt-8 border-t border-slate-200/60 dark:border-slate-800/60 max-w-3xl mx-auto">
+                <div class="flex flex-wrap items-center justify-center gap-4 text-xs font-bold text-slate-500 dark:text-slate-400">
+                    <div class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-100/80 dark:bg-slate-900/80 border border-slate-200/60 dark:border-slate-800 shadow-sm">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <span>Live Campus Feeds</span>
+                    </div>
+                    <div class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-100/80 dark:bg-slate-900/80 border border-slate-200/60 dark:border-slate-800 shadow-sm">
+                        <span>⚡</span>
+                        <span>Instant Digital Passes</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- LIVE EVENTS BLOCK -->
     <section class="container mx-auto px-6">
-        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6 border-b border-slate-100 dark:border-slate-800 pb-10">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6 border-b border-slate-200 dark:border-slate-800 pb-10">
             <div class="max-w-xl">
-                <h2 class="text-5xl font-black text-slate-900 dark:text-white tracking-tight italic">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 text-[10px] font-black uppercase tracking-widest mb-3">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span> Live Broadcast
+                </div>
+                <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight italic">
                     Live <span class="text-brand-purple">Events</span>
                 </h2>
-                <p class="text-slate-500 dark:text-slate-400 font-medium text-lg mt-2">Premium events selected for the community.</p>
+                <p class="text-slate-500 dark:text-slate-400 font-medium text-lg mt-2">Active happenings selected for the student community.</p>
             </div>
             <a asp-controller="Events" asp-action="Index" class="group flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 hover:text-brand-purple transition-all">
                 Full Schedule 
@@ -97,9 +114,13 @@
             }
             else
             {
-                <div class="col-span-full py-32 text-center bg-white dark:bg-slate-900 border-4 border-dashed border-slate-100 dark:border-slate-800 rounded-[4rem]">
-                    <div class="w-20 h-20 bg-slate-50 dark:bg-slate-800 rounded-3xl flex items-center justify-center text-4xl mx-auto mb-6">🛰️</div>
-                    <p class="text-slate-400 font-black uppercase tracking-[0.3em]">System stands ready. No live events.</p>
+                <div class="col-span-full py-20 px-8 text-center bg-white dark:bg-slate-900 border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-[3.5rem] flex flex-col items-center justify-center">
+                    <div class="w-20 h-20 bg-slate-50 dark:bg-slate-800 rounded-3xl flex items-center justify-center text-4xl mb-6 shadow-inner">🛰️</div>
+                    <h3 class="text-2xl font-black text-slate-900 dark:text-white uppercase italic tracking-tight mb-2">No Live Events Scheduled Today</h3>
+                    <p class="text-slate-400 font-medium text-sm max-w-md mx-auto mb-6">Our campus radar has no active sessions broadcasting right now. Explore upcoming events or archived highlights.</p>
+                    <a asp-controller="Events" asp-action="Index" class="inline-flex items-center gap-2 px-8 py-3.5 bg-brand-gradient text-white font-black text-xs uppercase tracking-widest rounded-2xl shadow-xl shadow-brand-purple/20 hover:scale-105 transition-all">
+                        Browse Upcoming Events &rarr;
+                    </a>
                 </div>
             }
         </div>

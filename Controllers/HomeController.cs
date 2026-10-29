@@ -44,13 +44,13 @@ public class HomeController : Controller
         return View(viewModel);
     }
 
-    [HttpGet("Home/Contact")]
+    [HttpGet("Contact")]
     public IActionResult Contact()
     {
         return View();
     }
 
-    [HttpPost("Home/Contact")]
+    [HttpPost("Contact")]
     [ValidateAntiForgeryToken]
     public IActionResult Contact(string fullname, string email, string subject, string message)
     {

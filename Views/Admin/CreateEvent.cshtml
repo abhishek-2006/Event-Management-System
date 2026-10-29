@@ -20,95 +20,104 @@
     <form asp-action="CreateEvent" method="post" class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
         @Html.AntiForgeryToken()
 
-        <div class="lg:col-span-7 space-y-10 bg-white dark:bg-slate-900 p-10 md:p-12 rounded-[3.5rem] border border-slate-100 dark:border-slate-800 shadow-2xl">
+        @if (!ViewData.ModelState.IsValid && ViewData.ModelState.ErrorCount > 0)
+        {
+            <div asp-validation-summary="All" class="col-span-full p-6 bg-rose-500/10 border-2 border-rose-500/30 text-rose-500 rounded-[2rem] text-sm font-bold shadow-lg"></div>
+        }
+
+        <div class="lg:col-span-7 space-y-8 bg-white dark:bg-slate-900 p-8 md:p-12 rounded-[3rem] border border-slate-200 dark:border-slate-800 shadow-xl">
             
-            <div class="space-y-3">
-                <label asp-for="Title" class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-2">Event Title</label>
+            <div class="space-y-2">
+                <label asp-for="Title" class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Event Title</label>
                 <input asp-for="Title" placeholder="e.g. AI/ML Complete Journey 2026" 
-                    class="w-full px-8 py-5 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-[2rem] text-xl font-bold text-slate-900 dark:text-white placeholder:text-slate-300 focus:border-brand-purple focus:bg-white dark:focus:bg-slate-900 outline-none transition-all shadow-inner" />
+                    class="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl text-lg font-bold text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-brand-purple focus:ring-4 focus:ring-brand-purple/10 focus:bg-white dark:focus:bg-slate-900 outline-none transition-all" />
+                <span asp-validation-for="Title" class="text-xs text-rose-500 font-bold ml-1"></span>
             </div>
 
-            <div class="space-y-3">
-                <label asp-for="Description" class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-2">Event Description</label>
+            <div class="space-y-2">
+                <label asp-for="Description" class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Event Description</label>
                 <textarea asp-for="Description" rows="6" placeholder="Describe the objectives and student takeaways..." 
-                    class="w-full px-8 py-5 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-[2.5rem] text-lg font-bold text-slate-900 dark:text-white placeholder:text-slate-300 focus:border-brand-purple focus:bg-white dark:focus:bg-slate-900 outline-none transition-all resize-none shadow-inner"></textarea>
+                    class="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl text-base font-medium text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-brand-purple focus:ring-4 focus:ring-brand-purple/10 focus:bg-white dark:focus:bg-slate-900 outline-none transition-all resize-none"></textarea>
+                <span asp-validation-for="Description" class="text-xs text-rose-500 font-bold ml-1"></span>
             </div>
 
-            <div class="space-y-3">
-                <label asp-for="Category" class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-2">Event Category</label>
+            <div class="space-y-2">
+                <label asp-for="Category" class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Event Category</label>
                 <div class="relative group">
-                    <select asp-for="Category" class="w-full px-8 py-5 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-[2rem] text-lg font-bold text-slate-900 dark:text-white focus:border-brand-purple focus:bg-white dark:focus:bg-slate-900 outline-none transition-all appearance-none cursor-pointer shadow-inner">
+                    <select asp-for="Category" class="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl text-base font-bold text-slate-900 dark:text-white focus:border-brand-purple focus:ring-4 focus:ring-brand-purple/10 focus:bg-white dark:focus:bg-slate-900 outline-none transition-all appearance-none cursor-pointer">
                         <option value="">Select Classification</option>
                         <option value="Technical">Technical / Workshop</option>
                         <option value="Sports">Sports / Athletics</option>
                         <option value="Cultural">Cultural / Arts</option>
                         <option value="Education">Education / Seminar</option>
                     </select>
-                    <div class="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400 group-focus-within:text-brand-purple transition-colors">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
+                    <div class="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400 group-focus-within:text-brand-purple transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
                     </div>
                 </div>
+                <span asp-validation-for="Category" class="text-xs text-rose-500 font-bold ml-1"></span>
             </div>
         </div>
 
         <div class="lg:col-span-5 space-y-8 lg:sticky lg:top-32">
             
-            <div class="bg-slate-900 rounded-[3rem] p-10 md:p-12 border-2 border-slate-800 shadow-2xl relative overflow-hidden">
-                <div class="absolute -top-12 -right-12 w-32 h-32 bg-brand-purple/20 rounded-full blur-3xl"></div>
+            <div class="bg-white dark:bg-slate-900 rounded-[3rem] p-8 md:p-10 border border-slate-200 dark:border-slate-800 shadow-xl relative overflow-hidden">
+                <div class="absolute -top-12 -right-12 w-32 h-32 bg-brand-purple/15 rounded-full blur-3xl pointer-events-none"></div>
 
-                <div class="space-y-10 relative z-10">
-                    <div class="space-y-3">
-                        <label asp-for="EventDate" class="text-[10px] font-black uppercase tracking-widest text-brand-purple ml-2">Event Date</label>
+                <div class="space-y-6 relative z-10">
+                    <div class="space-y-2">
+                        <label asp-for="EventDate" class="text-[10px] font-black uppercase tracking-widest text-brand-purple ml-1">Event Date</label>
                         <input asp-for="EventDate" type="date" 
-                            class="w-full px-8 py-5 bg-slate-800 border-2 border-transparent rounded-[2rem] text-lg font-bold text-white focus:border-brand-purple outline-none transition-all [color-scheme:dark] shadow-inner" />
-                        <span asp-validation-for="EventDate" class="text-xs text-red-400 ml-2"></span>
+                            class="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl text-base font-bold text-slate-900 dark:text-white focus:border-brand-purple focus:ring-4 focus:ring-brand-purple/10 outline-none transition-all" />
+                        <span asp-validation-for="EventDate" class="text-xs text-rose-500 ml-1"></span>
                     </div>
 
-                    <div class="space-y-3">
-                        <label asp-for="RegistrationStartDate" class="text-[10px] font-black uppercase tracking-widest text-emerald-400 ml-2">Registration Opens</label>
+                    <div class="space-y-2">
+                        <label asp-for="RegistrationStartDate" class="text-[10px] font-black uppercase tracking-widest text-emerald-600 dark:text-emerald-400 ml-1">Registration Opens</label>
                         <input asp-for="RegistrationStartDate" type="date" id="regStart"
-                            class="w-full px-8 py-5 bg-slate-800 border-2 border-transparent rounded-[2rem] text-lg font-bold text-white focus:border-emerald-400 outline-none transition-all [color-scheme:dark] shadow-inner" />
-                        <span asp-validation-for="RegistrationStartDate" class="text-xs text-red-400 ml-2"></span>
+                            class="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl text-base font-bold text-slate-900 dark:text-white focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all" />
+                        <span asp-validation-for="RegistrationStartDate" class="text-xs text-rose-500 ml-1"></span>
                     </div>
 
-                    <div class="space-y-3">
-                        <label asp-for="RegistrationEndDate" class="text-[10px] font-black uppercase tracking-widest text-rose-400 ml-2">Registration Closes</label>
+                    <div class="space-y-2">
+                        <label asp-for="RegistrationEndDate" class="text-[10px] font-black uppercase tracking-widest text-rose-500 ml-1">Registration Closes</label>
                         <input asp-for="RegistrationEndDate" type="date" id="regEnd"
-                            class="w-full px-8 py-5 bg-slate-800 border-2 border-transparent rounded-[2rem] text-lg font-bold text-white focus:border-rose-400 outline-none transition-all [color-scheme:dark] shadow-inner" />
-                        <span asp-validation-for="RegistrationEndDate" class="text-xs text-red-400 ml-2"></span>
+                            class="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl text-base font-bold text-slate-900 dark:text-white focus:border-rose-500 focus:ring-4 focus:ring-rose-500/10 outline-none transition-all" />
+                        <span asp-validation-for="RegistrationEndDate" class="text-xs text-rose-500 ml-1"></span>
                     </div>
 
-                    <div class="space-y-3">
-                        <label asp-for="Location" class="text-[10px] font-black uppercase tracking-widest text-brand-purple ml-2">Event Venue</label>
+                    <div class="space-y-2">
+                        <label asp-for="Location" class="text-[10px] font-black uppercase tracking-widest text-brand-purple ml-1">Event Venue</label>
                         <input asp-for="Location" placeholder="e.g. Auditorium A" 
-                            class="w-full px-8 py-5 bg-slate-800 border-2 border-transparent rounded-[2rem] text-lg font-bold text-white placeholder:text-slate-600 focus:border-brand-purple outline-none transition-all shadow-inner" />
+                            class="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl text-base font-bold text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-brand-purple focus:ring-4 focus:ring-brand-purple/10 outline-none transition-all" />
+                        <span asp-validation-for="Location" class="text-xs text-rose-500 ml-1 font-bold"></span>
                     </div>
 
-                    <div class="space-y-3">
-                        <label asp-for="Price" class="text-[10px] font-black uppercase tracking-widest text-brand-purple ml-2">Event Fee (INR)</label>
+                    <div class="space-y-2">
+                        <label asp-for="Price" class="text-[10px] font-black uppercase tracking-widest text-brand-purple ml-1">Event Fee (INR)</label>
                         <input asp-for="Price" type="number" step="0.01" placeholder="0.00" 
-                            class="w-full px-8 py-5 bg-slate-800 border-2 border-transparent rounded-[2rem] text-lg font-bold text-white placeholder:text-slate-600 focus:border-brand-purple outline-none transition-all shadow-inner" />
+                            class="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl text-base font-bold text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-brand-purple focus:ring-4 focus:ring-brand-purple/10 outline-none transition-all" />
+                        <span asp-validation-for="Price" class="text-xs text-rose-500 ml-1 font-bold"></span>
                     </div>
 
-                    <div class="pt-6">
+                    <div class="pt-4">
                         <button type="submit" 
-                            class="group relative w-full py-6 bg-white text-slate-900 font-black text-xs uppercase tracking-widest rounded-[2rem] overflow-hidden transition-all duration-300 hover:scale-[1.05] active:scale-95 shadow-2xl shadow-brand-purple/20">
-                            <span class="relative z-10 flex items-center justify-center gap-2 group-hover:text-white transition-colors duration-500">
+                            class="group relative w-full py-5 bg-brand-gradient text-white font-black text-xs uppercase tracking-widest rounded-2xl overflow-hidden transition-all duration-300 hover:scale-[1.02] active:scale-95 shadow-xl shadow-brand-purple/20">
+                            <span class="relative z-10 flex items-center justify-center gap-2">
                                 Launch Event
-                                <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+                                <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
                             </span>
-                            <div class="absolute inset-0 bg-brand-gradient translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out"></div>
                         </button>
                     </div>
                 </div>
             </div>
 
-            <div class="p-8 bg-brand-purple/5 border-2 border-dashed border-brand-purple/20 rounded-[2.5rem]">
-                <p class="text-[10px] font-black text-brand-purple uppercase tracking-widest mb-2 flex items-center gap-2">
-                    <span class="text-lg">💡</span> Note:
+            <div class="p-6 bg-brand-purple/5 border border-dashed border-brand-purple/20 rounded-3xl">
+                <p class="text-[10px] font-black text-brand-purple uppercase tracking-widest mb-1.5 flex items-center gap-2">
+                    <span>💡</span> Note:
                 </p>
-                <p class="text-sm font-medium text-slate-500 dark:text-slate-400 leading-relaxed">
-                    Event slugs are generated automatically based on the title. Ensure your title is unique to avoid identity conflicts.
+                <p class="text-xs font-medium text-slate-500 dark:text-slate-400 leading-relaxed">
+                    Event slugs are generated automatically based on the title. Ensure your title is descriptive for clean URL routing.
                 </p>
             </div>
         </div>

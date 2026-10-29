@@ -92,17 +92,27 @@ namespace EventManagementSystem.Controllers
 
             if (ModelState.IsValid)
             {
-                ev.Slug = ev.Title
-                .ToLower()
-                .Trim()
-                .Replace(" ", "-")
-                .Replace("--", "-")
-                .Replace(".", "")
-                .Replace(",", "");
+                var baseSlug = ev.Title
+                    .ToLower()
+                    .Trim()
+                    .Replace(" ", "-")
+                    .Replace("--", "-")
+                    .Replace(".", "")
+                    .Replace(",", "");
+
+                var slug = baseSlug;
+                int suffix = 1;
+                while (_context.Events.Any(e => e.Slug == slug))
+                {
+                    slug = $"{baseSlug}-{suffix++}";
+                }
+                ev.Slug = slug;
+
                 _context.Events.Add(ev);
                 _context.SaveChanges();
                 
-                return RedirectToAction("Dashboard");
+                TempData["SuccessMessage"] = $"Event '{ev.Title}' was launched successfully!";
+                return RedirectToAction("ManageEvents");
             }
 
             return View(ev);
@@ -219,9 +229,16 @@ namespace EventManagementSystem.Controllers
             if (ev == null)
                 return NotFound();
 
+            var registrations = _context.Registrations.Where(r => r.EventId == ev.EventId).ToList();
+            if (registrations.Any())
+            {
+                _context.Registrations.RemoveRange(registrations);
+            }
+
             _context.Events.Remove(ev);
             _context.SaveChanges();
             
+            TempData["SuccessMessage"] = $"Event '{ev.Title}' and its registrations were purged.";
             return RedirectToAction("ManageEvents");
         }
 

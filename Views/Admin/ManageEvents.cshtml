@@ -15,31 +15,43 @@
             </p>
         </div>
 
-        <a href="/Admin/CreateEvent" class="group relative inline-flex items-center gap-3 px-10 py-5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black text-xs uppercase tracking-[0.3em] rounded-2xl overflow-hidden shadow-2xl shadow-brand-purple/20 hover:scale-[1.02] active:scale-95 transition-all">
-            <span class="relative z-10 flex items-center gap-2">
-                Add New Event <span class="group-hover:rotate-12 transition-transform">✨</span>
-            </span>
-            <div class="absolute inset-0 bg-brand-gradient translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out"></div>
-        </a>
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+            <div class="relative min-w-[260px]">
+                <input type="text" id="event-admin-search" onkeyup="searchAdminEvents()" placeholder="Filter events..." 
+                       class="w-full pl-11 pr-4 py-3.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl text-xs font-bold text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-brand-purple focus:ring-4 focus:ring-brand-purple/10 outline-none transition-all shadow-sm" />
+                <div class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </div>
+            </div>
+
+            <a href="/Admin/CreateEvent" class="group relative inline-flex items-center gap-3 px-8 py-3.5 bg-brand-gradient text-white font-black text-xs uppercase tracking-[0.2em] rounded-2xl overflow-hidden shadow-xl shadow-brand-purple/20 hover:scale-[1.02] active:scale-95 transition-all">
+                <span class="relative z-10 flex items-center gap-2">
+                    Add New Event <span>✨</span>
+                </span>
+            </a>
+        </div>
     </div>
 
-    <div class="bg-white dark:bg-slate-900 rounded-[3rem] border border-slate-100 dark:border-slate-800 shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-700">
+    <div class="bg-white dark:bg-slate-900 rounded-[3rem] border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden animate-in fade-in zoom-in duration-700">
         <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse">
+            <table class="w-full text-left border-collapse" id="manage-events-table">
                 <thead>
-                    <tr class="bg-slate-50/50 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800">
-                        <th class="px-8 py-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Event Name</th>
-                        <th class="px-8 py-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Category</th>
-                        <th class="px-8 py-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Timeline</th>
-                        <th class="px-8 py-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Fees (INR)</th>
-                        <th class="px-8 py-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Total Registrations</th>
-                        <th class="px-8 py-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] text-right">Operations</th>
+                    <tr class="bg-slate-50/80 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800">
+                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Event Name</th>
+                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Category</th>
+                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Timeline</th>
+                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Fees (INR)</th>
+                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Total Registrations</th>
+                        <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] text-right">Operations</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-50 dark:divide-slate-800/60">
+                <tbody class="divide-y divide-slate-100 dark:divide-slate-800/60">
                     @foreach (var ev in Model)
                     {
-                        <tr class="group hover:bg-slate-50/30 dark:hover:bg-brand-purple/[0.02] transition-colors">
+                        <tr class="event-admin-row group hover:bg-slate-50/50 dark:hover:bg-brand-purple/[0.03] transition-colors"
+                            data-title="@ev.Title.ToLower()"
+                            data-cat="@ev.Category.ToLower()"
+                            data-loc="@ev.Location.ToLower()">
                             <td class="px-8 py-8">
                                 <div class="flex flex-col">
                                     <span class="text-xl font-black text-slate-900 dark:text-white group-hover:text-brand-purple transition-colors italic">@ev.Title</span>
@@ -160,4 +172,21 @@
     window.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') closeDeleteModal();
     });
+
+    function searchAdminEvents() {
+        const query = (document.getElementById('event-admin-search').value || '').toLowerCase().trim();
+        const rows = document.querySelectorAll('.event-admin-row');
+
+        rows.forEach(row => {
+            const title = row.getAttribute('data-title') || '';
+            const cat = row.getAttribute('data-cat') || '';
+            const loc = row.getAttribute('data-loc') || '';
+
+            if (!query || title.includes(query) || cat.includes(query) || loc.includes(query)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
 </script>

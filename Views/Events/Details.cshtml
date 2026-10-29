@@ -4,6 +4,7 @@
     ViewData["Title"] = @Model.Title;
     var today = DateTime.Now.Date;
     bool isPast = Model.EventDate.Date < today;
+    bool isLive = Model.EventDate.Date == today;
     bool notYetOpen = today < Model.RegistrationStartDate.Date;
     bool isClosed = today > Model.RegistrationEndDate.Date || isPast;
     bool isOpen = !notYetOpen && !isClosed;
@@ -15,126 +16,254 @@
         "Education" => "text-brand-blue bg-blue-50 dark:bg-blue-900/30 dark:text-blue-400 border-blue-200 dark:border-blue-800",
         _ => "text-slate-600 bg-slate-50 dark:bg-slate-800 dark:text-slate-400 border-slate-200 dark:border-slate-700"
     };
+
+    var relatedEvents = ViewBag.RelatedEvents as List<EventManagementSystem.Models.Event>;
 }
 
-<div class="py-12 max-w-7xl mx-auto px-6">
-    <!-- Navigation Back Link -->
-    <div class="mb-10">
-        <a asp-action="Index" 
-           class="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-brand-purple hover:border-brand-purple/30 text-xs font-black uppercase tracking-widest transition-all shadow-sm group">
-            <span class="group-hover:-translate-x-1 transition-transform duration-200">&larr;</span> Back to Events
-        </a>
+<div class="py-10 max-w-7xl mx-auto px-6 space-y-12">
+    <!-- Breadcrumb & Action Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800 pb-6">
+        <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-xs font-bold text-slate-400 flex-wrap">
+            <a href="/" class="hover:text-brand-purple transition-colors">Home</a>
+            <span>/</span>
+            <a href="/Events" class="hover:text-brand-purple transition-colors">Events</a>
+            <span>/</span>
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider @categoryColor">
+                @Model.Category
+            </span>
+            <span>/</span>
+            <span class="text-slate-900 dark:text-white line-clamp-1 max-w-[200px] md:max-w-xs font-semibold">@Model.Title</span>
+        </nav>
+
+        <div class="flex items-center gap-3">
+            <button onclick="copyEventLink()" id="copy-btn" 
+                    class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:border-brand-purple hover:text-brand-purple text-xs font-black uppercase tracking-wider transition-all shadow-sm">
+                <span>🔗</span>
+                <span id="copy-text">Share Link</span>
+            </button>
+            <a href="/Events" 
+               class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:text-brand-purple text-xs font-black uppercase tracking-wider transition-all shadow-sm">
+                &larr; All Events
+            </a>
+        </div>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-        <!-- Left Section: Event Details -->
+        <!-- Main Content Area -->
         <div class="lg:col-span-7 space-y-10">
-            <div>
-                <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border text-[10px] font-black uppercase tracking-widest mb-6 @categoryColor">
-                    <span class="w-1.5 h-1.5 rounded-full bg-current"></span>
-                    @Model.Category
+            <!-- Event Header & Badges -->
+            <div class="space-y-4">
+                <div class="flex flex-wrap items-center gap-3">
+                    <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border @categoryColor">
+                        <span class="w-1.5 h-1.5 rounded-full bg-current"></span>
+                        @Model.Category
+                    </span>
+
+                    @if (isPast)
+                    {
+                        <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-200/60 dark:bg-slate-800 text-slate-500 dark:text-slate-400 text-[10px] font-black uppercase tracking-widest">
+                            <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> Concluded
+                        </span>
+                    }
+                    else if (isLive)
+                    {
+                        <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 text-[10px] font-black uppercase tracking-widest">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Live Today
+                        </span>
+                    }
+                    else if (isOpen)
+                    {
+                        <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-brand-purple/10 border border-brand-purple/20 text-brand-purple text-[10px] font-black uppercase tracking-widest">
+                            <span class="w-1.5 h-1.5 rounded-full bg-brand-purple"></span> Registration Open
+                        </span>
+                    }
+                    else if (notYetOpen)
+                    {
+                        <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-500 text-[10px] font-black uppercase tracking-widest">
+                            <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Opens Soon
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-500 text-[10px] font-black uppercase tracking-widest">
+                            <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> Registration Closed
+                        </span>
+                    }
                 </div>
-                
-                <h1 class="text-4xl md:text-6xl font-black text-slate-900 dark:text-white tracking-tight leading-tight mb-6">
+
+                <h1 class="text-4xl md:text-6xl font-black text-slate-900 dark:text-white tracking-tight leading-tight italic">
                     @Model.Title
                 </h1>
-                
-                <p class="text-slate-600 dark:text-slate-300 text-lg leading-relaxed whitespace-pre-line font-medium">
+            </div>
+
+            <!-- Key Metric Cards Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div class="p-6 bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-200 dark:border-slate-800 shadow-sm flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-2xl shadow-inner shrink-0">
+                        📍
+                    </div>
+                    <div>
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Location / Venue</p>
+                        <p class="text-base font-bold text-slate-900 dark:text-white mt-1">@Model.Location</p>
+                        <span class="text-[10px] font-bold text-brand-blue uppercase tracking-wider">AMTICS Campus</span>
+                    </div>
+                </div>
+
+                <div class="p-6 bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-200 dark:border-slate-800 shadow-sm flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-2xl shadow-inner shrink-0">
+                        💰
+                    </div>
+                    <div>
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Participation Fee</p>
+                        <p class="text-base font-black text-slate-900 dark:text-white mt-1">@(Model.Price == 0 ? "Free Entry" : $"₹{Model.Price}")</p>
+                        <span class="text-[10px] font-bold text-emerald-500 uppercase tracking-wider">Official University Pass</span>
+                    </div>
+                </div>
+
+                <div class="p-6 bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-200 dark:border-slate-800 shadow-sm flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-2xl shadow-inner shrink-0">
+                        👥
+                    </div>
+                    <div>
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Confirmed Attendees</p>
+                        <p class="text-base font-black text-slate-900 dark:text-white mt-1">@Model.TotalRegistrations Registered</p>
+                        <span class="text-[10px] font-bold text-brand-purple uppercase tracking-wider">Live Enrollment Sync</span>
+                    </div>
+                </div>
+
+                <div class="p-6 bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-200 dark:border-slate-800 shadow-sm flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-2xl shadow-inner shrink-0">
+                        🎟️
+                    </div>
+                    <div>
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Pass Authentication</p>
+                        <p class="text-base font-bold text-slate-900 dark:text-white mt-1">QR Digital Pass</p>
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Instant Delegate Credential</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About The Experience Description Card -->
+            <div class="bg-white dark:bg-slate-900 rounded-[2.5rem] p-8 md:p-10 border border-slate-200 dark:border-slate-800 shadow-sm space-y-6">
+                <div class="flex items-center gap-3">
+                    <span class="w-2 h-6 bg-brand-gradient rounded-full"></span>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white uppercase italic tracking-tight">About This Event</h2>
+                </div>
+
+                <div class="prose dark:prose-invert max-w-none text-slate-600 dark:text-slate-300 text-base md:text-lg leading-relaxed whitespace-pre-line font-medium">
                     @Model.Description
-                </p>
-            </div>
-
-            <!-- Key Info Cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div class="p-8 bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-100 dark:border-slate-800 shadow-sm">
-                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Location & Venue</p>
-                    <div class="flex items-center gap-3">
-                        <span class="text-2xl">📍</span>
-                        <p class="text-lg font-bold text-slate-900 dark:text-white">@Model.Location</p>
-                    </div>
                 </div>
 
-                <div class="p-8 bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-100 dark:border-slate-800 shadow-sm">
-                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Entry Fee</p>
-                    <div class="flex items-center gap-3">
-                        <span class="text-2xl">💰</span>
-                        <p class="text-lg font-bold text-slate-900 dark:text-white">@(Model.Price == 0 ? "Free Entry" : $"₹{Model.Price}")</p>
+                <!-- Event Features / Highlights Checklist -->
+                <div class="pt-6 border-t border-slate-100 dark:border-slate-800 space-y-3">
+                    <h4 class="text-xs font-black uppercase tracking-widest text-slate-400">What You Receive</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div class="flex items-center gap-2 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300">
+                            <span class="text-brand-purple">✓</span>
+                            <span>Digital Badge & Pass</span>
+                        </div>
+                        <div class="flex items-center gap-2 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300">
+                            <span class="text-brand-purple">✓</span>
+                            <span>Campus Attendance Credit</span>
+                        </div>
+                        <div class="flex items-center gap-2 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300">
+                            <span class="text-brand-purple">✓</span>
+                            <span>Direct Faculty Networking</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Timeline Card -->
-            <div class="p-8 bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-100 dark:border-slate-800 shadow-sm">
-                <h3 class="text-xs font-black uppercase tracking-widest text-slate-400 mb-6 flex items-center gap-2">
-                    <span>🗓️</span> Registration Timeline
-                </h3>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50">
-                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Event Date</p>
-                        <p class="text-base font-black text-slate-900 dark:text-white mt-1">@Model.EventDate.ToString("MMM dd, yyyy")</p>
+            <!-- Visual Registration Timeline -->
+            <div class="bg-white dark:bg-slate-900 rounded-[2.5rem] p-8 md:p-10 border border-slate-200 dark:border-slate-800 shadow-sm space-y-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="w-2 h-6 bg-brand-purple rounded-full"></span>
+                        <h3 class="text-2xl font-black text-slate-900 dark:text-white uppercase italic tracking-tight">Event Timeline</h3>
                     </div>
-                    <div class="p-4 rounded-2xl bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-500/10">
-                        <p class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">Registration Opens</p>
-                        <p class="text-base font-black text-slate-900 dark:text-white mt-1">@Model.RegistrationStartDate.ToString("MMM dd, yyyy")</p>
+                    <span class="text-[10px] font-black uppercase tracking-widest px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-400 rounded-full">
+                        Key Dates
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="p-5 rounded-2xl @(notYetOpen ? "bg-amber-500/10 border-2 border-amber-500/40" : "bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800")">
+                        <p class="text-[10px] font-black uppercase tracking-wider text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span> 1. Registration Begins
+                        </p>
+                        <p class="text-base font-black text-slate-900 dark:text-white mt-2">@Model.RegistrationStartDate.ToString("MMM dd, yyyy")</p>
+                        <p class="text-[10px] text-slate-400 mt-1">Application window opens</p>
                     </div>
-                    <div class="p-4 rounded-2xl bg-rose-50/50 dark:bg-rose-950/20 border border-rose-500/10">
-                        <p class="text-[10px] font-bold text-rose-500 uppercase tracking-wider">Registration Closes</p>
-                        <p class="text-base font-black text-slate-900 dark:text-white mt-1">@Model.RegistrationEndDate.ToString("MMM dd, yyyy")</p>
+
+                    <div class="p-5 rounded-2xl @(isOpen ? "bg-brand-purple/10 border-2 border-brand-purple/40" : "bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800")">
+                        <p class="text-[10px] font-black uppercase tracking-wider text-rose-500 flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-rose-500"></span> 2. Registration Deadline
+                        </p>
+                        <p class="text-base font-black text-slate-900 dark:text-white mt-2">@Model.RegistrationEndDate.ToString("MMM dd, yyyy")</p>
+                        <p class="text-[10px] text-slate-400 mt-1">Final cutoff date for passes</p>
+                    </div>
+
+                    <div class="p-5 rounded-2xl @(isLive ? "bg-emerald-500/10 border-2 border-emerald-500/40" : "bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800")">
+                        <p class="text-[10px] font-black uppercase tracking-wider text-brand-blue flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-brand-blue"></span> 3. Event Day
+                        </p>
+                        <p class="text-base font-black text-slate-900 dark:text-white mt-2">@Model.EventDate.ToString("MMM dd, yyyy")</p>
+                        <p class="text-[10px] text-slate-400 mt-1">Live campus program begins</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Right Section: Reservation Sidebar -->
-        <div class="lg:col-span-5 lg:sticky lg:top-28">
-            <div class="relative bg-white dark:bg-slate-900 rounded-[2.5rem] p-8 md:p-10 border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
-                <div class="absolute -top-12 -right-12 w-32 h-32 bg-brand-purple/15 rounded-full blur-3xl pointer-events-none"></div>
+        <!-- Sticky Sidebar: Reservation Action Panel -->
+        <div class="lg:col-span-5 lg:sticky lg:top-24 space-y-6">
+            <div class="relative bg-white dark:bg-slate-900 rounded-[3rem] p-8 md:p-10 border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
+                <div class="absolute -top-12 -right-12 w-40 h-40 bg-brand-purple/20 rounded-full blur-3xl pointer-events-none"></div>
 
                 <div class="mb-8 pb-8 border-b border-slate-100 dark:border-slate-800">
                     <div class="flex items-center gap-2 mb-4">
-                        <span class="w-1.5 h-5 bg-brand-gradient rounded-full"></span>
-                        <p class="text-[10px] font-black text-brand-purple uppercase tracking-[0.3em]">Event Schedule</p>
+                        <span class="w-2 h-5 bg-brand-gradient rounded-full"></span>
+                        <p class="text-[10px] font-black text-brand-purple uppercase tracking-[0.3em]">Schedule & Timing</p>
                     </div>
 
-                    <div class="flex items-baseline gap-3">
-                        <span class="text-5xl font-black text-slate-900 dark:text-white tracking-tight">@Model.EventDate.Day</span>
+                    <div class="flex items-baseline gap-4">
+                        <span class="text-6xl font-black text-slate-900 dark:text-white tracking-tight leading-none">@Model.EventDate.Day</span>
                         <div>
-                            <p class="text-lg font-black text-slate-900 dark:text-white leading-none">@Model.EventDate.ToString("MMMM")</p>
-                            <p class="text-xs font-bold text-slate-400">@Model.EventDate.Year</p>
+                            <p class="text-2xl font-black text-slate-900 dark:text-white leading-tight">@Model.EventDate.ToString("MMMM")</p>
+                            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">@Model.EventDate.ToString("yyyy") &bull; @Model.EventDate.ToString("dddd")</p>
                         </div>
                     </div>
 
-                    <p class="text-slate-500 dark:text-slate-400 font-bold mt-4 uppercase tracking-widest text-[10px] flex items-center gap-2">
-                        <svg class="w-3.5 h-3.5 text-brand-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                        @Model.EventDate.ToString("dddd") &bull; @Model.EventDate.ToString("hh:mm tt")
+                    <p class="text-slate-500 dark:text-slate-400 font-bold mt-4 uppercase tracking-widest text-[11px] flex items-center gap-2">
+                        <svg class="w-4 h-4 text-brand-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                        Starts at @Model.EventDate.ToString("hh:mm tt")
                     </p>
                 </div>
 
                 <div class="space-y-6">
                     <div>
-                        <h4 class="text-base font-black text-slate-900 dark:text-white tracking-tight uppercase italic">
+                        <h4 class="text-lg font-black text-slate-900 dark:text-white tracking-tight uppercase italic">
                             @if (notYetOpen) { <span>Registration Opens Soon</span> }
                             else if (isClosed) { <span>Registration Closed</span> }
-                            else { <span>Reserve Your Seat</span> }
+                            else { <span>Seat Allocation Available</span> }
                         </h4>
                         
                         <p class="text-sm font-medium text-slate-500 dark:text-slate-400 leading-relaxed mt-2">
                             @if (notYetOpen) {
-                                <span class="text-amber-500 font-semibold">Registration begins on @Model.RegistrationStartDate.ToString("MMM dd, yyyy").</span>
+                                <span class="text-amber-500 font-bold">Registration begins on @Model.RegistrationStartDate.ToString("MMM dd, yyyy").</span>
                             } else if (isClosed) {
-                                <span class="text-rose-500 font-semibold">Registration concluded on @Model.RegistrationEndDate.ToString("MMM dd, yyyy").</span>
+                                <span class="text-rose-500 font-bold">Registration window closed on @Model.RegistrationEndDate.ToString("MMM dd, yyyy").</span>
                             } else {
-                                <span>Closes on <strong class="text-slate-900 dark:text-white">@Model.RegistrationEndDate.ToString("MMM dd, yyyy")</strong>.
+                                <span>Pass registration closes on <strong class="text-slate-900 dark:text-white font-black">@Model.RegistrationEndDate.ToString("MMM dd, yyyy")</strong>.
                                 @if (Model.DaysUntilDeadline == 0) {
-                                    <span class="text-rose-500 font-bold"> — Last day!</span>
+                                    <span class="text-rose-500 font-black"> — Last day to register!</span>
                                 } else {
-                                    <span class="text-brand-purple font-bold"> (@Model.DaysUntilDeadline days remaining)</span>
+                                    <span class="text-brand-purple font-black"> (@Model.DaysUntilDeadline days left)</span>
                                 }</span>
                             }
                         </p>
                     </div>
 
-                    <!-- Button Area: Sized properly instead of full-screen width -->
+                    <!-- Call To Action Button -->
                     <div class="pt-2">
                         @if (isOpen) {
                             <a asp-action="Register" asp-route-slug="@Model.Slug" 
@@ -145,29 +274,65 @@
                                 </svg>
                             </a>
                         } else if (notYetOpen) {
-                            <div class="inline-flex items-center justify-center gap-2.5 w-full py-3.5 px-6 rounded-full bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 font-black text-xs uppercase tracking-widest border border-amber-200 dark:border-amber-800/40 cursor-not-allowed">
+                            <div class="inline-flex items-center justify-center gap-2.5 w-full py-4 px-6 rounded-2xl bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 font-black text-xs uppercase tracking-widest border border-amber-200 dark:border-amber-800/40 cursor-not-allowed">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                <span>Opens Soon</span>
+                                <span>Opens @Model.RegistrationStartDate.ToString("MMM dd")</span>
                             </div>
                         } else {
-                            <div class="inline-flex items-center justify-center gap-2.5 w-full py-3.5 px-6 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-400 font-black text-xs uppercase tracking-widest border border-slate-200 dark:border-slate-700 cursor-not-allowed">
+                            <div class="inline-flex items-center justify-center gap-2.5 w-full py-4 px-6 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-400 font-black text-xs uppercase tracking-widest border border-slate-200 dark:border-slate-700 cursor-not-allowed">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 0 00-2 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
                                 <span>Registration Closed</span>
                             </div>
                         }
                     </div>
 
-                    <div class="flex items-center justify-center gap-4 pt-2">
-                        <div class="h-[1px] flex-grow bg-slate-100 dark:bg-slate-800"></div>
-                        <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">
-                            @if (isClosed) { <span>Registration Closed</span> }
-                            else if (notYetOpen) { <span>Upcoming Announcement</span> }
-                            else { <span>Instant Pass Confirmation</span> }
+                    <div class="pt-2 text-center">
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                            Need help or group booking? 
+                            <a href="/Contact" class="text-brand-purple hover:underline font-black">Contact Coordinators</a>
                         </p>
-                        <div class="h-[1px] flex-grow bg-slate-100 dark:bg-slate-800"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Related Events Section -->
+    @if (relatedEvents != null && relatedEvents.Any())
+    {
+        <section class="pt-16 border-t border-slate-200 dark:border-slate-800/80 space-y-8">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-3xl font-black text-slate-900 dark:text-white uppercase italic tracking-tight">
+                        More <span class="text-brand-purple">Events</span>
+                    </h2>
+                    <p class="text-slate-400 text-sm mt-1">Discover other campus opportunities across @Model.Category and beyond.</p>
+                </div>
+                <a href="/Events" class="text-xs font-black uppercase tracking-widest text-brand-purple hover:underline">
+                    View Catalog &rarr;
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                @foreach (var item in relatedEvents)
+                {
+                    @await Html.PartialAsync("_EventCard", item)
+                }
+            </div>
+        </section>
+    }
 </div>
+
+<script>
+    function copyEventLink() {
+        const url = window.location.href;
+        navigator.clipboard.writeText(url).then(() => {
+            const btn = document.getElementById('copy-text');
+            if (btn) {
+                const original = btn.innerText;
+                btn.innerText = 'Copied! ✓';
+                setTimeout(() => { btn.innerText = original; }, 2000);
+            }
+        });
+    }
+</script>

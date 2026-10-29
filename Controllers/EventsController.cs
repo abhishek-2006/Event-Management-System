@@ -155,8 +155,27 @@ namespace EventManagementSystem.Controllers
             var ev = _context.Events.FirstOrDefault(e => e.Slug == slug);
             if (ev == null) return NotFound();
 
+            ev.TotalRegistrations = _context.Registrations.Count(r => r.EventId == ev.EventId);
+
             ViewData["EventSlug"] = ev.Slug;
             ViewData["EventTitle"] = ev.Title;
+
+            var related = _context.Events
+                .Where(e => e.EventId != ev.EventId && e.Category == ev.Category)
+                .OrderByDescending(e => e.EventDate)
+                .Take(3)
+                .ToList();
+
+            if (!related.Any())
+            {
+                related = _context.Events
+                    .Where(e => e.EventId != ev.EventId)
+                    .OrderByDescending(e => e.EventDate)
+                    .Take(3)
+                    .ToList();
+            }
+
+            ViewBag.RelatedEvents = related;
 
             return View(ev);
         }

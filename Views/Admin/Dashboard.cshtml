@@ -18,52 +18,58 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-        <div class="group bg-white dark:bg-slate-900 p-12 rounded-[3rem] border border-slate-100 dark:border-slate-800 transition-all hover:border-brand-purple shadow-sm hover:shadow-[0_20px_50px_-15px_rgba(139,92,246,0.15)]">
-            <div class="flex items-center justify-between mb-8">
-                <div class="w-16 h-16 bg-slate-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center text-4xl group-hover:scale-110 transition-transform">📅</div>
-                <span class="text-[10px] font-black text-brand-purple bg-brand-purple/10 px-4 py-2 rounded-full uppercase tracking-widest border border-brand-purple/20">Active</span>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="group relative bg-white dark:bg-slate-900 p-10 md:p-12 rounded-[3rem] border border-slate-200 dark:border-slate-800 transition-all hover:border-brand-purple shadow-lg hover:shadow-brand-purple/10 overflow-hidden">
+            <div class="absolute -top-12 -right-12 w-32 h-32 bg-brand-purple/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500"></div>
+            <div class="relative z-10">
+                <div class="flex items-center justify-between mb-8">
+                    <div class="w-16 h-16 bg-slate-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center text-4xl group-hover:scale-110 transition-transform shadow-inner">📅</div>
+                    <span class="text-[10px] font-black text-brand-purple bg-brand-purple/10 px-4 py-2 rounded-full uppercase tracking-widest border border-brand-purple/20">Active Catalog</span>
+                </div>
+                <p class="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em]">Total Cataloged Events</p>
+                <h3 class="text-5xl font-black text-slate-900 dark:text-white mt-4 tracking-tighter italic">@ViewData["TotalEvents"]</h3>
             </div>
-            <p class="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em]">Total Cataloged Events</p>
-            <h3 class="text-5xl font-black text-slate-900 dark:text-white mt-4 tracking-tighter italic">@ViewData["TotalEvents"]</h3>
         </div>
 
-        <div class="group bg-white dark:bg-slate-900 p-12 rounded-[3rem] border border-slate-100 dark:border-slate-800 transition-all hover:border-brand-blue shadow-sm hover:shadow-[0_20px_50px_-15px_rgba(59,130,246,0.15)]">
-            <div class="flex items-center justify-between mb-8">
-                <div class="w-16 h-16 bg-slate-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center text-4xl group-hover:scale-110 transition-transform">👥</div>
-                <span class="text-[10px] font-black text-brand-blue bg-brand-blue/10 px-4 py-2 rounded-full uppercase tracking-widest border border-brand-blue/20">Realtime</span>
+        <div class="group relative bg-white dark:bg-slate-900 p-10 md:p-12 rounded-[3rem] border border-slate-200 dark:border-slate-800 transition-all hover:border-brand-blue shadow-lg hover:shadow-brand-blue/10 overflow-hidden">
+            <div class="absolute -top-12 -right-12 w-32 h-32 bg-brand-blue/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500"></div>
+            <div class="relative z-10">
+                <div class="flex items-center justify-between mb-8">
+                    <div class="w-16 h-16 bg-slate-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center text-4xl group-hover:scale-110 transition-transform shadow-inner">👥</div>
+                    <span class="text-[10px] font-black text-brand-blue bg-brand-blue/10 px-4 py-2 rounded-full uppercase tracking-widest border border-brand-blue/20">Realtime Sync</span>
+                </div>
+                <p class="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em]">Total Registered Attendees</p>
+                <h3 class="text-5xl font-black text-slate-900 dark:text-white mt-4 tracking-tighter italic">@ViewData["TotalRegistrations"]</h3>
             </div>
-            <p class="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em]">Total Registrations</p>
-            <h3 class="text-5xl font-black text-slate-900 dark:text-white mt-4 tracking-tighter italic">@ViewData["TotalRegistrations"]</h3>
         </div>
     </div>
 
-    <div class="space-y-8 pt-8">
+    <div class="space-y-8 pt-4">
         <div class="flex items-center gap-4 px-2">
             <span class="h-8 w-2 bg-brand-gradient rounded-full"></span>
             <h3 class="text-3xl font-black text-slate-900 dark:text-slate-100 tracking-tight uppercase italic leading-none">Management Operations</h3>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <a href="/Admin/CreateEvent" class="group bg-white dark:bg-slate-900 p-10 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 hover:border-brand-purple transition-all shadow-lg hover:shadow-brand-purple/5 flex flex-col min-h-[300px]">
-                <div class="w-14 h-14 bg-slate-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:rotate-12 transition-transform">✨</div>
+            <a href="/Admin/CreateEvent" class="group bg-white dark:bg-slate-900 p-8 md:p-10 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 hover:border-brand-purple transition-all shadow-lg hover:shadow-brand-purple/10 flex flex-col min-h-[280px]">
+                <div class="w-14 h-14 bg-slate-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:rotate-12 transition-transform shadow-inner">✨</div>
                 <h4 class="text-2xl font-black text-slate-900 dark:text-white italic uppercase tracking-tighter">Create Event</h4>
-                <p class="text-slate-500 dark:text-slate-400 text-sm mt-4 leading-relaxed font-medium">Launch high-impact seminars and campus workshops.</p>
-                <p class="mt-auto pt-8 text-brand-purple font-black text-[10px] uppercase tracking-[0.2em] flex items-center gap-2">Create Event <span class="group-hover:translate-x-2 transition-transform">&rarr;</span></p>
+                <p class="text-slate-500 dark:text-slate-400 text-sm mt-3 leading-relaxed font-medium">Launch high-impact seminars and campus workshops.</p>
+                <p class="mt-auto pt-6 text-brand-purple font-black text-[10px] uppercase tracking-[0.2em] flex items-center gap-2">Launch Event <span class="group-hover:translate-x-2 transition-transform">&rarr;</span></p>
             </a>
 
-            <a href="/Admin/ManageEvents" class="group bg-white dark:bg-slate-900 p-10 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 hover:border-brand-blue transition-all shadow-lg hover:shadow-brand-blue/5 flex flex-col min-h-[300px]">
-                <div class="w-14 h-14 bg-slate-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:rotate-12 transition-transform">⚙️</div>
+            <a href="/Admin/ManageEvents" class="group bg-white dark:bg-slate-900 p-8 md:p-10 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 hover:border-brand-blue transition-all shadow-lg hover:shadow-brand-blue/10 flex flex-col min-h-[280px]">
+                <div class="w-14 h-14 bg-slate-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:rotate-12 transition-transform shadow-inner">⚙️</div>
                 <h4 class="text-2xl font-black text-slate-900 dark:text-white italic uppercase tracking-tighter">Event Control</h4>
-                <p class="text-slate-500 dark:text-slate-400 text-sm mt-4 leading-relaxed font-medium">Full administrative control over active event records.</p>
-                <p class="mt-auto pt-8 text-brand-blue font-black text-[10px] uppercase tracking-[0.2em] flex items-center gap-2">Manage All Events <span class="group-hover:translate-x-2 transition-transform">&rarr;</span></p>
+                <p class="text-slate-500 dark:text-slate-400 text-sm mt-3 leading-relaxed font-medium">Full administrative control over active event records.</p>
+                <p class="mt-auto pt-6 text-brand-blue font-black text-[10px] uppercase tracking-[0.2em] flex items-center gap-2">Manage All Events <span class="group-hover:translate-x-2 transition-transform">&rarr;</span></p>
             </a>
 
-            <a href="/Admin/ViewRegistrations" class="group bg-white dark:bg-slate-900 p-10 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 hover:border-brand-purple transition-all shadow-lg hover:shadow-brand-purple/5 flex flex-col min-h-[300px]">
-                <div class="w-14 h-14 bg-slate-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:rotate-12 transition-transform">📋</div>
+            <a href="/Admin/ViewRegistrations" class="group bg-white dark:bg-slate-900 p-8 md:p-10 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 hover:border-brand-purple transition-all shadow-lg hover:shadow-brand-purple/10 flex flex-col min-h-[280px]">
+                <div class="w-14 h-14 bg-slate-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:rotate-12 transition-transform shadow-inner">📋</div>
                 <h4 class="text-2xl font-black text-slate-900 dark:text-white italic uppercase tracking-tighter">Attendee Logs</h4>
-                <p class="text-slate-500 dark:text-slate-400 text-sm mt-4 leading-relaxed font-medium">View and analyze student registration lists and analytics.</p>
-                <p class="mt-auto pt-8 text-brand-purple font-black text-[10px] uppercase tracking-[0.2em] flex items-center gap-2">Review Logs <span class="group-hover:translate-x-2 transition-transform">&rarr;</span></p>
+                <p class="text-slate-500 dark:text-slate-400 text-sm mt-3 leading-relaxed font-medium">View and analyze student registration lists and analytics.</p>
+                <p class="mt-auto pt-6 text-brand-purple font-black text-[10px] uppercase tracking-[0.2em] flex items-center gap-2">Review Logs <span class="group-hover:translate-x-2 transition-transform">&rarr;</span></p>
             </a>
         </div>
     </div>
@@ -84,11 +90,11 @@
                     </a>
                 </div>
 
-                <div class="bg-white dark:bg-slate-900 rounded-[3rem] border border-slate-100 dark:border-slate-800 shadow-xl overflow-hidden">
+                <div class="bg-white dark:bg-slate-900 rounded-[3rem] border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden">
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse">
                             <thead>
-                                <tr class="bg-slate-50/50 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800">
+                                <tr class="bg-slate-50/80 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800">
                                     <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Event Name</th>
                                     <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Category</th>
                                     <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Date</th>
@@ -96,15 +102,15 @@
                                     <th class="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] text-right">Action</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-slate-50 dark:divide-slate-800/60">
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-800/60">
                                 @foreach (var item in stats)
                                 {
-                                    <tr class="group hover:bg-slate-50/30 dark:hover:bg-brand-purple/[0.02] transition-colors">
+                                    <tr class="group hover:bg-slate-50/50 dark:hover:bg-brand-purple/[0.03] transition-colors">
                                         <td class="px-8 py-6">
                                             <span class="text-base font-black text-slate-900 dark:text-white group-hover:text-brand-purple transition-colors italic">@item.Title</span>
                                         </td>
                                         <td class="px-8 py-6">
-                                            <span class="px-4 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[9px] font-black rounded-full uppercase tracking-widest">
+                                            <span class="px-4 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[9px] font-black rounded-full uppercase tracking-widest border border-slate-200/50 dark:border-slate-700">
                                                 @item.Category
                                             </span>
                                         </td>
@@ -118,7 +124,7 @@
                                         </td>
                                         <td class="px-8 py-6 text-right">
                                             <a href="/Admin/ViewRegistrations?eventId=@item.EventId" 
-                                               class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-brand-purple dark:hover:bg-brand-purple hover:text-white dark:hover:text-white text-[10px] font-black uppercase tracking-wider transition-colors shadow-sm">
+                                               class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-brand-purple dark:hover:bg-brand-purple hover:text-white dark:hover:text-white text-[10px] font-black uppercase tracking-wider transition-all shadow-sm hover:scale-105 active:scale-95">
                                                 <span>View Registrations</span>
                                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
                                             </a>

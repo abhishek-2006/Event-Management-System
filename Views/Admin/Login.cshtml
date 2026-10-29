@@ -12,12 +12,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - EventHub</title>
     <link rel="icon" type="image/jpeg" href="~/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,700;1,800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif']
+                    },
                     colors: { 
                         'brand-purple': '#8b5cf6',
                         'brand-blue': '#3b82f6'
@@ -30,7 +36,7 @@
         }
     </script>
 </head>
-<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 transition-colors duration-300 selection:bg-brand-purple/30">
+<body class="font-sans bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-white transition-colors duration-300 selection:bg-brand-purple/30">
 
     <div class="min-h-screen flex items-center justify-center py-12 px-6 overflow-hidden relative">
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40rem] h-[40rem] bg-brand-purple/5 rounded-full blur-[120px] -z-10 animate-pulse"></div>
@@ -49,6 +55,14 @@
                     </h2>
                     <p class="text-slate-400 font-bold mt-2 uppercase tracking-widest text-[10px]">Restricted Access</p>
                 </div>
+
+                @if (ViewBag.Error != null)
+                {
+                    <div class="mb-8 p-5 bg-rose-500/10 border-2 border-rose-500/30 text-rose-500 rounded-2xl flex items-center gap-3.5 shadow-lg shadow-rose-500/5 animate-in fade-in zoom-in duration-300">
+                        <span class="text-xl">⚠️</span>
+                        <p class="text-xs font-black uppercase tracking-wider">@ViewBag.Error</p>
+                    </div>
+                }
 
                 <form asp-action="Login" method="post" class="space-y-8">
                     @Html.AntiForgeryToken()

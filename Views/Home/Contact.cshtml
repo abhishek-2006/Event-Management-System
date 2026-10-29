@@ -52,43 +52,48 @@
         </div>
 
         <div class="lg:col-span-7 order-1 lg:order-2">
-            <div class="bg-white dark:bg-slate-900 rounded-[3.5rem] p-12 border-2 border-slate-100 dark:border-slate-800 shadow-2xl">
-                <div class="flex items-center gap-4 mb-12">
-                    <div class="w-12 h-12 rounded-2xl overflow-hidden border-2 border-slate-100 dark:border-slate-800">
+            <div class="bg-white dark:bg-slate-900 rounded-[3rem] p-8 md:p-12 border border-slate-200 dark:border-slate-800 shadow-2xl">
+                <div class="flex items-center gap-4 mb-10">
+                    <div class="w-12 h-12 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm">
                         <img src="~/favicon.ico" class="w-full h-full object-cover" />
                     </div>
-                    <h3 class="text-4xl font-black text-slate-900 dark:text-white tracking-tighter uppercase italic">Drop a Message</h3>
+                    <div>
+                        <h3 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tighter uppercase italic leading-none">Drop a Message</h3>
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Direct transmission to campus coordinators</p>
+                    </div>
                 </div>
                 
-                <form asp-controller="Home" asp-action="Contact" method="POST" class="space-y-10">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div class="space-y-3">
+                <form asp-controller="Home" asp-action="Contact" method="POST" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
                             <label class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1">Full Identity</label>
                             <input type="text" name="fullName" required placeholder="Abhishek Shah" 
-                                   class="w-full px-8 py-5 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-[2rem] text-lg font-bold text-slate-900 dark:text-white placeholder:text-slate-300 focus:border-brand-purple focus:bg-white dark:focus:bg-slate-900 outline-none transition-all shadow-inner" />
+                                   class="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl text-base font-bold text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-brand-purple focus:ring-4 focus:ring-brand-purple/10 focus:bg-white dark:focus:bg-slate-900 outline-none transition-all" />
                         </div>
-                        <div class="space-y-3">
+                        <div class="space-y-2">
                             <label class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1">College Email</label>
                             <input type="email" name="email" required placeholder="student@college.edu" 
-                                   class="w-full px-8 py-5 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-[2rem] text-lg font-bold text-slate-900 dark:text-white placeholder:text-slate-300 focus:border-brand-purple focus:bg-white dark:focus:bg-slate-900 outline-none transition-all shadow-inner" />
+                                   class="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl text-base font-bold text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-brand-purple focus:ring-4 focus:ring-brand-purple/10 focus:bg-white dark:focus:bg-slate-900 outline-none transition-all" />
                         </div>
                     </div>
 
-                    <div class="space-y-3">
+                    <div class="space-y-2">
                         <label class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1">Message Subject</label>
-                        <input type="text" name="subject" required placeholder="Registration Issue" 
-                               class="w-full px-8 py-5 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-[2rem] text-lg font-bold text-slate-900 dark:text-white placeholder:text-slate-300 focus:border-brand-purple focus:bg-white dark:focus:bg-slate-900 outline-none transition-all shadow-inner" />
+                        <input type="text" name="subject" required placeholder="Registration or Event Inquiry" 
+                               class="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl text-base font-bold text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-brand-purple focus:ring-4 focus:ring-brand-purple/10 focus:bg-white dark:focus:bg-slate-900 outline-none transition-all" />
                     </div>
 
-                    <div class="space-y-3">
+                    <div class="space-y-2">
                         <label class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1">How can we help?</label>
-                        <textarea rows="5" name="message" required placeholder="Describe your inquiry..." 
-                                  class="w-full px-8 py-5 bg-slate-50 dark:bg-slate-800/50 border-2 border-transparent rounded-[2rem] text-lg font-bold text-slate-900 dark:text-white placeholder:text-slate-300 focus:border-brand-purple focus:bg-white dark:focus:bg-slate-900 outline-none transition-all resize-none shadow-inner"></textarea>
+                        <textarea rows="4" name="message" required placeholder="Describe your question or issue in detail..." 
+                                  class="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl text-base font-bold text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-brand-purple focus:ring-4 focus:ring-brand-purple/10 focus:bg-white dark:focus:bg-slate-900 outline-none transition-all resize-none"></textarea>
                     </div>
 
-                    <div class="pt-4">
-                        <button type="submit" class="group relative w-full py-6 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black text-sm uppercase tracking-[0.3em] rounded-[2rem] overflow-hidden transition-all hover:scale-[1.02] active:scale-95 shadow-2xl">
-                            <span class="relative z-10">Launch Message</span>
+                    <div class="pt-2">
+                        <button type="submit" class="group relative w-full py-5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black text-xs uppercase tracking-[0.3em] rounded-2xl overflow-hidden transition-all hover:scale-[1.01] active:scale-95 shadow-2xl">
+                            <span class="relative z-10 flex items-center justify-center gap-2">
+                                Send Message <span>🚀</span>
+                            </span>
                             <div class="absolute inset-0 bg-gradient-to-r from-brand-purple to-brand-blue translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
                         </button>
                     </div>
